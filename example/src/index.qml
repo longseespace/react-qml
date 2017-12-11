@@ -16,8 +16,6 @@ ApplicationWindow {
   Item {
     id: root
 
-    Item {}
-
     Component.onCompleted: {
       var app = AppPkg.App.create();
       ReactPkg.ReactQML.render(app, root);

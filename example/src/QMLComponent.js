@@ -9,7 +9,8 @@ export function setInitialProps(qmlElement, nextProps) {
 
     switch (propName) {
       case 'children':
-        qmlElement.children = [nextProps.children]
+        qmlElement.children.length = 0;
+        qmlElement.children.push(nextProps.children);
         break;
 
       default:
