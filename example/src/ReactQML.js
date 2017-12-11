@@ -135,7 +135,12 @@ export const QMLRenderer = Reconciler({
 
     removeChildFromContainer(parentInstance, child) {
       console.log('removeChildFromContainer');
-      parentInstance.removeChild(child);
+      for (var i = parentInstance.children.length; i > 0; i--) {
+        if (child == parentInstance.children[i]) {
+          parentInstance.children[i].destroy();
+          break;
+        }
+      }
     },
 
     insertBefore(parentInstance, child, beforeChild) {
