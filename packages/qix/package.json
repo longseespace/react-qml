@@ -1,0 +1,46 @@
+{
+  "name": "qix",
+  "version": "0.1.0",
+  "description": "QML development with modern ES6 javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/longseespace/qix.git"
+  },
+  "keywords": [
+    "QML",
+    "es6",
+    "HMR",
+    "Qt",
+    "Desktop",
+    "native"
+  ],
+  "author": "Long Nguyen <long@podzim.co>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/longseespace/qix/issues"
+  },
+  "homepage": "https://github.com/longseespace/qix#readme",
+  "dependencies": {
+    "absolute-path": "^0.0.0",
+    "chalk": "^2.3.0",
+    "chokidar": "^1.7.0",
+    "commander": "^2.12.2",
+    "finalhandler": "^1.1.0",
+    "lodash": "^4.17.4",
+    "metro": "^0.23.0",
+    "node-notifier": "^5.1.2",
+    "opn": "^5.1.0",
+    "serve-static": "^1.13.1",
+    "shell-quote": "^1.6.1",
+    "ws": "^3.3.2"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0"
+  }
+}
