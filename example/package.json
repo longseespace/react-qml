@@ -1,0 +1,15 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "qix example",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Long Nguyen <long@podzim.co>",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {
+    "redux": "^3.7.2"
+  }
+}

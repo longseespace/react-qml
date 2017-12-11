@@ -59,3 +59,6 @@ typings/
 
 # qt builds
 *build-*
+
+# we use yarn
+package-lock.json

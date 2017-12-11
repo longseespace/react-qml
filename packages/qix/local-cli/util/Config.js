@@ -13,7 +13,7 @@
 
 const findSymlinkedModules = require('./findSymlinkedModules');
 const fs = require('fs');
-const getPolyfills = require('../rn-get-polyfills');
+const getPolyfills = require('../../rn-get-polyfills');
 const invariant = require('fbjs/lib/invariant');
 const path = require('path');
 

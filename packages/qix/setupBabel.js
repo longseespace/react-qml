@@ -13,7 +13,7 @@ const babelRegisterOnly = require('metro/src/babelRegisterOnly');
 const escapeRegExp = require('lodash/escapeRegExp');
 const path = require('path');
 
-const BABEL_ENABLED_PATHS = ['qix'];
+const BABEL_ENABLED_PATHS = ['local-cli'];
 
 /**
  * We use absolute paths for matching only the top-level folders reliably. For
