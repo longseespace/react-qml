@@ -13,9 +13,16 @@ function createElement(type, props, rootContainerElement) {
   switch (type) {
     case 'rectangle': {
       return Qt.createQmlObject(
-        'import QtQuick 2.0; Rectangle {color: "red"; width: 20; height: 20}',
+        'import QtQuick 2.0; Rectangle {}',
         rootContainerElement,
-        'dynamicSnippet1'
+        'rectangle'
+      );
+    }
+    case 'button': {
+      return Qt.createQmlObject(
+        'import QtQuick 2.0; import QtQuick.Controls 2.0; Button {}',
+        rootContainerElement,
+        'button'
       );
     }
   }
@@ -104,21 +111,26 @@ export const QMLRenderer = Reconciler({
   mutation: {
     appendChild(parentInstance, child) {
       console.log('appendChild');
-      console.log('  parent', parentInstance)
-      console.log('  child', child)
+      console.log('  parent', parentInstance);
+      console.log('  child', child);
       parentInstance.children.push(child);
     },
 
     appendChildToContainer(parentInstance, child) {
       console.log('appendChildToContainer');
-      console.log('  parent', parentInstance)
-      console.log('  child', child)
+      console.log('  parent', parentInstance);
+      console.log('  child', child);
       parentInstance.children.push(child);
     },
 
     removeChild(parentInstance, child) {
       console.log('removeChild');
-      parentInstance.removeChild(child);
+      for (var i = parentInstance.children.length; i > 0; i--) {
+        if (child == parentInstance.children[i]) {
+          parentInstance.children[i].destroy();
+          break;
+        }
+      }
     },
 
     removeChildFromContainer(parentInstance, child) {
