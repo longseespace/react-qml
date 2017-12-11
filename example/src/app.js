@@ -29,6 +29,7 @@ class App extends React.Component {
         <rectangle x={10} y={10} width={100} height={100} color="blue"/>
         {greenVisible && <rectangle x={210} y={210} width={100} height={100} color="green"/>}
         <button x={300} y={300} width={100} height={44} text="Click Me" onClicked={this.toggle} />
+        <label x={500} y={400} text="Just a text" />
       </rectangle>
     )
   }

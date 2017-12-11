@@ -25,6 +25,13 @@ function createElement(type, props, rootContainerElement) {
         'button'
       );
     }
+    case 'label': {
+      return Qt.createQmlObject(
+        'import QtQuick 2.0; import QtQuick.Controls 2.0; Label {}',
+        rootContainerElement,
+        'label'
+      );
+    }
   }
 
   return null;

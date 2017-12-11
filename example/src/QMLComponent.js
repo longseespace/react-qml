@@ -1,60 +1,47 @@
+const isEventRegex = /^on([A-Z][a-zA-Z]+)$/;
+
+function listenTo(qmlElement, eventName, value, lastValue) {
+  eventName = eventName.toLowerCase();
+
+  if (!qmlElement[eventName]) {
+    // TODO: warn
+    return;
+  }
+
+  if (lastValue) {
+    qmlElement[eventName].disconnect(lastValue);
+  }
+
+  qmlElement[eventName].connect(value);
+}
+
 export function setInitialProps(qmlElement, nextProps) {
   console.log('setInitialProps');
   console.log('  qmlElement', qmlElement);
   console.log('  nextProps', JSON.stringify(nextProps));
 
-  Object.keys(nextProps).forEach((propName) => {
-    console.log('    propName', propName);
-    console.log('    value', nextProps[propName]);
+  // qmlElement.clicked.connect(nextProps.onClicked);
 
-    switch (propName) {
-      case 'children':
-        qmlElement.data.length = 0;
-        qmlElement.data.push(nextProps.children);
-        break;
+  Object.entries(nextProps).forEach(([propKey, propValue]) => {
+    let match
 
-      case 'onClicked': {
-        qmlElement.clicked.connect(nextProps.onClicked);
-        break;
-      }
-
-      default:
-        qmlElement[propName] = nextProps[propName];
+    if (
+      propKey === 'dangerouslySetInnerHTML' &&
+      propValue &&
+      propValue.__html != null
+    ) {
+      // TODO: implement this
+    } else if (propKey === 'children') {
+      qmlElement.data.length = 0;
+      qmlElement.data.push(propValue);
+    } else if ((match = propKey.match(isEventRegex))) {
+      let [, eventName] = match
+      listenTo(qmlElement, eventName, propValue, null)
+    } else if (propValue != null) {
+      qmlElement[propKey] = propValue;
     }
   })
-
-  // Object.entries(nextProps).forEach(([propKey, propValue]) => {
-  //   let match
-  //
-  //   // inline styles!
-  //   if (propKey === 'style') {
-  //     css(qmlElement, propValue)
-  //
-  //     // Quick support for dangerousSetInnerHTML={{__html}}
-  //   } else if (
-  //     propKey === 'dangerouslySetInnerHTML' &&
-  //     propValue &&
-  //     propValue.__html != null
-  //   ) {
-  //     qmlElement.innerHtml = propValue.__html
-  //
-  //     // Handle when `children` is a renderable (text, number, etc)
-  //   } else if (propKey === 'children') {
-  //     // doesn't cover an IE8 issue with textareas
-  //     if (typeof propValue === 'number') propValue = `${propValue}`
-  //     if (typeof propValue === 'string') qmlElement.textContent = propValue
-  //
-  //     // Add DOM event listeners
-  //   } else if ((match = propKey.match(isEventRegex))) {
-  //     let [, eventName] = match
-  //     listenTo(qmlElement, eventName, propValue, null)
-  //   } else if (propValue != null) {
-  //     setValueOnElement(qmlElement, propKey, propValue)
-  //   }
-  // })
 }
-
-const isEventRegex = /^on([A-Z][a-zA-Z]+)$/
 
 export function diffProps(domElement, lastProps, nextProps) {
   let updatePayload = null
@@ -90,8 +77,7 @@ export function diffProps(domElement, lastProps, nextProps) {
       }
     } else if (
       propKey === 'children' &&
-      lastProp !== nextProp &&
-      isRenderableChild(nextProp)
+      lastProp !== nextProp
     ) {
       add(propKey, nextProp)
     } else if (propKey.match(isEventRegex) && lastProp !== nextProp) {
@@ -104,37 +90,25 @@ export function diffProps(domElement, lastProps, nextProps) {
     }
   }
 
-  // let styleUpdates = diffStyle(lastProps.style, nextProps.style)
-  // if (styleUpdates) {
-  //   add('style', styleUpdates)
-  // }
-
   return updatePayload
 }
 
 export function updateProps(qmlElement, updateQueue) {
   for (let [propKey, propValue] of updateQueue) {
-    console.log('    propKey', propKey);
-    console.log('    propValue', JSON.stringify(propValue));
-
-    switch (propKey) {
-      case 'children':
-        qmlElement.data.length = 0;
-        qmlElement.data.push(propValue);
-        break;
-
-      case 'onClicked': {
-        const [lastHandler, nextHandler] = propValue;
-        qmlElement.clicked.disconnect(lastHandler);
-        qmlElement.clicked.connect(nextHandler);
-        break;
-      }
-
-      default:
-        qmlElement[propKey] = propValue;
+    if (
+      propKey === 'dangerouslySetInnerHTML' &&
+      propValue &&
+      propValue.__html != null
+    ) {
+      // TODO: implement this
+    } else if (propKey === 'children') {
+      qmlElement.data.length = 0;
+      qmlElement.data.push(propValue);
+    } else if ((match = propKey.match(isEventRegex))) {
+      let [lastHandler, nextHandler] = propValue;
+      listenTo(domElement, match[1], nextHandler, lastHandler);
+    } else if (propValue != null) {
+      qmlElement[propKey] = propValue;
     }
   }
 }
-
-const isRenderableChild = child =>
-  typeof child === 'string' || typeof child === 'number'
