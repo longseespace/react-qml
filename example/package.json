@@ -4,12 +4,24 @@
   "description": "qix example",
   "main": "index.js",
   "scripts": {
+    "build_lib": "webpack --config lib.webpack.js",
+    "build": "webpack --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Long Nguyen <long@podzim.co>",
   "license": "MIT",
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1"
+  },
   "dependencies": {
-    "redux": "^3.7.2"
+    "babel-polyfill": "^6.26.0",
+    "es6-map": "^0.1.5",
+    "es6-set": "^0.1.5",
+    "es6-weak-map": "^2.0.2",
+    "react": "^16.2.0",
+    "react-reconciler": "^0.7.0"
   }
 }

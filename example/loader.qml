@@ -5,8 +5,6 @@ import QtQuick.Window 2.2
 import QtWebSockets 1.0
 
 Item {
-  id: root
-
   // this is set from main.cpp
   property bool _DEBUG_MODE
 
@@ -14,7 +12,8 @@ Item {
   // in debug mode fetched from http, in production, builtin version is used
   Loader {
     id: loader
-    source: _DEBUG_MODE ? "http://127.0.0.1:44333/main.qml" : "qrc:/main.qml"
+    // source: _DEBUG_MODE ? "http://127.0.0.1:44333/index.qml" : "qrc:/index.qml"
+    source: "qrc:/src/index.qml"
     anchors.fill: parent
     asynchronous: false
 

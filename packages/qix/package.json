@@ -4,7 +4,7 @@
   "description": "QML development with modern ES6 javascript",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --testPathPattern=e2e --forceExit"
   },
   "repository": {
     "type": "git",
@@ -25,22 +25,13 @@
   },
   "homepage": "https://github.com/longseespace/qix#readme",
   "dependencies": {
-    "absolute-path": "^0.0.0",
-    "babel-core": "^6.26.0",
-    "babel-register": "^6.26.0",
-    "babel-runtime": "^6.26.0",
-    "chalk": "^2.3.0",
-    "commander": "^2.12.2",
-    "lodash": "^4.17.4",
-    "metro": "^0.23.0",
-    "node-notifier": "^5.1.2",
-    "opn": "^5.1.0",
-    "shell-quote": "^1.6.1",
-    "ws": "^3.3.2"
+
   },
   "devDependencies": {
+    "babel-jest": "^21.2.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-flow": "^6.23.0"
+    "babel-preset-flow": "^6.23.0",
+    "jest": "^21.2.1"
   }
 }
