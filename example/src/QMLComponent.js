@@ -9,8 +9,8 @@ export function setInitialProps(qmlElement, nextProps) {
 
     switch (propName) {
       case 'children':
-        qmlElement.children.length = 0;
-        qmlElement.children.push(nextProps.children);
+        qmlElement.data.length = 0;
+        qmlElement.data.push(nextProps.children);
         break;
 
       case 'onClicked': {
@@ -110,6 +110,30 @@ export function diffProps(domElement, lastProps, nextProps) {
   // }
 
   return updatePayload
+}
+
+export function updateProps(qmlElement, updateQueue) {
+  for (let [propKey, propValue] of updateQueue) {
+    console.log('    propKey', propKey);
+    console.log('    propValue', JSON.stringify(propValue));
+
+    switch (propKey) {
+      case 'children':
+        qmlElement.data.length = 0;
+        qmlElement.data.push(propValue);
+        break;
+
+      case 'onClicked': {
+        const [lastHandler, nextHandler] = propValue;
+        qmlElement.clicked.disconnect(lastHandler);
+        qmlElement.clicked.connect(nextHandler);
+        break;
+      }
+
+      default:
+        qmlElement[propKey] = propValue;
+    }
+  }
 }
 
 const isRenderableChild = child =>

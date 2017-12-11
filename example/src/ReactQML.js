@@ -140,7 +140,14 @@ export const QMLRenderer = Reconciler({
 
     insertBefore(parentInstance, child, beforeChild) {
       console.log('insertBefore');
-      parentInstance.insertBefore(child, beforeChild);
+      for (var i = parentInstance.children.length; i > 0; i--) {
+        parentInstance.children[i + 1] = parentInstance.children[i];
+        if (beforeChild == parentInstance.children[i]) {
+          parentInstance.children[i] = child;
+          child.parent = parentInstance;
+          break;
+        }
+      }
     },
 
     commitUpdate(instance, preparedUpdateQueue) {
