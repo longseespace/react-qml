@@ -6,6 +6,8 @@
   "scripts": {
     "build_lib": "webpack --config lib.webpack.js",
     "build": "webpack --config webpack.config.js",
+    "make": "(cd ../build-Example-Desktop-Debug && make)",
+    "dev": "../build-Example-Desktop-Debug/Example.app/Contents/MacOS/Example --remote-debugging-port=9222",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Long Nguyen <long@podzim.co>",
@@ -15,7 +17,8 @@
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1"
+    "babel-preset-react": "^6.24.1",
+    "raw-loader": "^0.5.1"
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",

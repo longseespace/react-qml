@@ -10,6 +10,7 @@ const m = {
   Label: ['QtQuick 2.0', 'QtQuick.Controls 2.0'],
   Rectangle: ['QtQuick 2.0'],
   Popup: ['QtQuick 2.7', 'QtQuick.Controls 2.2', 'QtQuick.Layouts 1.1'],
+  Item: ['QtQuick 2.7'],
 };
 
 // FIXME: only work if deps.length > 0
@@ -29,15 +30,7 @@ function createElement(type, props, rootContainerElement) {
   if (mapping[type]) {
     return Qt.createQmlObject(mapping[type], rootContainerElement, type);
   }
-
-  // if type is a component
-  if (typeof type === 'function') {
-    console.log('objectName', props.objectName);
-    const instance = type(props);
-    instance.parent = rootContainerElement;
-    return instance;
-  }
-
+  
   return null;
 }
 

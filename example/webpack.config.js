@@ -18,6 +18,10 @@ module.exports = {
             presets: ['env', 'react']
           }
         }
+      },
+      {
+        test: /\.qml/,
+        use: 'raw-loader'
       }
     ]
   }
