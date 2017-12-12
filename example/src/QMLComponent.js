@@ -43,7 +43,7 @@ export function setInitialProps(qmlElement, nextProps) {
   })
 }
 
-export function diffProps(domElement, lastProps, nextProps) {
+export function diffProps(qmlElement, lastProps, nextProps) {
   let updatePayload = null
 
   let add = (k, v) => {
@@ -106,7 +106,7 @@ export function updateProps(qmlElement, updateQueue) {
       qmlElement.data.push(propValue);
     } else if ((match = propKey.match(isEventRegex))) {
       let [lastHandler, nextHandler] = propValue;
-      listenTo(domElement, match[1], nextHandler, lastHandler);
+      listenTo(qmlElement, match[1], nextHandler, lastHandler);
     } else if (propValue != null) {
       qmlElement[propKey] = propValue;
     }
