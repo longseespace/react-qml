@@ -24,48 +24,38 @@ export function setInitialProps(qmlElement, nextProps) {
     require('util').inspect(nextProps, { depth: null, colors: true })
   );
 
-  let element = qmlElement;
-
-  if (
-    nextProps.dangerouslySetInnerQML &&
-    nextProps.dangerouslySetInnerQML.__qml != null
-  ) {
-    const child = Qt.createQmlObject(
-      nextProps.dangerouslySetInnerQML.__qml,
-      qmlElement,
-      'qml'
-    );
-    element = child;
-  }
 
   Object.entries(nextProps).forEach(([propKey, propValue]) => {
-    if (propValue == null || propKey === 'dangerouslySetInnerQML') {
+    if (
+      propValue == null ||
+      propKey === '__qmlRawContent'
+    ) {
       // ignore
       return;
     }
 
     if (propKey === 'children') {
-      element.data.length = 0;
-      element.data.push(propValue);
+      qmlElement.data.length = 0;
+      qmlElement.data.push(propValue);
       return;
     }
 
     if (propKey.match(isEventRegex)) {
       const match = propKey.match(isEventRegex);
-      listenTo(element, match[1], propValue, null);
+      listenTo(qmlElement, match[1], propValue, null);
       return;
     }
 
     if (typeof propValue === 'object') {
-      if (element[propKey]) {
+      if (qmlElement[propKey]) {
         Object.entries(propValue).forEach(([configKey, configValue]) => {
-          element[propKey][configKey] = configValue;
+          qmlElement[propKey][configKey] = configValue;
         });
       }
       return;
     }
 
-    element[propKey] = propValue;
+    qmlElement[propKey] = propValue;
   });
 }
 
@@ -94,13 +84,6 @@ export function diffProps(qmlElement, lastProps, nextProps) {
       (nextProp == null && lastProp == null)
     ) {
       continue;
-    } else if (propKey === 'dangerouslySetInnerQML') {
-      const nextQml = nextProp ? nextProp.__qml : undefined;
-      const lastQml = lastProp ? lastProp.__qml : undefined;
-
-      if (nextQml != null && lastQml !== nextQml) {
-        add(propKey, nextQml);
-      }
     } else if (propKey === 'children' && lastProp !== nextProp) {
       add(propKey, nextProp);
     } else if (propKey.match(isEventRegex) && lastProp !== nextProp) {
@@ -117,31 +100,11 @@ export function diffProps(qmlElement, lastProps, nextProps) {
 }
 
 export function updateProps(qmlElement, updateQueue) {
-  let element = qmlElement;
-
-  if (updateQueue.dangerouslySetInnerQML) {
-    const prevChild = qmlElement.data[0];
-    if (prevChild) {
-      prevChild.destroy();
-    }
-    qmlElement.data.length = 0;
-
-    if (updateQueue.dangerouslySetInnerQML.__qml != null) {
-      const child = Qt.createQmlObject(
-        updateQueue.dangerouslySetInnerQML.__qml,
-        qmlElement,
-        'qml'
-      );
-
-      element = child;
-    } else {
-      // short circuit return
-      return;
-    }
-  }
-
   for (let [propKey, propValue] of updateQueue) {
-    if (propValue == null || propKey === 'dangerouslySetInnerQML') {
+    if (
+      propValue == null ||
+      propKey === '__qmlRawContent'
+    ) {
       // ignore
       return;
     }

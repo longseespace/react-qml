@@ -5,7 +5,10 @@ module.exports = {
   output: {
     filename: 'App.build.js',
     library: 'App',
-    path: path.resolve(__dirname, 'src')
+    path: path.resolve(__dirname, 'src'),
+  },
+  resolveLoader: {
+    modules: ['node_modules', path.resolve(__dirname, 'src')],
   },
   module: {
     rules: [
@@ -15,14 +18,14 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['env', 'react']
-          }
-        }
+            presets: ['env', 'react'],
+          },
+        },
       },
       {
         test: /\.qml/,
-        use: 'raw-loader'
-      }
-    ]
-  }
+        use: 'qml-loader',
+      },
+    ],
+  },
 };

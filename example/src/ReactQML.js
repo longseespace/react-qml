@@ -16,9 +16,7 @@ const m = {
 // FIXME: only work if deps.length > 0
 const mapping = Object.entries(m).reduce((obj, [CompName, deps]) => {
   return Object.assign(obj, {
-    [CompName.toLowerCase()]: `import ${deps.join(';import ')}; ${
-      CompName
-    } {}`,
+    [CompName.toLowerCase()]: `import ${deps.join(';import ')}; ${CompName} {}`,
   });
 }, {});
 
@@ -30,7 +28,13 @@ function createElement(type, props, rootContainerElement) {
   if (mapping[type]) {
     return Qt.createQmlObject(mapping[type], rootContainerElement, type);
   }
-  
+
+  if (type === 'qml') {
+    const qml = props.__qmlRawContent;
+
+    return Qt.createQmlObject(qml, rootContainerElement, type);
+  }
+
   return null;
 }
 

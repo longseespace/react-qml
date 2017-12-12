@@ -2,13 +2,7 @@ import 'es6-map/implement';
 import 'es6-set/implement';
 import * as React from 'react';
 
-import dialogQMLContent from './dialog.qml';
-
-class Dialog extends React.Component {
-  render() {
-    return <item dangerouslySetInnerQML={{ __qml: dialogQMLContent }} {...this.props} />;
-  }
-}
+import Dialog from './dialog.qml';
 
 export function create() {
   return React.createElement(App);
