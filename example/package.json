@@ -8,7 +8,8 @@
     "build": "webpack --config webpack.config.js",
     "devserver": "webpack-dev-server",
     "make": "(cd ../build-Example-Desktop-Debug && make)",
-    "dev": "../build-Example-Desktop-Debug/Example.app/Contents/MacOS/Example --remote-debugging-port=9222",
+    "dev":
+      "../build-Example-Desktop-Debug/Example.app/Contents/MacOS/Example --remote-debugging-port=9222",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Long Nguyen <long@podzim.co>",
