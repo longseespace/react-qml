@@ -8,7 +8,9 @@ Item {
   // props and signal
   property alias errorMessage: errorLabel.text
   property alias errorVisible: errorLabel.visible
-  property bool processing: false
+  default property bool processing: false
+  property alias email: emailField.text
+  property alias password: passwordField.text
   signal submit(string email, string password)
   // ----------------
 
@@ -16,8 +18,6 @@ Item {
 
     closePolicy: Popup.NoAutoClose
     width: 320
-    x: 30
-    y: 30
     modal: false
 
     visible: true
@@ -65,7 +65,6 @@ Item {
           text: ""
           anchors.horizontalCenter: parent.horizontalCenter
           echoMode: TextInput.Password
-          validator: RegExpValidator { regExp: /.{8,32}/ }
           enabled: !processing
         }
 

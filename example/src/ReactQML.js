@@ -8,6 +8,7 @@ import * as QMLComponent from './QMLComponent';
 const m = {
   Button: ['QtQuick 2.0', 'QtQuick.Controls 2.0'],
   Label: ['QtQuick 2.0', 'QtQuick.Controls 2.0'],
+  TextField: ['QtQuick 2.0', 'QtQuick.Controls 2.0'],
   Rectangle: ['QtQuick 2.0'],
   Popup: ['QtQuick 2.7', 'QtQuick.Controls 2.2', 'QtQuick.Layouts 1.1'],
   Item: ['QtQuick 2.7'],

@@ -1,11 +1,16 @@
 const isEventRegex = /^on([A-Z][a-zA-Z]+)$/;
 
+function camelize(str) {
+  return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
+    return index == 0 ? letter.toLowerCase() : letter.toUpperCase();
+  }).replace(/\s+/g, '');
+}
+
 function listenTo(qmlElement, eventName, value, lastValue) {
-  eventName = eventName.toLowerCase();
-  console.log('listenTo', qmlElement, eventName, value);
+  eventName = camelize(eventName);
 
   if (!qmlElement[eventName]) {
-    // TODO: warn
+    console.warn(`Event "${eventName}" not found in ${qmlElement}`);
     return;
   }
 
