@@ -5,33 +5,37 @@ import 'es6-set/implement';
 import Reconciler from 'react-reconciler';
 import * as QMLComponent from './QMLComponent';
 
+const m = {
+  Button: ['QtQuick 2.0', 'QtQuick.Controls 2.0'],
+  Label: ['QtQuick 2.0', 'QtQuick.Controls 2.0'],
+  Rectangle: ['QtQuick 2.0'],
+  Popup: ['QtQuick 2.7', 'QtQuick.Controls 2.2', 'QtQuick.Layouts 1.1'],
+};
+
+// FIXME: only work if deps.length > 0
+const mapping = Object.entries(m).reduce((obj, [CompName, deps]) => {
+  return Object.assign(obj, {
+    [CompName.toLowerCase()]: `import ${deps.join(';import ')}; ${
+      CompName
+    } {}`,
+  });
+}, {});
+
 function createElement(type, props, rootContainerElement) {
   console.log('createElement');
   console.log('  type', type);
   console.log('  props', JSON.stringify(props));
 
-  switch (type) {
-    case 'rectangle': {
-      return Qt.createQmlObject(
-        'import QtQuick 2.0; Rectangle {}',
-        rootContainerElement,
-        'rectangle'
-      );
-    }
-    case 'button': {
-      return Qt.createQmlObject(
-        'import QtQuick 2.0; import QtQuick.Controls 2.0; Button {}',
-        rootContainerElement,
-        'button'
-      );
-    }
-    case 'label': {
-      return Qt.createQmlObject(
-        'import QtQuick 2.0; import QtQuick.Controls 2.0; Label {}',
-        rootContainerElement,
-        'label'
-      );
-    }
+  if (mapping[type]) {
+    return Qt.createQmlObject(mapping[type], rootContainerElement, type);
+  }
+
+  // if type is a component
+  if (typeof type === 'function') {
+    console.log('objectName', props.objectName);
+    const instance = type(props);
+    instance.parent = rootContainerElement;
+    return instance;
   }
 
   return null;
@@ -40,9 +44,9 @@ function createElement(type, props, rootContainerElement) {
 export const QMLRenderer = Reconciler({
   appendInitialChild(parentInstance, child) {
     console.log('appendInitialChild');
-    if (parentInstance.children) {
+    if (parentInstance.data) {
       console.log('  appendInitialChild has children');
-      parentInstance.children.push(child);
+      parentInstance.data.push(child);
     } else {
       console.log('  appendInitialChild has no children');
       parentInstance.document = child;
@@ -120,21 +124,21 @@ export const QMLRenderer = Reconciler({
       console.log('appendChild');
       console.log('  parent', parentInstance);
       console.log('  child', child);
-      parentInstance.children.push(child);
+      parentInstance.data.push(child);
     },
 
     appendChildToContainer(parentInstance, child) {
       console.log('appendChildToContainer');
       console.log('  parent', parentInstance);
       console.log('  child', child);
-      parentInstance.children.push(child);
+      parentInstance.data.push(child);
     },
 
     removeChild(parentInstance, child) {
       console.log('removeChild');
-      for (var i = parentInstance.children.length; i > 0; i--) {
-        if (child == parentInstance.children[i]) {
-          parentInstance.children[i].destroy();
+      for (var i = parentInstance.data.length; i > 0; i--) {
+        if (child == parentInstance.data[i]) {
+          parentInstance.data[i].destroy();
           break;
         }
       }
@@ -142,9 +146,9 @@ export const QMLRenderer = Reconciler({
 
     removeChildFromContainer(parentInstance, child) {
       console.log('removeChildFromContainer');
-      for (var i = parentInstance.children.length; i > 0; i--) {
-        if (child == parentInstance.children[i]) {
-          parentInstance.children[i].destroy();
+      for (var i = parentInstance.data.length; i > 0; i--) {
+        if (child == parentInstance.data[i]) {
+          parentInstance.data[i].destroy();
           break;
         }
       }
@@ -152,10 +156,10 @@ export const QMLRenderer = Reconciler({
 
     insertBefore(parentInstance, child, beforeChild) {
       console.log('insertBefore');
-      for (var i = parentInstance.children.length; i > 0; i--) {
-        parentInstance.children[i + 1] = parentInstance.children[i];
-        if (beforeChild == parentInstance.children[i]) {
-          parentInstance.children[i] = child;
+      for (var i = parentInstance.data.length; i > 0; i--) {
+        parentInstance.data[i + 1] = parentInstance.data[i];
+        if (beforeChild == parentInstance.data[i]) {
+          parentInstance.data[i] = child;
           child.parent = parentInstance;
           break;
         }

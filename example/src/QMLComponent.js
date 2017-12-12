@@ -23,8 +23,6 @@ export function setInitialProps(qmlElement, nextProps) {
   // qmlElement.clicked.connect(nextProps.onClicked);
 
   Object.entries(nextProps).forEach(([propKey, propValue]) => {
-    let match
-
     if (
       propKey === 'dangerouslySetInnerHTML' &&
       propValue &&
@@ -34,11 +32,19 @@ export function setInitialProps(qmlElement, nextProps) {
     } else if (propKey === 'children') {
       qmlElement.data.length = 0;
       qmlElement.data.push(propValue);
-    } else if ((match = propKey.match(isEventRegex))) {
-      let [, eventName] = match
-      listenTo(qmlElement, eventName, propValue, null)
+    } else if (propKey.match(isEventRegex)) {
+      const match = propKey.match(isEventRegex);
+      listenTo(qmlElement, match[1], propValue, null)
     } else if (propValue != null) {
-      qmlElement[propKey] = propValue;
+      if (typeof propValue === 'object') {
+        if (qmlElement[propKey]) {
+          Object.entries(propValue).forEach(([configKey, configValue]) => {
+            qmlElement[propKey][configKey] = configValue;
+          })
+        }
+      } else {
+        qmlElement[propKey] = propValue;
+      }
     }
   })
 }
@@ -104,11 +110,20 @@ export function updateProps(qmlElement, updateQueue) {
     } else if (propKey === 'children') {
       qmlElement.data.length = 0;
       qmlElement.data.push(propValue);
-    } else if ((match = propKey.match(isEventRegex))) {
+    } else if (propKey.match(isEventRegex)) {
+      const match = propKey.match(isEventRegex);
       let [lastHandler, nextHandler] = propValue;
       listenTo(qmlElement, match[1], nextHandler, lastHandler);
     } else if (propValue != null) {
-      qmlElement[propKey] = propValue;
+      if (typeof propValue === 'object') {
+        if (qmlElement[propKey]) {
+          Object.entries(propValue).forEach(([configKey, configValue]) => {
+            qmlElement[propKey][configKey] = configValue;
+          })
+        }
+      } else {
+        qmlElement[propKey] = propValue;
+      }
     }
   }
 }

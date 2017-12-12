@@ -4,5 +4,6 @@
     <file>src/index.qml</file>
     <file>src/App.build.js</file>
     <file>src/ReactQML.build.js</file>
+    <file>src/dialog.qml</file>
   </qresource>
 </RCC>
