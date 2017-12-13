@@ -1,7 +1,3 @@
-import 'es6-map/implement';
-import 'es6-weak-map/implement';
-import 'es6-set/implement';
-
 import Reconciler from 'react-reconciler';
 import * as QMLComponent from './QMLComponent';
 

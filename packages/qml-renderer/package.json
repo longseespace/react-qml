@@ -1,0 +1,33 @@
+{
+  "name": "qml-renderer",
+  "version": "0.1.0",
+  "description": "React QML Renderer",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "babel ./src -d ./dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/longseespace/qix.git"
+  },
+  "keywords": [
+    "QML",
+    "React",
+    "Renderer",
+    "qix"
+  ],
+  "author": "Long Nguyen <long@podzim.co>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/longseespace/qix/issues"
+  },
+  "homepage": "https://github.com/longseespace/qix#readme",
+  "dependencies": {
+    "react-reconciler": "^0.7.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  }
+}
