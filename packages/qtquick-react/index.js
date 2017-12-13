@@ -1,5 +1,6 @@
 const components = require('./manifest');
 const fs = require('fs');
+const mkdirp = require('mkdirp');
 const { flatten, flow, entries, map } = require('lodash/fp');
 const es6ExportClass = require('./es6ExportClass.template');
 
@@ -9,17 +10,21 @@ const writeFiles = ({ fileName, content }) => {
 
 const execute = flow(
   entries,
-  map(([moduleName, { version, components }]) => {
+  map(([moduleName, { versions, components }]) => {
     const path = moduleName.split('.').join('/');
 
-    return components.map(componentName => ({
-      fileName: `./src/${path}/${componentName}.js`,
-      content: es6ExportClass(
-        componentName,
-        `import ${moduleName} ${version}\n${componentName} {}`
-      ),
-    }));
+    return versions.map(version => {
+      mkdirp.sync(`./src/${path}/${version}`);
+      return components.map(componentName => ({
+        fileName: `./src/${path}/${version}/${componentName}.js`,
+        content: es6ExportClass(
+          componentName,
+          `import ${moduleName} ${version}\n${componentName} {}`
+        ),
+      }));
+    });
   }),
+  flatten,
   flatten,
   map(writeFiles)
 );

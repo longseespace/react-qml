@@ -6,7 +6,7 @@
 
 const manifest = {
   'QtQuick.Controls': {
-    version: '2.3',
+    versions: ['2.0', '2.1', '2.2', '2.3'],
     components: [
       'AbstractButton',
       'Action',
