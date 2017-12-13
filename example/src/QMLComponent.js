@@ -1,13 +1,8 @@
 const isEventRegex = /^on([A-Z][a-zA-Z]+)$/;
 
-function camelize(str) {
-  return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
-    return index == 0 ? letter.toLowerCase() : letter.toUpperCase();
-  }).replace(/\s+/g, '');
-}
-
 function listenTo(qmlElement, eventName, value, lastValue) {
-  eventName = camelize(eventName);
+  eventName = eventName[0].toLowerCase() + eventName.substring(1);
+  console.log('listenTo', qmlElement, eventName, value);
 
   if (!qmlElement[eventName]) {
     console.warn(`Event "${eventName}" not found in ${qmlElement}`);
@@ -29,12 +24,8 @@ export function setInitialProps(qmlElement, nextProps) {
     require('util').inspect(nextProps, { depth: null, colors: true })
   );
 
-
   Object.entries(nextProps).forEach(([propKey, propValue]) => {
-    if (
-      propValue == null ||
-      propKey === '__qmlRawContent'
-    ) {
+    if (propValue == null || propKey === '__qmlRawContent') {
       // ignore
       return;
     }
@@ -106,10 +97,7 @@ export function diffProps(qmlElement, lastProps, nextProps) {
 
 export function updateProps(qmlElement, updateQueue) {
   for (let [propKey, propValue] of updateQueue) {
-    if (
-      propValue == null ||
-      propKey === '__qmlRawContent'
-    ) {
+    if (propValue == null || propKey === '__qmlRawContent') {
       // ignore
       return;
     }
