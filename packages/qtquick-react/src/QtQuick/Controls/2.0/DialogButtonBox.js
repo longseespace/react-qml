@@ -1,23 +1,25 @@
 
-import { registerNativeComponentClass } from 'qml-renderer';
-import { createElement, Component } from 'react';
+  import { registerNativeComponentClass } from 'qml-renderer';
+  import { createElement, Component } from 'react';
 
-const qmlContent = "import QtQuick.Controls 2.0\nDialogButtonBox {}";
+  const qmlContent = "import QtQuick.Controls 2.0\nDialogButtonBox {}";
+  const NATIVE_COMPONENT_REGISTRY_NAME = 'QtQuick.Controls.DialogButtonBox_2.0'
 
-registerNativeComponentClass('QtQuick.Controls.DialogButtonBox', qmlContent);
+  registerNativeComponentClass(NATIVE_COMPONENT_REGISTRY_NAME, qmlContent);
 
-export default class DialogButtonBox extends Component {
-  setRef = qmlObject => (this.qmlObject = qmlObject);
-  render() {
-    var nextProps = {};
+  export default class DialogButtonBox extends Component {
+    setRef = qmlObject => (this.qmlObject = qmlObject);
+    render() {
+      var nextProps = {};
 
-    for (var key in this.props) {
-      nextProps[key] = this.props[key];
+      for (var key in this.props) {
+        nextProps[key] = this.props[key];
+      }
+
+      nextProps.ref = this.setRef;
+
+      return createElement(NATIVE_COMPONENT_REGISTRY_NAME, nextProps);
     }
-
-    nextProps.ref = this.setRef;
-
-    return createElement('QtQuick.Controls.DialogButtonBox', nextProps);
   }
-}
 
+  

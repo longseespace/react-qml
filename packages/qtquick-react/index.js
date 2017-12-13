@@ -17,10 +17,7 @@ const execute = flow(
       mkdirp.sync(`./src/${path}/${version}`);
       return components.map(componentName => ({
         fileName: `./src/${path}/${version}/${componentName}.js`,
-        content: es6ExportClass(
-          componentName,
-          `import ${moduleName} ${version}\n${componentName} {}`
-        ),
+        content: es6ExportClass(componentName, moduleName, version),
       }));
     });
   }),

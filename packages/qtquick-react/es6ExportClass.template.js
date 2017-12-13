@@ -1,24 +1,32 @@
-module.exports = (componentName, qmlContent) => `
-import { registerNativeComponentClass } from 'qml-renderer';
-import { createElement, Component } from 'react';
+module.exports = (componentName, moduleName, version) => {
+  const qmlContent = `import ${moduleName} ${version}\n${componentName} {}`;
+  const NATIVE_COMPONENT_REGISTRY_NAME = `${moduleName}.${componentName}_${
+    version
+  }`;
 
-const qmlContent = ${JSON.stringify(qmlContent)};
+  return `
+  import { registerNativeComponentClass } from 'qml-renderer';
+  import { createElement, Component } from 'react';
 
-registerNativeComponentClass('QtQuick.Controls.${componentName}', qmlContent);
+  const qmlContent = ${JSON.stringify(qmlContent)};
+  const NATIVE_COMPONENT_REGISTRY_NAME = '${NATIVE_COMPONENT_REGISTRY_NAME}'
 
-export default class ${componentName} extends Component {
-  setRef = qmlObject => (this.qmlObject = qmlObject);
-  render() {
-    var nextProps = {};
+  registerNativeComponentClass(NATIVE_COMPONENT_REGISTRY_NAME, qmlContent);
 
-    for (var key in this.props) {
-      nextProps[key] = this.props[key];
+  export default class ${componentName} extends Component {
+    setRef = qmlObject => (this.qmlObject = qmlObject);
+    render() {
+      var nextProps = {};
+
+      for (var key in this.props) {
+        nextProps[key] = this.props[key];
+      }
+
+      nextProps.ref = this.setRef;
+
+      return createElement(NATIVE_COMPONENT_REGISTRY_NAME, nextProps);
     }
-
-    nextProps.ref = this.setRef;
-
-    return createElement('QtQuick.Controls.${componentName}', nextProps);
   }
-}
 
-`;
+  `;
+};

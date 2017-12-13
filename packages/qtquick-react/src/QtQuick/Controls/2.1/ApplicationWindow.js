@@ -1,23 +1,25 @@
 
-import { registerNativeComponentClass } from 'qml-renderer';
-import { createElement, Component } from 'react';
+  import { registerNativeComponentClass } from 'qml-renderer';
+  import { createElement, Component } from 'react';
 
-const qmlContent = "import QtQuick.Controls 2.1\nApplicationWindow {}";
+  const qmlContent = "import QtQuick.Controls 2.1\nApplicationWindow {}";
+  const NATIVE_COMPONENT_REGISTRY_NAME = 'QtQuick.Controls.ApplicationWindow_2.1'
 
-registerNativeComponentClass('QtQuick.Controls.ApplicationWindow', qmlContent);
+  registerNativeComponentClass(NATIVE_COMPONENT_REGISTRY_NAME, qmlContent);
 
-export default class ApplicationWindow extends Component {
-  setRef = qmlObject => (this.qmlObject = qmlObject);
-  render() {
-    var nextProps = {};
+  export default class ApplicationWindow extends Component {
+    setRef = qmlObject => (this.qmlObject = qmlObject);
+    render() {
+      var nextProps = {};
 
-    for (var key in this.props) {
-      nextProps[key] = this.props[key];
+      for (var key in this.props) {
+        nextProps[key] = this.props[key];
+      }
+
+      nextProps.ref = this.setRef;
+
+      return createElement(NATIVE_COMPONENT_REGISTRY_NAME, nextProps);
     }
-
-    nextProps.ref = this.setRef;
-
-    return createElement('QtQuick.Controls.ApplicationWindow', nextProps);
   }
-}
 
+  
