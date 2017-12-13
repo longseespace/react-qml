@@ -1,6 +1,6 @@
 {
   "name": "qix",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "QML development with modern ES6 javascript",
   "main": "index.js",
   "scripts": {
@@ -24,9 +24,6 @@
     "url": "https://github.com/longseespace/qix/issues"
   },
   "homepage": "https://github.com/longseespace/qix#readme",
-  "dependencies": {
-
-  },
   "devDependencies": {
     "babel-jest": "^21.2.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
