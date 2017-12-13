@@ -3,6 +3,7 @@
   "version": "0.2.0",
   "description": "React QML Renderer",
   "main": "dist/index.js",
+  "files": ["dist"],
   "scripts": {
     "build": "babel ./src -d ./dist",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,12 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/longseespace/qix.git"
   },
-  "keywords": [
-    "QML",
-    "React",
-    "Renderer",
-    "qix"
-  ],
+  "keywords": ["QML", "React", "Renderer", "qix"],
   "author": "Long Nguyen <long@podzim.co>",
   "license": "MIT",
   "bugs": {
