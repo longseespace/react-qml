@@ -1,12 +1,12 @@
 
 import { registerNativeComponentClass } from 'qml-renderer';
-import { Component } from 'react';
+import { createElement, Component } from 'react';
 
 const qmlContent = "import QtQuick.Controls 2.3\nLabel {}";
 
 registerNativeComponentClass('QtQuick.Controls.Label', qmlContent);
 
-export default class Label extends React.Component {
+export default class Label extends Component {
   setRef = qmlObject => (this.qmlObject = qmlObject);
   render() {
     var nextProps = {};
@@ -17,7 +17,7 @@ export default class Label extends React.Component {
 
     nextProps.ref = this.setRef;
 
-    return React.createElement('QtQuick.Controls.Label', nextProps);
+    return createElement('QtQuick.Controls.Label', nextProps);
   }
 }
 

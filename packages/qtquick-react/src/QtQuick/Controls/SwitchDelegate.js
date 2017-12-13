@@ -1,12 +1,12 @@
 
 import { registerNativeComponentClass } from 'qml-renderer';
-import { Component } from 'react';
+import { createElement, Component } from 'react';
 
 const qmlContent = "import QtQuick.Controls 2.3\nSwitchDelegate {}";
 
 registerNativeComponentClass('QtQuick.Controls.SwitchDelegate', qmlContent);
 
-export default class SwitchDelegate extends React.Component {
+export default class SwitchDelegate extends Component {
   setRef = qmlObject => (this.qmlObject = qmlObject);
   render() {
     var nextProps = {};
@@ -17,7 +17,7 @@ export default class SwitchDelegate extends React.Component {
 
     nextProps.ref = this.setRef;
 
-    return React.createElement('QtQuick.Controls.SwitchDelegate', nextProps);
+    return createElement('QtQuick.Controls.SwitchDelegate', nextProps);
   }
 }
 

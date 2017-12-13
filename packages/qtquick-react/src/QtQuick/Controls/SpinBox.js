@@ -1,12 +1,12 @@
 
 import { registerNativeComponentClass } from 'qml-renderer';
-import { Component } from 'react';
+import { createElement, Component } from 'react';
 
 const qmlContent = "import QtQuick.Controls 2.3\nSpinBox {}";
 
 registerNativeComponentClass('QtQuick.Controls.SpinBox', qmlContent);
 
-export default class SpinBox extends React.Component {
+export default class SpinBox extends Component {
   setRef = qmlObject => (this.qmlObject = qmlObject);
   render() {
     var nextProps = {};
@@ -17,7 +17,7 @@ export default class SpinBox extends React.Component {
 
     nextProps.ref = this.setRef;
 
-    return React.createElement('QtQuick.Controls.SpinBox', nextProps);
+    return createElement('QtQuick.Controls.SpinBox', nextProps);
   }
 }
 

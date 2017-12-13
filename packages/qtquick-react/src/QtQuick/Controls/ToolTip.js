@@ -1,12 +1,12 @@
 
 import { registerNativeComponentClass } from 'qml-renderer';
-import { Component } from 'react';
+import { createElement, Component } from 'react';
 
 const qmlContent = "import QtQuick.Controls 2.3\nToolTip {}";
 
 registerNativeComponentClass('QtQuick.Controls.ToolTip', qmlContent);
 
-export default class ToolTip extends React.Component {
+export default class ToolTip extends Component {
   setRef = qmlObject => (this.qmlObject = qmlObject);
   render() {
     var nextProps = {};
@@ -17,7 +17,7 @@ export default class ToolTip extends React.Component {
 
     nextProps.ref = this.setRef;
 
-    return React.createElement('QtQuick.Controls.ToolTip', nextProps);
+    return createElement('QtQuick.Controls.ToolTip', nextProps);
   }
 }
 

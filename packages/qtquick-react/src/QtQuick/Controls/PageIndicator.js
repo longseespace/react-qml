@@ -1,12 +1,12 @@
 
 import { registerNativeComponentClass } from 'qml-renderer';
-import { Component } from 'react';
+import { createElement, Component } from 'react';
 
 const qmlContent = "import QtQuick.Controls 2.3\nPageIndicator {}";
 
 registerNativeComponentClass('QtQuick.Controls.PageIndicator', qmlContent);
 
-export default class PageIndicator extends React.Component {
+export default class PageIndicator extends Component {
   setRef = qmlObject => (this.qmlObject = qmlObject);
   render() {
     var nextProps = {};
@@ -17,7 +17,7 @@ export default class PageIndicator extends React.Component {
 
     nextProps.ref = this.setRef;
 
-    return React.createElement('QtQuick.Controls.PageIndicator', nextProps);
+    return createElement('QtQuick.Controls.PageIndicator', nextProps);
   }
 }
 

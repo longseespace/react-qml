@@ -1,12 +1,12 @@
 
 import { registerNativeComponentClass } from 'qml-renderer';
-import { Component } from 'react';
+import { createElement, Component } from 'react';
 
 const qmlContent = "import QtQuick.Controls 2.3\nPane {}";
 
 registerNativeComponentClass('QtQuick.Controls.Pane', qmlContent);
 
-export default class Pane extends React.Component {
+export default class Pane extends Component {
   setRef = qmlObject => (this.qmlObject = qmlObject);
   render() {
     var nextProps = {};
@@ -17,7 +17,7 @@ export default class Pane extends React.Component {
 
     nextProps.ref = this.setRef;
 
-    return React.createElement('QtQuick.Controls.Pane', nextProps);
+    return createElement('QtQuick.Controls.Pane', nextProps);
   }
 }
 

@@ -1,12 +1,12 @@
 module.exports = (componentName, qmlContent) => `
 import { registerNativeComponentClass } from 'qml-renderer';
-import { Component } from 'react';
+import { createElement, Component } from 'react';
 
 const qmlContent = ${JSON.stringify(qmlContent)};
 
 registerNativeComponentClass('QtQuick.Controls.${componentName}', qmlContent);
 
-export default class ${componentName} extends React.Component {
+export default class ${componentName} extends Component {
   setRef = qmlObject => (this.qmlObject = qmlObject);
   render() {
     var nextProps = {};
@@ -17,7 +17,7 @@ export default class ${componentName} extends React.Component {
 
     nextProps.ref = this.setRef;
 
-    return React.createElement('QtQuick.Controls.${componentName}', nextProps);
+    return createElement('QtQuick.Controls.${componentName}', nextProps);
   }
 }
 
