@@ -1,5 +1,5 @@
 
-import { registerNativeComponentClass } from 'react-qml-render';
+import { registerNativeComponentClass } from 'qml-render';
 import { Component } from 'react';
 
 const qmlContent = "import QtQuick.Controls 2.3\nAbstractButton {}";
