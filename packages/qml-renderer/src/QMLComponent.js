@@ -1,4 +1,6 @@
 const isEventRegex = /^on([A-Z][a-zA-Z]+)$/;
+const entries = require('lodash/entries')
+const keys = require('lodash/keys')
 
 function listenTo(qmlElement, eventName, value, lastValue) {
   eventName = eventName[0].toLowerCase() + eventName.substring(1);
@@ -19,12 +21,12 @@ function listenTo(qmlElement, eventName, value, lastValue) {
 export function setInitialProps(qmlElement, nextProps) {
   console.log('setInitialProps');
   console.log('  qmlElement', qmlElement);
-  console.log(
+  console.warn(
     '  nextProps',
     require('util').inspect(nextProps, { depth: null, colors: true })
   );
 
-  Object.entries(nextProps).forEach(([propKey, propValue]) => {
+  entries(nextProps).forEach(([propKey, propValue]) => {
     if (propValue == null || propKey === '__qmlRawContent') {
       // ignore
       return;
@@ -44,7 +46,7 @@ export function setInitialProps(qmlElement, nextProps) {
 
     if (typeof propValue === 'object') {
       if (qmlElement[propKey]) {
-        Object.entries(propValue).forEach(([configKey, configValue]) => {
+        entries(propValue).forEach(([configKey, configValue]) => {
           qmlElement[propKey][configKey] = configValue;
         });
       }
@@ -63,7 +65,7 @@ export function diffProps(qmlElement, lastProps, nextProps) {
     updatePayload.push([k, v]);
   };
 
-  for (let propKey in Object.keys(lastProps)) {
+  for (let propKey in keys(lastProps)) {
     if (lastProps[propKey] == null || nextProps.hasOwnProperty(propKey)) {
       continue;
     } else if (propKey.match(isEventRegex)) {
@@ -71,7 +73,7 @@ export function diffProps(qmlElement, lastProps, nextProps) {
     }
   }
 
-  for (let [propKey, nextProp] of Object.entries(nextProps)) {
+  for (let [propKey, nextProp] of entries(nextProps)) {
     const lastProp = lastProps[propKey];
 
     if (
@@ -117,7 +119,7 @@ export function updateProps(qmlElement, updateQueue) {
 
     if (typeof propValue === 'object') {
       if (qmlElement[propKey]) {
-        Object.entries(propValue).forEach(([configKey, configValue]) => {
+        entries(propValue).forEach(([configKey, configValue]) => {
           qmlElement[propKey][configKey] = configValue;
         });
       }

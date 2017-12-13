@@ -1,6 +1,6 @@
 {
   "name": "qml-renderer",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "React QML Renderer",
   "main": "dist/index.js",
   "files": [
@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/longseespace/qix#readme",
   "dependencies": {
+    "lodash": "^4.17.4",
     "react-reconciler": "^0.7.0"
   },
   "devDependencies": {
