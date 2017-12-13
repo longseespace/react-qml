@@ -1,9 +1,9 @@
 import Reconciler from 'react-reconciler';
 import * as QMLComponent from './QMLComponent';
 
-const Registry = {}
+const Registry = {};
 
-export const registerNativeComponentClass = (name, qmlContent) {
+export const registerNativeComponentClass = (name, qmlContent) => {
   if (Registry[name]) {
     // noop
     throw new Error(`Conflicted name. ${name} is already registered`);
@@ -11,7 +11,7 @@ export const registerNativeComponentClass = (name, qmlContent) {
   }
 
   Registry[name] = qmlContent;
-}
+};
 
 function createElement(type, props, rootContainerElement) {
   console.log('createElement');
