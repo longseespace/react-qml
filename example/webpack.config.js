@@ -30,7 +30,7 @@ module.exports = {
       },
       {
         test: /\.qml/,
-        use: 'qml-loader',
+        loader: 'babel-loader!qml-loader',
       },
     ],
   },
