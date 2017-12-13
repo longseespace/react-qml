@@ -1,6 +1,8 @@
 import * as React from 'react';
 
-import Dialog from './dialog.qml';
+import Frame from 'qtquick-react/QtQuick/Controls/2.2/Frame';
+import Button20 from 'qtquick-react/QtQuick/Controls/2.0/Button';
+import Button22 from 'qtquick-react/QtQuick/Controls/2.2/Button';
 
 class App extends React.Component {
   constructor(props) {
@@ -21,18 +23,10 @@ class App extends React.Component {
   render() {
     const { greenVisible } = this.state;
     return (
-      <item>
-        <Dialog
-          x={300}
-          y={200}
-          width={320}
-          visible
-          onSubmit={this.onSubmit}
-          email="test@bodidata.com"
-          password="12345678"
-        />
-        <textfield placeholderText="Email" width={320} x={300} y={160} onTextEdited={this.onEmailChanged} />
-      </item>
+      <Frame>
+        <Button20 x={200} y={200} text="Click 1" />
+        <Button22 x={300} y={300} text="Click 2" />
+      </Frame>
     );
   }
 }

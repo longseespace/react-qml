@@ -960,8 +960,8 @@ camelcase@^4.1.0:
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-4.1.0.tgz#d545635be1e33c542649c69173e5de6acfae34dd"
 
 caniuse-lite@^1.0.30000780:
-  version "1.0.30000782"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000782.tgz#5b82b8c385f25348745c471ca51320afb1b7f254"
+  version "1.0.30000783"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000783.tgz#9b5499fb1b503d2345d12aa6b8612852f4276ffd"
 
 caseless@~0.12.0:
   version "0.12.0"
@@ -2796,9 +2796,9 @@ qml-loader@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/qml-loader/-/qml-loader-0.1.1.tgz#1ee1ddc2dd0d0b562187bacb47612c126ee5ae63"
 
-qml-renderer@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/qml-renderer/-/qml-renderer-0.1.1.tgz#b4091a4de10ccca7cb3ba1ce45b251595d4bcd17"
+qml-renderer@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/qml-renderer/-/qml-renderer-0.2.3.tgz#936c7ca1954b2f1ac6f2229f56880de953363dcb"
   dependencies:
     react-reconciler "^0.7.0"
 
@@ -2809,6 +2809,10 @@ qs@6.5.1:
 qs@~6.4.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.4.0.tgz#13e26d28ad6b0ffaa91312cd3bf708ed351e7233"
+
+qtquick-react@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/qtquick-react/-/qtquick-react-1.2.0.tgz#396706d2901b27a5e36587954c3bcace7abb0990"
 
 querystring-es3@^0.2.0:
   version "0.2.1"

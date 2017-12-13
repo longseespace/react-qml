@@ -31,7 +31,8 @@
     "es6-map": "^0.1.5",
     "es6-set": "^0.1.5",
     "es6-weak-map": "^2.0.2",
-    "qml-renderer": "^0.1.1",
+    "qml-renderer": "^0.2.3",
+    "qtquick-react": "^1.2.0",
     "react": "^16.2.0",
     "react-reconciler": "^0.7.0"
   }
