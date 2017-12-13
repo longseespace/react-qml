@@ -13,13 +13,6 @@ export const registerNativeComponentClass = (name, qmlContent) {
   Registry[name] = qmlContent;
 }
 
-// FIXME: only work if deps.length > 0
-const mapping = Object.entries(m).reduce((obj, [CompName, deps]) => {
-  return Object.assign(obj, {
-    [CompName.toLowerCase()]: `import ${deps.join(';import ')}; ${CompName} {}`,
-  });
-}, {});
-
 function createElement(type, props, rootContainerElement) {
   console.log('createElement');
   console.log('  type', type);
