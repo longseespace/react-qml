@@ -1,17 +1,8 @@
 import Reconciler from 'react-reconciler';
 import * as QMLComponent from './QMLComponent';
+export { registerNativeComponentClass } from './Registry';
 
-const Registry = {};
-
-export const registerNativeComponentClass = (name, qmlContent) => {
-  if (Registry[name]) {
-    // noop
-    throw new Error(`Conflicted name. ${name} is already registered`);
-    return;
-  }
-
-  Registry[name] = qmlContent;
-};
+import { Registry } from './Registry';
 
 function createElement(type, props, rootContainerElement) {
   console.log('createElement');
@@ -22,23 +13,32 @@ function createElement(type, props, rootContainerElement) {
     return Qt.createQmlObject(Registry[type], rootContainerElement, type);
   }
 
+  console.error('unknown type', type);
+
   return null;
 }
 
 export const QMLRenderer = Reconciler({
   appendInitialChild(parentInstance, child) {
     console.log('appendInitialChild');
+    // child.parent = parentInstance;
     if (parentInstance.data) {
       console.log('  appendInitialChild has children');
       parentInstance.data.push(child);
     } else {
       console.log('  appendInitialChild has no children');
-      parentInstance.document = child;
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> child', child);
+      console.log(
+        '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> parent',
+        parentInstance
+      );
+
+      // parentInstance.contentItem.data.push(child)
     }
   },
 
   createInstance(type, props, parent) {
-    console.log('createInstance');
+    console.log('createInstance', type);
     return createElement(type, props, parent);
   },
 
@@ -91,8 +91,8 @@ export const QMLRenderer = Reconciler({
     console.log('shouldSetTextContent');
     return (
       type === 'textarea' ||
-      typeof props.children === 'string' ||
-      typeof props.children === 'number' ||
+      typeof props.data === 'string' ||
+      typeof props.data === 'number' ||
       (typeof props.dangerouslySetInnerHTML === 'object' &&
         props.dangerouslySetInnerHTML !== null &&
         typeof props.dangerouslySetInnerHTML.__html === 'string')
@@ -108,14 +108,14 @@ export const QMLRenderer = Reconciler({
       console.log('appendChild');
       console.log('  parent', parentInstance);
       console.log('  child', child);
-      parentInstance.data.push(child);
+      (parentInstance.contentItem || parentInstance).data.push(child);
     },
 
     appendChildToContainer(parentInstance, child) {
       console.log('appendChildToContainer');
       console.log('  parent', parentInstance);
       console.log('  child', child);
-      parentInstance.data.push(child);
+      (parentInstance.contentItem || parentInstance).data.push(child);
     },
 
     removeChild(parentInstance, child) {

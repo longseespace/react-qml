@@ -19,29 +19,41 @@ class App extends React.Component {
       console.log('onSubmit', email, password);
     };
 
-    this.onEmailChanged = (email) => {
+    this.onEmailChanged = email => {
       console.log('onEmailChanged', email);
     };
   }
 
   render() {
-    const { greenVisible } = this.state;
+    const contentItem = (
+      <ColumnLayout objectName="ColumnLayout">
+        <ProgressBar indeterminate visible Layout={{ fillWidth: true }} />
+        {/* <ColumnLayout Layout={{ margins: 32 }} spacing={16}>
+          <Label color="red" Layout={{ fillWidth: true }} />
+          <TextField
+            placeholderText={qsTr('Email')}
+            Layout={{ fillWidth: true }}
+          />
+          <TextField
+            placeholderText={qsTr('Password')}
+            Layout={{ fillWidth: true }}
+          />
+          <Button Layout={{ fillWidth: true }} text="Login" />
+        </ColumnLayout> */}
+      </ColumnLayout>
+    );
+
     return (
-      <Item>
-        <Popup x={300} y={300} width={320} modal={false} visible padding={0}
-          contentItem={
-            <ColumnLayout>
-              <ProgressBar indeterminate visible Layout={{ fillWidth: true }} />
-              <ColumnLayout Layout={{ margins: 32 }} spacing={16}>
-                <Label color="red" Layout={{ fillWidth: true }} />
-                <TextField placeholderText={qsTr("Email")} Layout={{ fillWidth: true }}  />
-                <TextField placeholderText={qsTr("Password")} Layout={{ fillWidth: true }}  />
-                <Button Layout={{ fillWidth: true }} text="Login"  />
-              </ColumnLayout>
-            </ColumnLayout>
-          }
-        />
-      </Item>
+      <Popup
+        objectName="Popup"
+        x={300}
+        y={300}
+        width={320}
+        modal={false}
+        visible
+        padding={0}
+        children={contentItem}
+      />
     );
   }
 }

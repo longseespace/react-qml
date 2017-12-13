@@ -1,6 +1,8 @@
 const isEventRegex = /^on([A-Z][a-zA-Z]+)$/;
-const entries = require('lodash/entries')
-const keys = require('lodash/keys')
+const entries = require('lodash/entries');
+const keys = require('lodash/keys');
+
+import { Registry, registerNativeComponentClass } from './Registry';
 
 function listenTo(qmlElement, eventName, value, lastValue) {
   eventName = eventName[0].toLowerCase() + eventName.substring(1);
@@ -20,11 +22,11 @@ function listenTo(qmlElement, eventName, value, lastValue) {
 
 export function setInitialProps(qmlElement, nextProps) {
   console.log('setInitialProps');
-  console.log('  qmlElement', qmlElement);
-  console.warn(
-    '  nextProps',
-    require('util').inspect(nextProps, { depth: null, colors: true })
-  );
+  // console.log('  qmlElement', qmlElement);
+  // console.warn(
+  //   '  nextProps',
+  //   require('util').inspect(nextProps, { depth: null, colors: true })
+  // );
 
   entries(nextProps).forEach(([propKey, propValue]) => {
     if (propValue == null || propKey === '__qmlRawContent') {
@@ -32,10 +34,50 @@ export function setInitialProps(qmlElement, nextProps) {
       return;
     }
 
+    // if (typeof propValue.$$typeof === 'number') {
+    //   // qmlElement[propKey] = propValue;
+    //   console.log(require('util').inspect(propValue, { depth: null }));
+    //   const QmlReactClass = propValue.type;
+    //   let element = new QmlReactClass(propValue.props);
+    //   element = element.render();
+    //
+    //   if (!Registry[element.type]) {
+    //     throw new Error(`unregistered native component class: ${element.type}`);
+    //   }
+    //
+    //   const qmlObject = Qt.createQmlObject(
+    //     Registry[element.type],
+    //     qmlElement,
+    //     element.type
+    //   );
+    //   console.log(
+    //     'qmlObject',
+    //     require('util').inspect(qmlObject, { depth: 3, colors: true })
+    //   );
+    //
+    //   if ('push' in qmlElement[propKey]) {
+    //     console.log('push', qmlElement[propKey]);
+    //     qmlElement[propKey].length = 0;
+    //     qmlElement[propKey].push(qmlObject);
+    //   } else {
+    //     console.log('set', qmlElement[propKey]);
+    //     // qmlElement.setProperty(propKey, qmlObject);
+    //     qmlElement[propKey] = qmlObject;
+    //   }
+    //
+    //   return;
+    // }
+
     if (propKey === 'children') {
-      qmlElement.data.length = 0;
-      qmlElement.data.push(propValue);
-      return;
+      if (qmlElement.data) {
+        qmlElement.data.length = 0;
+        qmlElement.data.push(propValue);
+        return;
+      } else {
+        console.log('no data')
+        // qmlElement.contentItem.data.length = 0;
+        // qmlElement.contentItem.data.push(propValue);
+      }
     }
 
     if (propKey.match(isEventRegex)) {

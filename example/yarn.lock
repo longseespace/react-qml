@@ -2796,10 +2796,11 @@ qml-loader@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/qml-loader/-/qml-loader-0.1.1.tgz#1ee1ddc2dd0d0b562187bacb47612c126ee5ae63"
 
-qml-renderer@^0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/qml-renderer/-/qml-renderer-0.2.3.tgz#936c7ca1954b2f1ac6f2229f56880de953363dcb"
+qml-renderer@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/qml-renderer/-/qml-renderer-0.2.4.tgz#0d8fb1c925ad2b990f0dcd7747f6bad29077572a"
   dependencies:
+    lodash "^4.17.4"
     react-reconciler "^0.7.0"
 
 qs@6.5.1:
