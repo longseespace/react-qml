@@ -1,5 +1,5 @@
 module.exports = (componentName, qmlContent) => `
-import { registerNativeComponentClass } from 'qml-render';
+import { registerNativeComponentClass } from 'qml-renderer';
 import { Component } from 'react';
 
 const qmlContent = ${JSON.stringify(qmlContent)};
