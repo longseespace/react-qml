@@ -1,12 +1,21 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
-  entry: './src/app.js',
+  entry: './src/index.js',
   output: {
-    filename: 'App.build.js',
-    library: 'App',
-    path: path.resolve(__dirname, 'src'),
+    filename: 'bundle.js',
+    library: 'Bundle',
+    path: path.resolve(__dirname, 'dist'),
   },
+  devServer: {
+    contentBase: './dist',
+    // hot: true
+  },
+  plugins: [
+    // new webpack.NamedModulesPlugin(),
+    // new webpack.HotModuleReplacementPlugin()
+  ],
   resolveLoader: {
     modules: ['node_modules', path.resolve(__dirname, 'src')],
   },

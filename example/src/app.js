@@ -1,12 +1,6 @@
-import 'es6-map/implement';
-import 'es6-set/implement';
 import * as React from 'react';
 
 import Dialog from './dialog.qml';
-
-export function create() {
-  return React.createElement(App);
-}
 
 class App extends React.Component {
   constructor(props) {
@@ -42,3 +36,5 @@ class App extends React.Component {
     );
   }
 }
+
+export default App;

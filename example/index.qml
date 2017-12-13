@@ -4,8 +4,8 @@ import QtQuick.Layouts 1.1
 import QtQuick.Window 2.2
 import QtQuick.Controls.Material 2.0
 
-import "ReactQML.build.js" as ReactPkg;
-import "App.build.js" as AppPkg;
+import "dist/ReactQML.js" as ReactPkg;
+import "http://localhost:8080/bundle.js" as AppPkg;
 
 ApplicationWindow {
   visible: true
@@ -18,8 +18,7 @@ ApplicationWindow {
     id: root
 
     Component.onCompleted: {
-      var app = AppPkg.App.create();
-      ReactPkg.ReactQML.render(app, root);
+      AppPkg.Bundle.init(ReactPkg.ReactQML.render, root);
     }
   }
 }

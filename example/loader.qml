@@ -13,7 +13,7 @@ Item {
   Loader {
     id: loader
     // source: _DEBUG_MODE ? "http://127.0.0.1:44333/index.qml" : "qrc:/index.qml"
-    source: "qrc:/src/index.qml"
+    source: "qrc:/index.qml"
     anchors.fill: parent
     asynchronous: false
 
