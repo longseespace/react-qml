@@ -29,7 +29,7 @@ module.exports = {
         },
       },
       {
-        test: /\.qml/,
+        test: /\.qml$/,
         loader: 'babel-loader!qml-loader',
       },
     ],

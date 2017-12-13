@@ -8,8 +8,7 @@
     "build": "webpack --config webpack.config.js",
     "devserver": "webpack-dev-server",
     "make": "(cd ../build-Example-Desktop-Debug && make)",
-    "dev":
-      "../build-Example-Desktop-Debug/Example.app/Contents/MacOS/Example --remote-debugging-port=9222",
+    "dev": "../build-Example-Desktop-Debug/Example.app/Contents/MacOS/Example --remote-debugging-port=9222",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Long Nguyen <long@podzim.co>",
@@ -21,14 +20,18 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
+    "qml-loader": "^0.1.1",
     "webpack": "^3.10.0",
     "webpack-dev-server": "2.7.1"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.26.0",
+    "core-js": "^2.5.3",
     "es6-map": "^0.1.5",
     "es6-set": "^0.1.5",
     "es6-weak-map": "^2.0.2",
+    "qml-renderer": "^0.1.1",
     "react": "^16.2.0",
     "react-reconciler": "^0.7.0"
   }
