@@ -1,14 +1,17 @@
 import Reconciler from 'react-reconciler';
 import * as QMLComponent from './QMLComponent';
 
-const m = {
-  Button: ['QtQuick 2.0', 'QtQuick.Controls 2.0'],
-  Label: ['QtQuick 2.0', 'QtQuick.Controls 2.0'],
-  TextField: ['QtQuick 2.0', 'QtQuick.Controls 2.0'],
-  Rectangle: ['QtQuick 2.0'],
-  Popup: ['QtQuick 2.7', 'QtQuick.Controls 2.2', 'QtQuick.Layouts 1.1'],
-  Item: ['QtQuick 2.7'],
-};
+const Registry = {}
+
+export const registerNativeComponentClass = (name, qmlContent) {
+  if (Registry[name]) {
+    // noop
+    throw new Error(`Conflicted name. ${name} is already registered`);
+    return;
+  }
+
+  Registry[name] = qmlContent;
+}
 
 // FIXME: only work if deps.length > 0
 const mapping = Object.entries(m).reduce((obj, [CompName, deps]) => {
@@ -22,14 +25,8 @@ function createElement(type, props, rootContainerElement) {
   console.log('  type', type);
   console.log('  props', JSON.stringify(props));
 
-  if (mapping[type]) {
-    return Qt.createQmlObject(mapping[type], rootContainerElement, type);
-  }
-
-  if (type === 'qml') {
-    const qml = props.__qmlRawContent;
-
-    return Qt.createQmlObject(qml, rootContainerElement, type);
+  if (Registry[type]) {
+    return Qt.createQmlObject(Registry[type], rootContainerElement, type);
   }
 
   return null;
