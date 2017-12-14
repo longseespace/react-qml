@@ -1,29 +1,54 @@
-const components = require('./manifest');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
-const { flatten, flow, entries, map } = require('lodash/fp');
+const { tap, flatten, flow, entries, map, forEach } = require('lodash/fp');
 const es6ExportClass = require('./es6ExportClass.template');
 
-const writeFiles = ({ fileName, content }) => {
-  fs.writeFileSync(fileName, content);
-};
+const COMPONENTS = require('./components');
+const VERSIONS = require('./versions-mapping');
 
-const execute = flow(
+const PATCHES = require('./patches')
+
+console.time('done')
+
+flow(
   entries,
-  map(([moduleName, { versions, components }]) => {
-    const path = moduleName.split('.').join('/');
+  map(([qtVersion, moduleVersions]) => {
+    console.log(`> building components for qt ${qtVersion}`);
 
-    return versions.map(version => {
-      mkdirp.sync(`./src/${path}/${version}`);
-      return components.map(componentName => ({
-        fileName: `./src/${path}/${version}/${componentName}.js`,
-        content: es6ExportClass(componentName, moduleName, version),
-      }));
-    });
+    return flow(
+      entries,
+      forEach(([moduleName, moduleVersion]) => {
+        const { components } = COMPONENTS[moduleName];
+        console.log(
+          `> [qt ${qtVersion}]: ${moduleName} ${moduleVersion} - ${
+            components.length
+          } components`
+        );
+
+        components.forEach(componentName => {
+          const patch = PATCHES[`${moduleName}.${componentName}`] || {};
+
+          const path = moduleName.split('.').join('/');
+          mkdirp.sync(`./src/${path}/${moduleVersion}`);
+
+          const fileName = `./src/${path}/${moduleVersion}/${componentName}.js`;
+          const content = es6ExportClass({
+            componentName,
+            moduleName,
+            moduleVersion,
+            patch,
+            dependenciesVersions: VERSIONS[qtVersion],
+          });
+
+          writeFiles(fileName, content);
+        });
+      })
+    )(moduleVersions);
   }),
-  flatten,
-  flatten,
-  map(writeFiles)
-);
+)(VERSIONS);
 
-execute(components);
+console.timeEnd('done')
+
+function writeFiles(fileName, content) {
+  fs.writeFileSync(fileName, content);
+}
