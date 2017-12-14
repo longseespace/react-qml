@@ -34,50 +34,9 @@ export function setInitialProps(qmlElement, nextProps) {
       return;
     }
 
-    // if (typeof propValue.$$typeof === 'number') {
-    //   // qmlElement[propKey] = propValue;
-    //   console.log(require('util').inspect(propValue, { depth: null }));
-    //   const QmlReactClass = propValue.type;
-    //   let element = new QmlReactClass(propValue.props);
-    //   element = element.render();
-    //
-    //   if (!Registry[element.type]) {
-    //     throw new Error(`unregistered native component class: ${element.type}`);
-    //   }
-    //
-    //   const qmlObject = Qt.createQmlObject(
-    //     Registry[element.type],
-    //     qmlElement,
-    //     element.type
-    //   );
-    //   console.log(
-    //     'qmlObject',
-    //     require('util').inspect(qmlObject, { depth: 3, colors: true })
-    //   );
-    //
-    //   if ('push' in qmlElement[propKey]) {
-    //     console.log('push', qmlElement[propKey]);
-    //     qmlElement[propKey].length = 0;
-    //     qmlElement[propKey].push(qmlObject);
-    //   } else {
-    //     console.log('set', qmlElement[propKey]);
-    //     // qmlElement.setProperty(propKey, qmlObject);
-    //     qmlElement[propKey] = qmlObject;
-    //   }
-    //
-    //   return;
-    // }
 
     if (propKey === 'children') {
-      if (qmlElement.data) {
-        qmlElement.data.length = 0;
-        qmlElement.data.push(propValue);
-        return;
-      } else {
-        console.log('no data')
-        // qmlElement.contentItem.data.length = 0;
-        // qmlElement.contentItem.data.push(propValue);
-      }
+      return
     }
 
     if (propKey.match(isEventRegex)) {
