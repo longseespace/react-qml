@@ -2,7 +2,14 @@
   import { registerNativeComponentClass } from 'qml-renderer';
   import { createElement, Component } from 'react';
 
-  const qmlContent = "\nimport QtQuick.Controls 2.2\nPopup {\n  propery alias data: childItem.data;\n  Item {\n    id: childItem\n  }\n}";
+  const qmlContent = `
+import QtQuick.Controls 2.2
+Popup {
+  property alias data: childItem.data;
+  contentItem: Item {
+    id: childItem;
+  }
+}`;
 
   const NATIVE_COMPONENT_REGISTRY_NAME = 'QtQuick.Controls.Popup_2.2'
 
