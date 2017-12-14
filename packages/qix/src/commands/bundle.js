@@ -144,7 +144,7 @@ module.exports = ({
           description: 'Builds Windows bundle',
         },
       ],
-      example: 'haul bundle --platform macos',
+      example: 'qix bundle --platform macos',
     },
     {
       name: 'bundleOutput',
@@ -156,8 +156,8 @@ module.exports = ({
     },
     {
       name: 'config',
-      description: 'Path to config file, eg. webpack.haul.js',
-      default: 'webpack.haul.js',
+      description: 'Path to config file, eg. webpack.qix.js',
+      default: 'webpack.qix.js',
     },
   ],
 }: Command);

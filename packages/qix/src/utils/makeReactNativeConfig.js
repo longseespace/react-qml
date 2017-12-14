@@ -70,7 +70,7 @@ const getDefaultConfig = ({
         { parser: { requireEnsure: false } },
         {
           test: /\.js$/,
-          exclude: /node_modules\/(?!react|@expo|pretty-format|haul)/,
+          exclude: /node_modules\/(?!react|@expo|pretty-format|qix)/,
           use: [
             {
               loader: require.resolve('thread-loader'),
@@ -236,7 +236,7 @@ function makeReactNativeConfig(
 }
 
 /*
- * Takes user entries from webpack.haul.js,
+ * Takes user entries from webpack.qix.js,
  * change them to multi-point entries
  * and injects polyfills
  */
