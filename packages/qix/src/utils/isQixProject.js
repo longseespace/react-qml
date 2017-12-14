@@ -7,7 +7,7 @@
 const fs = require('fs');
 const path = require('path');
 
-module.exports = function isReactNativeProject(cwd: string) {
+module.exports = function isQixProject(cwd: string) {
   try {
     const pak = JSON.parse(
       fs.readFileSync(path.join(cwd, 'package.json')).toString()
@@ -19,7 +19,7 @@ module.exports = function isReactNativeProject(cwd: string) {
       ...(pak.peerDependencies || {}),
     };
 
-    if (deps['react-native']) {
+    if (deps.qix) {
       return true;
     }
   } catch (e) {
