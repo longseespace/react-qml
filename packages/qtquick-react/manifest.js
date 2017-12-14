@@ -37,7 +37,9 @@ const manifest = {
       'Page',
       'PageIndicator',
       'Pane',
-      'Popup',
+      ['Popup', {
+        customQml: ''
+      }],
       'ProgressBar',
       'RadioButton',
       'RadioDelegate',

@@ -21,6 +21,8 @@
     "@babel/preset-env": "^7.0.0-beta.34",
     "@babel/preset-stage-2": "^7.0.0-beta.34",
     "lodash": "^4.17.4",
-    "mkdirp": "^0.5.1"
+    "mkdirp": "^0.5.1",
+    "qml-renderer": "^0.2.4",
+    "react": "^16.2.0"
   }
 }
