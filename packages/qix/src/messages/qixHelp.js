@@ -14,7 +14,7 @@ module.exports = (commands: Array<Command>) => {
 
   ui.div(
     `
-${chalk.bold('Usage:')} haul [command] [options]
+${chalk.bold('Usage:')} qix [command] [options]
 
 ${chalk.bold('Options:')}
 
@@ -28,7 +28,7 @@ ${commands
       .join('\n')}
 
 Run ${chalk.bold(
-      'haul COMMAND --help'
+      'qix COMMAND --help'
     )} for more information on specific commands
 `
   );

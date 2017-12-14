@@ -5,4 +5,4 @@
  * @flow
  */
 
-module.exports = () => `There is already a 'webpack.haul.js'. Overwrite it?`;
+module.exports = () => `There is already a 'webpack.qix.js'. Overwrite it?`;
