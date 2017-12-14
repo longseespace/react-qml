@@ -133,7 +133,8 @@ module.exports = ({
     {
       name: 'platform',
       description: 'Platform to bundle for',
-      required: true,
+      required: false,
+      default: 'macos',
       choices: [
         {
           value: 'macos',

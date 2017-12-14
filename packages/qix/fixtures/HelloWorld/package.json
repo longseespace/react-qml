@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "qix start --dev=true --platform=macos",
-    "bundle": "qix bundle --dev=true --platform=macos --bundleOutput=qt/bundle.js"
+    "build": "qix bundle --platform=macos --bundleOutput=qt/bundle.js"
   },
   "dependencies": {
     "qix": "^0.1.1",
