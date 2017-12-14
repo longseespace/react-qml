@@ -85,6 +85,17 @@ const getDefaultConfig = ({
           ],
         },
         {
+          test: AssetResolver.test,
+          use: {
+            /**
+             * Asset loader enables asset management based on image scale
+             * This needs the AssetResolver plugin in resolver.plugins to work
+             */
+            loader: require.resolve('../loaders/assetLoader'),
+            query: { platform, root, bundle },
+          },
+        },
+        {
           test: /\.qml$/,
           loader: 'babel-loader!qml-loader',
         },
@@ -117,28 +128,28 @@ const getDefaultConfig = ({
         debug: dev,
       }),
     ]
-      // .concat(
-      //   dev
-      //     ? [
-      //         new webpack.HotModuleReplacementPlugin(),
-      //         new webpack.EvalSourceMapDevToolPlugin({
-      //           module: true,
-      //         }),
-      //         new webpack.NamedModulesPlugin(),
-      //       ]
-      //     : [
-      //         /**
-      //          * By default, sourcemaps are only generated with *.js files
-      //          * We need to use the plugin to configure *.bundle (Android, iOS - development)
-      //          * and *.jsbundle (iOS - production) to emit sourcemap
-      //          */
-      //         new webpack.SourceMapDevToolPlugin({
-      //           test: /\.(js|css|(js)?bundle)($|\?)/i,
-      //           filename: '[file].map',
-      //         }),
-      //         new webpack.optimize.ModuleConcatenationPlugin(),
-      //       ]
-      // )
+      .concat(
+        dev
+          ? [
+              new webpack.HotModuleReplacementPlugin(),
+              // new webpack.EvalSourceMapDevToolPlugin({
+              //   module: true,
+              // }),
+              new webpack.NamedModulesPlugin(),
+            ]
+          : [
+              /**
+               * By default, sourcemaps are only generated with *.js files
+               * We need to use the plugin to configure *.bundle (Android, iOS - development)
+               * and *.jsbundle (iOS - production) to emit sourcemap
+               */
+              new webpack.SourceMapDevToolPlugin({
+                test: /\.(js|css|(js)?bundle)($|\?)/i,
+                filename: '[file].map',
+              }),
+              new webpack.optimize.ModuleConcatenationPlugin(),
+            ]
+      )
       .concat(
         minify
           ? [
@@ -165,8 +176,7 @@ const getDefaultConfig = ({
               }),
             ]
           : []
-      )
-      ,
+      ),
     resolve: {
       plugins: [
         /**
