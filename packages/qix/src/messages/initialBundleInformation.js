@@ -16,8 +16,8 @@ type Params = {
 module.exports = (config: Params) => {
   const mode = config.dev ? 'development' : 'production';
   return dedent`
-    Haul is now bundling your React Native app in ${chalk.bold(mode)} mode.
-    
+    Qix is now bundling your app in ${chalk.bold(mode)} mode.
+
     Starting from:
 
     ${chalk.grey(getEntryFiles(config.entry))}

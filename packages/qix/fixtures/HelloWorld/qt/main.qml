@@ -2,7 +2,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 
-import "index.bundle.js" as JS;
+import "bundle.js" as JS;
 
 Item {
   id: root

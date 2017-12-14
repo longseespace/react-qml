@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "qix start",
-    "bundle": "qix bundle --dev=true --platform=macos"
+    "start": "qix start --dev=true --platform=macos",
+    "bundle": "qix bundle --dev=true --platform=macos --bundleOutput=qt/bundle.js"
   },
   "dependencies": {
     "qix": "^0.1.1",

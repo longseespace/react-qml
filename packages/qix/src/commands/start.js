@@ -30,7 +30,7 @@ async function start(opts: *) {
       type: 'list',
       name: 'userChoice',
       message: `Port ${opts.port} is already in use. What should we do?`,
-      choices: [`Kill process using port ${opts.port} and start Haul`, 'Quit'],
+      choices: [`Kill process using port ${opts.port} and start Qix`, 'Quit'],
     });
     if (userChoice === 'Quit') {
       process.exit();
@@ -172,27 +172,27 @@ module.exports = ({
     {
       name: 'platform',
       description: 'Platform to bundle for',
-      example: 'haul start --platform ios',
+      example: 'qix start --platform macos',
       required: true,
       choices: [
         {
-          value: 'ios',
-          description: 'Serves iOS bundle',
+          value: 'macos',
+          description: 'Serves macOS bundle',
         },
         {
-          value: 'android',
-          description: 'Serves Android bundle',
+          value: 'windows',
+          description: 'Serves Windows bundle',
         },
         {
           value: 'all',
-          description: 'Serves both platforms',
+          description: 'Serves all platforms',
         },
       ],
     },
     {
       name: 'config',
-      description: 'Path to config file, eg. webpack.haul.js',
-      default: 'webpack.haul.js',
+      description: 'Path to config file, eg. webpack.qix.js',
+      default: 'webpack.qix.js',
     },
   ],
 }: Command);

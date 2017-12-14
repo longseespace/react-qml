@@ -5,4 +5,4 @@
  * @flow
  */
 
-module.exports = () => `Haul files are already ignored`;
+module.exports = () => `Qix files are already ignored`;

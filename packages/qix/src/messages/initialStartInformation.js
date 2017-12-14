@@ -22,7 +22,7 @@ module.exports = (config: Params) => {
   return dedent`
   Ready at ${chalk.cyan(`http://localhost:${config.port}`)}
 
-  Haul is now bundling your React Native app, starting from:
+  Qix is now bundling your app, starting from:
 
   ${messages.join('\n')}
 
