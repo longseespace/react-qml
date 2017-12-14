@@ -21,13 +21,13 @@ const barOptions = {
   total: 100,
 };
 const labelOptions = {
-  android: {
+  windows: {
     color: 'green',
-    label: 'Android',
+    label: 'Windows',
   },
-  ios: {
+  macos: {
     color: 'cyan',
-    label: 'iOS',
+    label: 'macOS',
   },
 };
 

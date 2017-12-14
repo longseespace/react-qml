@@ -1,6 +1,6 @@
 <RCC>
   <qresource prefix="/">
     <file>main.qml</file>
-    <file>dist/bundle.js</file>
+    <file alias="index.bundle.js">../dist/index.macos.bundle</file>
   </qresource>
 </RCC>

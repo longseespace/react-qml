@@ -4,12 +4,15 @@
   "private": true,
   "scripts": {
     "start": "qix start",
-    "bundle": "qix bundle"
+    "bundle": "qix bundle --dev=true --platform=macos"
   },
   "dependencies": {
     "qix": "^0.1.1",
     "qml-renderer": "^0.2.4",
     "qtquick-react": "^1.4.6",
     "react": "16.0.0"
+  },
+  "devDependencies": {
+    "babel-preset-react-native": "^4.0.0"
   }
 }

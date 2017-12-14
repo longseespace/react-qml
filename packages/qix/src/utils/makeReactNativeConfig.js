@@ -11,8 +11,6 @@ const path = require('path');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const haulProgressBar = require('./haulProgressBar');
 const AssetResolver = require('../resolvers/AssetResolver');
-const HasteResolver = require('../resolvers/HasteResolver');
-const moduleResolve = require('../utils/resolveModule');
 const getBabelConfig = require('./getBabelConfig');
 
 const PLATFORMS = ['macos', 'windows'];
@@ -63,6 +61,7 @@ const getDefaultConfig = ({
     output: {
       path: path.join(root, 'dist'),
       filename: `index.${platform}.bundle`,
+      library: 'Bundle',
       publicPath: `http://localhost:${port}/`,
     },
     module: {
@@ -72,9 +71,6 @@ const getDefaultConfig = ({
           test: /\.js$/,
           exclude: /node_modules\/(?!react|@expo|pretty-format|qix)/,
           use: [
-            {
-              loader: require.resolve('thread-loader'),
-            },
             {
               loader: require.resolve('babel-loader'),
               options: Object.assign({}, getBabelConfig(root), {
@@ -89,15 +85,8 @@ const getDefaultConfig = ({
           ],
         },
         {
-          test: AssetResolver.test,
-          use: {
-            /**
-             * Asset loader enables asset management based on image scale
-             * This needs the AssetResolver plugin in resolver.plugins to work
-             */
-            loader: require.resolve('../loaders/assetLoader'),
-            query: { platform, root, bundle },
-          },
+          test: /\.qml$/,
+          loader: 'babel-loader!qml-loader',
         },
       ],
     },
@@ -128,28 +117,28 @@ const getDefaultConfig = ({
         debug: dev,
       }),
     ]
-      .concat(
-        dev
-          ? [
-              new webpack.HotModuleReplacementPlugin(),
-              new webpack.EvalSourceMapDevToolPlugin({
-                module: true,
-              }),
-              new webpack.NamedModulesPlugin(),
-            ]
-          : [
-              /**
-               * By default, sourcemaps are only generated with *.js files
-               * We need to use the plugin to configure *.bundle (Android, iOS - development)
-               * and *.jsbundle (iOS - production) to emit sourcemap
-               */
-              new webpack.SourceMapDevToolPlugin({
-                test: /\.(js|css|(js)?bundle)($|\?)/i,
-                filename: '[file].map',
-              }),
-              new webpack.optimize.ModuleConcatenationPlugin(),
-            ]
-      )
+      // .concat(
+      //   dev
+      //     ? [
+      //         new webpack.HotModuleReplacementPlugin(),
+      //         new webpack.EvalSourceMapDevToolPlugin({
+      //           module: true,
+      //         }),
+      //         new webpack.NamedModulesPlugin(),
+      //       ]
+      //     : [
+      //         /**
+      //          * By default, sourcemaps are only generated with *.js files
+      //          * We need to use the plugin to configure *.bundle (Android, iOS - development)
+      //          * and *.jsbundle (iOS - production) to emit sourcemap
+      //          */
+      //         new webpack.SourceMapDevToolPlugin({
+      //           test: /\.(js|css|(js)?bundle)($|\?)/i,
+      //           filename: '[file].map',
+      //         }),
+      //         new webpack.optimize.ModuleConcatenationPlugin(),
+      //       ]
+      // )
       .concat(
         minify
           ? [
@@ -163,29 +152,23 @@ const getDefaultConfig = ({
                 test: /\.(js|(js)?bundle)($|\?)/i,
                 sourceMap: true,
                 compress: {
-                  screw_ie8: true,
+                  screw_ie8: false,
                   warnings: false,
                 },
                 mangle: {
-                  screw_ie8: true,
+                  screw_ie8: false,
                 },
                 output: {
                   comments: false,
-                  screw_ie8: true,
+                  screw_ie8: false,
                 },
               }),
             ]
           : []
-      ),
+      )
+      ,
     resolve: {
       plugins: [
-        /**
-         * React Native uses a module system called Haste
-         * We don't support it, but need to provide a compatibility layer
-         */
-        new HasteResolver({
-          directories: [moduleResolve(root, 'react-native')],
-        }),
         /**
          * This is required by asset loader to resolve extra scales
          * It will resolve assets like image@1x.png when image.png is not present

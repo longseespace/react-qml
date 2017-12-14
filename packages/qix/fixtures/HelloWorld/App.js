@@ -1,4 +1,5 @@
 import ApplicationWindow from 'qtquick-react/QtQuick/Controls/2.2/ApplicationWindow';
+import ColumnLayout from 'qtquick-react/QtQuick/Layouts/1.0/ColumnLayout'
 import Text from 'qtquick-react/QtQuick/2.7/Text';
 import * as React from 'react';
 

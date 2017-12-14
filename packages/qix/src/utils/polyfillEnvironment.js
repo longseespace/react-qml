@@ -8,13 +8,16 @@
  */
 
 /* eslint-disable import/no-extraneous-dependencies */
+require('es6-map/implement');
+require('es6-weak-map/implement');
+require('es6-set/implement');
 require('../../vendor/polyfills/console.js')(global);
 require('../../vendor/polyfills/error-guard.js');
 require('../../vendor/polyfills/Number.es6.js');
 require('../../vendor/polyfills/String.prototype.es6.js');
 require('../../vendor/polyfills/Array.prototype.es6.js');
 require('../../vendor/polyfills/Array.es6.js');
-require('../../vendor/polyfills/Object.es6.js');
+// require('../../vendor/polyfills/Object.es6.js');
 require('../../vendor/polyfills/Object.es7.js');
 require('../../vendor/polyfills/babelHelpers.js');
 
@@ -31,7 +34,5 @@ require('../../vendor/polyfills/babelHelpers.js');
 if (!global.self) {
   global.self = global; /* eslint-disable-line */
 }
-
-require('InitializeCore'); // eslint-disable-line import/no-unresolved
 
 require('../hot/client/importScriptsPolyfill');
