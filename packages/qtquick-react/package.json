@@ -1,6 +1,6 @@
 {
   "name": "qtquick-react",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "",
   "main": "index.js",
   "files": [
@@ -10,7 +10,7 @@
     "meta-build": "node index",
     "build": "babel src -d .",
     "prebuild": "rm -rf QtQuick",
-    "prepare": "yarn build"
+    "//prepare": "yarn build"
   },
   "keywords": [],
   "author": "",
