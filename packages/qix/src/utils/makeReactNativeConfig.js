@@ -15,7 +15,7 @@ const HasteResolver = require('../resolvers/HasteResolver');
 const moduleResolve = require('../utils/resolveModule');
 const getBabelConfig = require('./getBabelConfig');
 
-const PLATFORMS = ['ios', 'android'];
+const PLATFORMS = ['macos', 'windows'];
 
 type ConfigOptions = {
   root: string,
@@ -156,8 +156,8 @@ const getDefaultConfig = ({
               new webpack.optimize.UglifyJsPlugin({
                 /**
                  * By default, uglify only minifies *.js files
-                 * We need to use the plugin to configure *.bundle (Android, iOS - development) 
-                 * and *.jsbundle (iOS - production) to get minified. 
+                 * We need to use the plugin to configure *.bundle (Android, iOS - development)
+                 * and *.jsbundle (iOS - production) to get minified.
                  * Also disable IE8 support as we don't need it.
                  */
                 test: /\.(js|(js)?bundle)($|\?)/i,

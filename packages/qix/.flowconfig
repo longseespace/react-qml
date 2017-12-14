@@ -1,6 +1,3 @@
-[version]
-0.57.2
-
 [ignore]
 .*/example
 .*/node_modules/react-native

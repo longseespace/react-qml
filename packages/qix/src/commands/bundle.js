@@ -136,19 +136,19 @@ module.exports = ({
       required: true,
       choices: [
         {
-          value: 'ios',
-          description: 'Builds iOS bundle',
+          value: 'macos',
+          description: 'Builds macOS bundle',
         },
         {
-          value: 'android',
-          description: 'Builds Android bundle',
+          value: 'windows',
+          description: 'Builds Windows bundle',
         },
       ],
-      example: 'haul bundle --platform ios',
+      example: 'haul bundle --platform macos',
     },
     {
       name: 'bundleOutput',
-      description: 'Path to use for the bundle file, eg. index.ios.bundle',
+      description: 'Path to use for the bundle file, eg. index.macos.bundle',
     },
     {
       name: 'assetsDest',
