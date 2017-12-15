@@ -1,8 +1,8 @@
-import ApplicationWindow from 'qtquick-react/QtQuick/Controls/2.2/ApplicationWindow';
-import GridLayout from 'qtquick-react/QtQuick/Layouts/1.0/GridLayout';
-import ColumnLayout from 'qtquick-react/QtQuick/Layouts/1.0/ColumnLayout';
-import Text from 'qtquick-react/QtQuick/2.7/Text';
-import Item from 'qtquick-react/QtQuick/2.7/Item';
+import ApplicationWindow from 'qt-react/QtQuick/Controls/2.2/ApplicationWindow';
+import GridLayout from 'qt-react/QtQuick/Layouts/1.0/GridLayout';
+import ColumnLayout from 'qt-react/QtQuick/Layouts/1.0/ColumnLayout';
+import Text from 'qt-react/QtQuick/2.7/Text';
+import Item from 'qt-react/QtQuick/2.7/Item';
 import * as React from 'react';
 
 class App extends React.Component {

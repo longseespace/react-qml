@@ -534,16 +534,16 @@ qix@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/qix/-/qix-0.1.1.tgz#fe0f0b6a9baf4b7adfe00233a5b6014985995a4c"
 
-qml-renderer@^0.2.4:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/qml-renderer/-/qml-renderer-0.2.4.tgz#0d8fb1c925ad2b990f0dcd7747f6bad29077572a"
+qml-react@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/qml-react/-/qml-react-2.0.0.tgz#2a3dcafd6e9aa131c60109608be514dd59e3911f"
   dependencies:
     lodash "^4.17.4"
     react-reconciler "^0.7.0"
 
-qtquick-react@^1.4.6:
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/qtquick-react/-/qtquick-react-1.4.6.tgz#d269b1e094bc3035429420782c356b8e9f9e901f"
+qt-react@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/qt-react/-/qt-react-2.0.1.tgz#d16c8ece1a2c2b539f8f4636a272f098dadd3e92"
 
 react-deep-force-update@^1.0.0:
   version "1.1.1"

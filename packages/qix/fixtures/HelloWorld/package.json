@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "qix": "^0.1.1",
-    "qml-renderer": "^0.2.4",
-    "qtquick-react": "^1.4.6",
+    "qml-react": "^2.0.0",
+    "qt-react": "^2.0.1",
     "react": "16.0.0"
   },
   "devDependencies": {
