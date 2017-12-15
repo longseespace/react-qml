@@ -1,3 +1,0 @@
-{
-  "presets": [["@babel/env", { "targets": { "browsers": ["ie 8"] } }], "@babel/stage-2"]
-}
