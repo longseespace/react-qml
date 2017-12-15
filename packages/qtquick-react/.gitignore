@@ -1,3 +1,4 @@
 /QtQuick
 /Qt
-/es6/**/*.js
+/es6/*
+!/es6/.babelrc
