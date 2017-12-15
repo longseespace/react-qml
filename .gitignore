@@ -62,3 +62,7 @@ typings/
 
 # we use yarn
 package-lock.json
+
+
+/packages/qt-quick-react
+*.app

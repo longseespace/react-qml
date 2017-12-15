@@ -10,12 +10,8 @@ ApplicationWindow {
 
   width: 1024
   height: 768
-
-  Item {
-    id: root
-
-    Component.onCompleted: {
-      AppPkg.Bundle.init(root);
-    }
+  id: root
+  Component.onCompleted: {
+    AppPkg.Bundle.init(root);
   }
 }

@@ -1,55 +1,45 @@
 import Reconciler from 'react-reconciler';
 import * as QMLComponent from './QMLComponent';
-
-const m = {
-  Button: ['QtQuick 2.0', 'QtQuick.Controls 2.0'],
-  Label: ['QtQuick 2.0', 'QtQuick.Controls 2.0'],
-  TextField: ['QtQuick 2.0', 'QtQuick.Controls 2.0'],
-  Rectangle: ['QtQuick 2.0'],
-  Popup: ['QtQuick 2.7', 'QtQuick.Controls 2.2', 'QtQuick.Layouts 1.1'],
-  Item: ['QtQuick 2.7'],
-};
-
-// FIXME: only work if deps.length > 0
-const mapping = Object.entries(m).reduce((obj, [CompName, deps]) => {
-  return Object.assign(obj, {
-    [CompName.toLowerCase()]: `import ${deps.join(';import ')}; ${CompName} {}`,
-  });
-}, {});
+export { registerNativeComponentClass } from './Registry';
+import { Registry } from './Registry';
 
 function createElement(type, props, rootContainerElement) {
   console.log('createElement');
   console.log('  type', type);
-  console.log('  props', JSON.stringify(props));
+  // console.log('  props', JSON.stringify(props));
 
-  if (mapping[type]) {
-    return Qt.createQmlObject(mapping[type], rootContainerElement, type);
+  if (Registry[type]) {
+    // return Registry[type];
+    const { qmlContent, defautlProp } = Registry[type];
+    console.log('  createQmlObject', type);
+    const obj = Qt.createQmlObject(qmlContent, rootContainerElement, type);
+
+    return obj;
+    // return {
+    //   qmlObject: obj
+    // }
   }
 
-  if (type === 'qml') {
-    const qml = props.__qmlRawContent;
-
-    return Qt.createQmlObject(qml, rootContainerElement, type);
-  }
+  console.error('------ unknown type', type);
 
   return null;
 }
 
+const children = new WeakMap();
+
 export const QMLRenderer = Reconciler({
   appendInitialChild(parentInstance, child) {
-    console.log('appendInitialChild');
-    if (parentInstance.data) {
-      console.log('  appendInitialChild has children');
-      parentInstance.data.push(child);
-    } else {
-      console.log('  appendInitialChild has no children');
-      parentInstance.document = child;
-    }
+    console.log('appendInitialChild', parentInstance, child);
+
+    // parentInstance._children = [child];
+    const childrenArray = children.get(parentInstance) || [];
+    childrenArray.push(child);
+    children.set(parentInstance, childrenArray);
   },
 
-  createInstance(type, props, parent) {
-    console.log('createInstance');
-    return createElement(type, props, parent);
+  createInstance(type, props, rootInstance) {
+    console.log('createInstance', type);
+    return createElement(type, props, rootInstance);
   },
 
   createTextInstance(text, rootContainerInstance) {
@@ -57,9 +47,29 @@ export const QMLRenderer = Reconciler({
     return getOwnerDocument(rootContainerInstance).createTextNode(text);
   },
 
-  finalizeInitialChildren(domElement, type, props, rootContainerInstance) {
-    console.log('finalizeInitialChildren');
-    QMLComponent.setInitialProps(domElement, props, rootContainerInstance);
+  finalizeInitialChildren(parent, type, props, rootContainerInstance) {
+    console.log('finalizeInitialChildren', parent);
+
+    const reactChild = children.get(parent);
+    const { defaultProp } = Registry[type];
+    console.log('  defaultProp', defaultProp);
+
+    if (reactChild) {
+      console.log('  children length', reactChild.length);
+      // console.log('  reactChild.parent', reactChild.parent);
+      if (parent[defaultProp].push) {
+        console.log('  parent accepts a list');
+        parent[defaultProp].length = 0;
+        reactChild.forEach(child => {
+          parent[defaultProp].push(child);
+        });
+      } else {
+        console.log('  parent accepts a single child');
+        parent[defaultProp] = reactChild[0];
+      }
+    }
+
+    QMLComponent.setInitialProps(parent, props, rootContainerInstance);
   },
 
   getPublicInstance(inst) {
@@ -101,8 +111,8 @@ export const QMLRenderer = Reconciler({
     console.log('shouldSetTextContent');
     return (
       type === 'textarea' ||
-      typeof props.children === 'string' ||
-      typeof props.children === 'number' ||
+      typeof props.data === 'string' ||
+      typeof props.data === 'number' ||
       (typeof props.dangerouslySetInnerHTML === 'object' &&
         props.dangerouslySetInnerHTML !== null &&
         typeof props.dangerouslySetInnerHTML.__html === 'string')
@@ -118,14 +128,14 @@ export const QMLRenderer = Reconciler({
       console.log('appendChild');
       console.log('  parent', parentInstance);
       console.log('  child', child);
-      parentInstance.data.push(child);
+      (parentInstance.contentItem || parentInstance).data.push(child);
     },
 
     appendChildToContainer(parentInstance, child) {
       console.log('appendChildToContainer');
       console.log('  parent', parentInstance);
       console.log('  child', child);
-      parentInstance.data.push(child);
+      (parentInstance.contentItem || parentInstance).data.push(child);
     },
 
     removeChild(parentInstance, child) {

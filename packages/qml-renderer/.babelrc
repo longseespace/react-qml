@@ -1,4 +1,6 @@
 {
   "presets": ["env"],
-  "plugins": [["transform-remove-console", { "exclude": ["error", "warn"] }]]
+  "plugins": [
+    ["transform-remove-console", { "exclude": ["warn", "error"] }]
+  ]
 }
