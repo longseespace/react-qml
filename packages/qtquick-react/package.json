@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "files": [
-    "QtQuick/*"
+    "QtQuick",
+    "Qt",
+    "es6"
   ],
   "scripts": {
     "meta-build": "node index",
     "build": "babel src -d .",
-    "prebuild": "rm -rf QtQuick",
-    "//prepare": "yarn build"
+    "prebuild": "rm -rf {QtQuick,Qt}",
+    "prepare": "yarn build"
   },
   "keywords": [],
   "author": "",
