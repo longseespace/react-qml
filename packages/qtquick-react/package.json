@@ -26,5 +26,9 @@
     "mkdirp": "^0.5.1",
     "qml-react": "^2.0.0",
     "react": "^16.2.0"
+  },
+  "peerDependencies": {
+    "qml-react": "^2.0.0",
+    "react": "^16"
   }
 }
