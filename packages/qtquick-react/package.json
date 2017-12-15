@@ -1,6 +1,6 @@
 {
   "name": "qt-react",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "files": [
@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "meta-build": "node index",
-    "build": "babel src -d .",
+    "build": "babel es6 -d .",
     "prebuild": "rm -rf {QtQuick,Qt}",
     "prepare": "yarn build"
   },
