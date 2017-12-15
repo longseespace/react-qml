@@ -4,12 +4,8 @@ import QtQuick.Layouts 1.2
 
 import "dist/bundle.js" as AppPkg;
 
-ApplicationWindow {
+Item {
   visible: true
-  title: qsTr("BodiData Scanner")
-
-  width: 1024
-  height: 768
   id: root
   Component.onCompleted: {
     AppPkg.Bundle.init(root);

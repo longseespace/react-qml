@@ -3,7 +3,7 @@ import 'es6-weak-map/implement';
 import 'es6-set/implement';
 
 import * as React from 'react';
-import { render } from 'qml-renderer';
+import { render } from 'qml-react';
 import App from './app';
 
 export function init(root) {
