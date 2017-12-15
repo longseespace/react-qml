@@ -14,12 +14,12 @@ type Request = {
 
 type Options = {
   test?: RegExp,
-  platform: 'ios' | 'android',
+  platform: 'macos' | 'windows',
 };
 
 type CollectOutput = {
   [key: string]: {
-    platform: 'ios' | 'android',
+    platform: 'macos' | 'windows',
     name: string,
   },
 };

@@ -2,5 +2,6 @@
   <qresource prefix="/">
     <file>main.qml</file>
     <file>bundle.js</file>
+    <file>loader.qml</file>
   </qresource>
 </RCC>

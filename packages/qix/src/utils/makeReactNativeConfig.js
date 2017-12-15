@@ -60,7 +60,7 @@ const getDefaultConfig = ({
     entry: [],
     output: {
       path: path.join(root, 'dist'),
-      filename: `index.${platform}.bundle`,
+      filename: `${platform}.bundle.js`,
       library: 'Bundle',
       publicPath: `http://localhost:${port}/`,
     },
