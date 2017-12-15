@@ -16,14 +16,13 @@ int main(int argc, char *argv[]) {
   // expose C++ classes to QML
   engine.rootContext()->setContextProperty("__platform", &platform);
 
-  // load main file
-  engine.load(QUrl(QLatin1String("qrc:/loader.qml")));
-
 // set debug mode as QML property
 #ifdef DEBUG
-  engine.rootObjects().first()->setProperty("__DEBUG__", true);
+  // load loader file
+  engine.load(QUrl(QLatin1String("qrc:/loader.qml")));
 #else
-  engine.rootObjects().first()->setProperty("__DEBUG__", false);
+  // load main file
+  engine.load(QUrl(QLatin1String("qrc:/main.qml")));
 #endif
 
   return app.exec();

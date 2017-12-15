@@ -31,7 +31,7 @@ const logger: Logger = {
   error: (...args: any[]) => section(chalk.black.bgRed(' ERROR '), ...args),
   done: (...args: any[]) => section(chalk.black.bgGreen(' DONE '), ...args),
   debug: (prefix: string, ...args: any[]) =>
-    log(chalk.cyan(prefix.toUpperCase()), ...args.map(str => chalk.grey(str))),
+    log(chalk.cyan(prefix.toUpperCase()), ...args.map(str => chalk.white(str))),
 };
 
 module.exports = logger;

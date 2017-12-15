@@ -39,5 +39,5 @@ CMakeLists.txt.user*
 
 dist/*
 *.build.js
-bundle.js
-bundle.js.map
+*bundle.js
+*bundle.js.map
