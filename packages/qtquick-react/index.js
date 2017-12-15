@@ -29,9 +29,9 @@ flow(
           const patch = PATCHES[`${moduleName}.${componentName}`] || {};
 
           const path = moduleName.split('.').join('/');
-          mkdirp.sync(`./src/${path}/${moduleVersion}`);
+          mkdirp.sync(`./es6/${path}/${moduleVersion}`);
 
-          const fileName = `./src/${path}/${moduleVersion}/${componentName}.js`;
+          const fileName = `./es6/${path}/${moduleVersion}/${componentName}.js`;
           const content = es6ExportClass({
             componentName,
             moduleName,
