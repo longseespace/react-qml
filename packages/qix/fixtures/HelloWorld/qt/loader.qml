@@ -67,7 +67,11 @@ ApplicationWindow {
         anchors.horizontalCenter: parent.horizontalCenter
 
         onClicked: {
-          liveReload = !liveReload;
+          if (liveReload) {
+            disableLiveReload();
+          } else {
+            enableLiveReload();
+          }
         }
       }
 
@@ -180,6 +184,7 @@ ApplicationWindow {
   }
 
   function liveReloadSubscribe() {
+    console.log('liveReloadSubscribe');
     request('GET', 'http://localhost:'+devServerPort+'/onchange', function(xhr) {
       if (xhr.readyState === 4) {
         if (liveReload) {
