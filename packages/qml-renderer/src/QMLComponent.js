@@ -21,22 +21,17 @@ function listenTo(qmlElement, eventName, value, lastValue) {
 }
 
 export function setInitialProps(qmlElement, nextProps) {
-  console.log('setInitialProps');
-  // console.log('  qmlElement', qmlElement);
-  // console.warn(
-  //   '  nextProps',
-  //   require('util').inspect(nextProps, { depth: null, colors: true })
-  // );
+  console.log('setInitialProps ');
+  console.log('  qmlElement', qmlElement);
+  console.debug(
+    '  nextProps',
+    require('util').inspect(nextProps, { depth: 0, colors: true })
+  );
 
   entries(nextProps).forEach(([propKey, propValue]) => {
-    if (propValue == null || propKey === '__qmlRawContent') {
+    if (propKey === 'children' || propValue == null) {
       // ignore
       return;
-    }
-
-
-    if (propKey === 'children') {
-      return
     }
 
     if (propKey.match(isEventRegex)) {
