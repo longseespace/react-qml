@@ -1,5 +1,7 @@
 import Reconciler from 'react-reconciler';
-
+import findIndex from 'lodash/findIndex';
+import without from 'lodash/without';
+import toArray from 'lodash/toArray';
 import { Registry, registerNativeComponentClass } from './Registry';
 import { diffProps, setInitialProps, updateProps } from './QMLComponent';
 import {
@@ -7,23 +9,16 @@ import {
   isElement,
   makeAttributeNode,
   makeElementNode,
+  setChildren,
+  release,
 } from './object-factory';
 
 // FIXME: remove this
-export { registerNativeComponentClass }
-
-const setChildren = (obj, key, children) => {
-  obj[key].length = 0;
-  children.forEach(child => {
-    console.debug(obj, 'push', key, child.value);
-    obj[key].push(child.value);
-  });
-};
-
+export { registerNativeComponentClass };
 
 export const QMLRenderer = Reconciler({
   createInstance(type, props, rootInstance) {
-    console.debug('createInstance ------------', type);
+    console.log('createInstance ------------', type);
 
     if (type === 'attribute') {
       const { name } = props;
@@ -39,6 +34,7 @@ export const QMLRenderer = Reconciler({
   },
 
   appendInitialChild(parent, child) {
+    console.log('appendInitialChild');
     // creating an attribute node
     if (isAttribute(parent)) {
       parent.value = child;
@@ -57,6 +53,7 @@ export const QMLRenderer = Reconciler({
   },
 
   finalizeInitialChildren(element, type, props, rootContainerInstance) {
+    console.log('finalizeInitialChildren ---', element.name);
     // attribute node doesn't need finalization
     if (isAttribute(element)) {
       return;
@@ -69,10 +66,9 @@ export const QMLRenderer = Reconciler({
       return;
     }
 
-    console.debug('finalizeInitialChildren ---', element.name);
-    console.debug('  children: ', element.children.length);
+    console.log('  children: ', element.children.length);
     element.children.forEach(child => {
-      console.debug('  -', child.name);
+      console.log('  -', child.name);
     });
 
     setChildren(element.value, element.defaultProp, element.children);
@@ -84,9 +80,8 @@ export const QMLRenderer = Reconciler({
     return getOwnerDocument(rootContainerInstance).createTextNode(text);
   },
 
-
   getPublicInstance(inst) {
-    // console.debug('getPublicInstance');
+    console.log('getPublicInstance', inst.name);
     if (!isElement(inst) && !isAttribute(inst)) {
       console.log(require('util').inspect(inst, { depth: 0, colors: true }));
       throw new Error('invalid instance');
@@ -95,7 +90,7 @@ export const QMLRenderer = Reconciler({
   },
 
   prepareForCommit() {
-    // console.log('prepareForCommit');
+    console.log('prepareForCommit');
     // noop
   },
 
@@ -105,7 +100,7 @@ export const QMLRenderer = Reconciler({
   },
 
   resetAfterCommit() {
-    // console.log('resetAfterCommit');
+    console.log('resetAfterCommit');
     // noop
   },
 
@@ -115,17 +110,17 @@ export const QMLRenderer = Reconciler({
   },
 
   getRootHostContext(instance) {
-    // console.log('getRootHostContext');
+    console.log('getRootHostContext');
     return {};
   },
 
   getChildHostContext(instance) {
-    // console.log('getChildHostContext');
+    console.log('getChildHostContext');
     return {};
   },
 
   shouldSetTextContent(type, props) {
-    // console.log('shouldSetTextContent');
+    console.log('shouldSetTextContent ---', type);
     // return (
     //   type === 'textarea' ||
     //   typeof props.data === 'string' ||
@@ -143,47 +138,67 @@ export const QMLRenderer = Reconciler({
 
   mutation: {
     appendChild(parent, child) {
-      console.debug('appendChild');
-      console.debug('  parent', parent);
-      console.debug('  child', child);
-      setChildren(parent.value, parent.defaultProp, child.value);
+      console.log('appendChild');
+      console.log('  parent', parent);
+      console.log('  child', child);
+      // setChildren(parent.value, parent.defaultProp, [child.value]);
+      parent.value[parent.defaultProp].push(child.value);
     },
 
     appendChildToContainer(containerQmlElement, topLevelChild) {
-      console.debug('appendChildToContainer');
+      console.log('appendChildToContainer');
       containerQmlElement.data.push(topLevelChild.value);
     },
 
     removeChild(parent, child) {
-      console.debug('removeChild');
-      for (var i = parent.data.length; i > 0; i--) {
-        if (child == parent.data[i]) {
-          parent.data[i].destroy();
+      console.log('removeChild ---', parent.value, child.value);
+
+      const propKey = isElement(child) ? parent.defaultProp : child.name;
+
+      console.log('  propKey', propKey);
+
+      // assuming propKey is always an array prop
+      const list = parent.value[propKey];
+
+      const index = findIndex(list, elm => elm === child.value);
+      const removingElm = list[index];
+      parent.value[propKey] = without(list, removingElm);
+
+      // TODO: move this back to pool
+      release(removingElm);
+    },
+
+    removeChildFromContainer(containerQmlElement, child) {
+      console.log(
+        'removeChildFromContainer ---',
+        containerQmlElement,
+        child.value
+      );
+      for (var i = containerQmlElement.data.length; i > 0; i--) {
+        if (child == containerQmlElement.data[i]) {
+          containerQmlElement.data[i].destroy();
           break;
         }
       }
     },
 
-    removeChildFromContainer(parentInstance, child) {
-      console.log('removeChildFromContainer');
-      for (var i = parentInstance.data.length; i > 0; i--) {
-        if (child == parentInstance.data[i]) {
-          parentInstance.data[i].destroy();
-          break;
-        }
-      }
-    },
-
-    insertBefore(parentInstance, child, beforeChild) {
+    insertBefore(parent, child, beforeChild) {
       console.log('insertBefore');
-      for (var i = parentInstance.data.length; i > 0; i--) {
-        parentInstance.data[i + 1] = parentInstance.data[i];
-        if (beforeChild == parentInstance.data[i]) {
-          parentInstance.data[i] = child;
-          child.parent = parentInstance;
-          break;
-        }
-      }
+      const propKey = isElement(child) ? parent.defaultProp : child.name;
+
+      console.log('  propKey', propKey);
+
+      // assuming propKey is always an array prop
+      const list = toArray(parent.value[propKey]);
+      const beforeChildIndex = findIndex(
+        list,
+        elem => elem === beforeChild.value
+      );
+      list.splice(beforeChild - 1, 0, child.value);
+
+      parent.value[propKey] = list;
+
+      console.log('  length aftermath', list.length);
     },
 
     commitUpdate(instance, preparedUpdateQueue) {

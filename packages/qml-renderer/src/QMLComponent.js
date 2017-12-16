@@ -1,3 +1,5 @@
+import { setChildren } from './object-factory';
+
 const isEventRegex = /^on([A-Z][a-zA-Z]+)$/;
 const entries = require('lodash/entries');
 const keys = require('lodash/keys');
@@ -69,7 +71,7 @@ export function diffProps(qmlElement, lastProps, nextProps) {
     }
   }
 
-  for (let [propKey, nextProp] of entries(nextProps)) {
+  entries(nextProps).forEach(([propKey, nextProp]) => {
     const lastProp = lastProps[propKey];
 
     if (
@@ -77,7 +79,7 @@ export function diffProps(qmlElement, lastProps, nextProps) {
       propKey === 'style' ||
       (nextProp == null && lastProp == null)
     ) {
-      continue;
+      return;
     } else if (propKey === 'children' && lastProp !== nextProp) {
       add(propKey, nextProp);
     } else if (propKey.match(isEventRegex) && lastProp !== nextProp) {
@@ -88,22 +90,37 @@ export function diffProps(qmlElement, lastProps, nextProps) {
       // filter it out using the whitelist during the commit.
       add(propKey, nextProp);
     }
-  }
+  });
 
   return updatePayload;
 }
 
-export function updateProps(qmlElement, updateQueue) {
-  for (let [propKey, propValue] of updateQueue) {
+export function updateProps(element, updateQueue) {
+  console.log(
+    'updateProps ---',
+    // require('util').inspect(element, { depth: 0, colors: true })
+  );
+
+  // console.log(
+  //   '  updateQueue',
+  //   require('util').inspect(updateQueue, { depth: 2, colors: true })
+  // );
+
+  const qmlElement = element.value;
+
+  updateQueue.forEach(([propKey, propValue]) => {
     if (propValue == null || propKey === '__qmlRawContent') {
       // ignore
       return;
     }
 
     if (propKey === 'children') {
-      qmlElement.data.length = 0;
-      qmlElement.data.push(propValue);
+      element.children = propValue;
       return;
+      // const { defaultProp } = element;
+      // console.log(require('util').inspect(propValue, { depth: 1, colors: true }));
+      // setChildren(qmlElement, defaultProp, propValue);
+      // return;
     }
 
     if (propKey.match(isEventRegex)) {
@@ -124,5 +141,5 @@ export function updateProps(qmlElement, updateQueue) {
     }
 
     qmlElement[propKey] = propValue;
-  }
+  });
 }

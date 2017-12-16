@@ -36,3 +36,16 @@ export const makeElementNode = (name, defaultProp, qmlContent, rootElem) => ({
 
 export const isElement = obj => obj.type && obj.type === ELEMENT;
 export const isAttribute = obj => obj.type && obj.type === ATTRIBUTE;
+
+export const setChildren = (obj, key, children) => {
+  obj[key].length = 0;
+  children.forEach(child => {
+    console.debug(obj, 'push', key, child.value);
+    obj[key].push(child.value);
+  });
+};
+
+
+export const release = (elem) => {
+  elem.destroy();
+}
