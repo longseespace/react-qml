@@ -2,18 +2,87 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import QtWebSockets 1.0
+import QtQuick.Window 2.2
 
 ApplicationWindow {
-  visible: true
-  width: 1
-  height: 1
-  x: 0
-  y: 0
-
-  // loader
+  // props and signals
   property int devServerPort: 8081
   property string bundleFileName: "main.qml"
+  property bool liveReload: false
+  property bool devWindowVisible: false
+  // -----------------
 
+  visible: true
+  id: devwindow
+
+  width: devWindowVisible ? 320 : 1;
+  height: devWindowVisible ? 480 : 1;
+  x: devWindowVisible ? Screen.desktopAvailableWidth - width : 0;
+  y: devWindowVisible ? (Screen.desktopAvailableHeight - height) / 2 : 0;
+
+  Popup {
+    visible: true
+    closePolicy: Popup.NoAutoClose
+    width: 300
+    x: (devwindow.width - width) / 2
+    y: (devwindow.height - height) / 2
+    modal: false
+
+    ColumnLayout {
+      anchors.fill: parent
+      Layout.margins: 32
+      spacing: 16
+
+      Button {
+        text: qsTr("Reload")
+        Layout.fillWidth: true
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        onClicked: {
+          loader.reload();
+        }
+      }
+
+      Button {
+        text: qsTr("Debug in Chrome")
+        Layout.fillWidth: true
+        anchors.horizontalCenter: parent.horizontalCenter
+      }
+
+      Button {
+        text: qsTr("Debug in Safari")
+        Layout.fillWidth: true
+        anchors.horizontalCenter: parent.horizontalCenter
+      }
+
+      Button {
+        text: qsTr("Inspect Element")
+        Layout.fillWidth: true
+        anchors.horizontalCenter: parent.horizontalCenter
+      }
+
+      Button {
+        text: liveReload ? qsTr("Disable Live Reload") : qsTr("Enable Live Reload")
+        Layout.fillWidth: true
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        onClicked: {
+          liveReload = !liveReload;
+        }
+      }
+
+      Button {
+        text: qsTr("Hide Dev Window")
+        Layout.fillWidth: true
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        onClicked: hideDevWindow()
+      }
+
+    }
+  }
+
+  // loader
   Loader {
     source: 'http://localhost:'+devServerPort+'/'+bundleFileName+'?t='+Date.now()
     id: loader
@@ -36,11 +105,26 @@ ApplicationWindow {
     }
   }
 
+  // cmd+R
   Shortcut {
     enabled: true
     sequence: StandardKey.Refresh
     context: Qt.ApplicationShortcut
     onActivated: loader.reload()
+  }
+
+  // cmd+D
+  Shortcut {
+    enabled: true
+    sequence: 'Ctrl+D'
+    context: Qt.ApplicationShortcut
+    onActivated: {
+      if (devWindowVisible) {
+        hideDevWindow();
+      } else {
+        showDevWindow();
+      }
+    }
   }
 
   // websocket client used for development
@@ -71,6 +155,26 @@ ApplicationWindow {
       ws.sendTextMessage(JSON.stringify({ id: msgId, "method": "prepareJSRuntime" }));
       msgId++;
     }
+  }
+
+  function showDevWindow() {
+    devWindowVisible = true;
+  }
+
+  function hideDevWindow() {
+    devWindowVisible = false;
+  }
+
+  // fns
+  function request(method, url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = (function(myxhr) {
+      return function() {
+        callback(myxhr);
+      }
+    })(xhr);
+    xhr.open(method, url, true);
+    xhr.send('');
   }
 
 }
