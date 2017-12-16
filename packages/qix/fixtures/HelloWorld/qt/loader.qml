@@ -102,6 +102,11 @@ ApplicationWindow {
       // restart websocket
       ws.active = false;
       ws.active = true;
+
+      // resubscribe to liveReload
+      if (liveReload) {
+        liveReloadSubscribe();
+      }
     }
   }
 
@@ -163,6 +168,25 @@ ApplicationWindow {
 
   function hideDevWindow() {
     devWindowVisible = false;
+  }
+
+  function disableLiveReload() {
+    liveReload = false;
+  }
+
+  function enableLiveReload() {
+    liveReload = true;
+    liveReloadSubscribe();
+  }
+
+  function liveReloadSubscribe() {
+    request('GET', 'http://localhost:'+devServerPort+'/onchange', function(xhr) {
+      if (xhr.readyState === 4) {
+        if (liveReload) {
+          loader.reload();
+        }
+      }
+    });
   }
 
   // fns
