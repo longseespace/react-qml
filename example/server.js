@@ -9,6 +9,7 @@ const finalhandler = require('finalhandler');
 const http = require('http');
 const path = require('path');
 const serveStatic = require('serve-static');
+const _ = require('lodash')
 
 const http_port = 44333;
 const ws_port = 44334;
@@ -65,7 +66,7 @@ const watcher = chokidar.watch(source_path, {
 
 console.log(`watching ${source_path} for changes`);
 
-watcher.on('change', function(path) {
+watcher.on('change', _.debounce(function(path) {
   console.log('change:', path);
 
   for (let client_id in clients) {
@@ -73,4 +74,4 @@ watcher.on('change', function(path) {
 
     client.send(`{ "action": "reload"}`);
   }
-});
+}, 300));

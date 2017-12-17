@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Window 2.2
 import QtWebSockets 1.0
 import Qt.labs.settings 1.0
-import QtQuick.Controls.Material 2.0
+// import QtQuick.Controls.Material 2.0
 
 ApplicationWindow {
     id: window

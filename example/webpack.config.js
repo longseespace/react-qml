@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 
+const StringReplacePlugin = require('string-replace-webpack-plugin');
+
 module.exports = {
   entry: './src/index.js',
   output: {
@@ -15,6 +17,7 @@ module.exports = {
   plugins: [
     // new webpack.NamedModulesPlugin(),
     // new webpack.HotModuleReplacementPlugin()
+    new StringReplacePlugin(),
   ],
   resolveLoader: {
     modules: ['node_modules', path.resolve(__dirname, 'src')],
@@ -31,6 +34,19 @@ module.exports = {
       {
         test: /\.qml$/,
         loader: 'babel-loader!qml-loader',
+      },
+      {
+        test: /\.js$/,
+        loader: StringReplacePlugin.replace({
+          replacements: [
+            {
+              pattern: /error.name = /gi,
+              replacement: function() {
+                return '// error.name = ';
+              },
+            },
+          ],
+        }),
       },
     ],
   },

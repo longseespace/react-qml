@@ -1,6 +1,7 @@
 import 'es6-map/implement';
 import 'es6-weak-map/implement';
 import 'es6-set/implement';
+import 'es6-symbol/implement';
 
 import * as React from 'react';
 import { render } from 'qml-react';
