@@ -12,6 +12,7 @@ require('es6-map/implement');
 require('es6-weak-map/implement');
 require('es6-set/implement');
 require('../../vendor/polyfills/console.js')(global);
+require('../../vendor/polyfills/timer.js')(global);
 require('../../vendor/polyfills/error-guard.js');
 require('../../vendor/polyfills/Number.es6.js');
 require('../../vendor/polyfills/String.prototype.es6.js');
