@@ -1,16 +1,18 @@
 import Reconciler from 'react-reconciler';
 import findIndex from 'lodash/findIndex';
-import without from 'lodash/without';
 import toArray from 'lodash/toArray';
+import without from 'lodash/without';
+
 import { Registry, registerNativeComponentClass } from './Registry';
 import { diffProps, setInitialProps, updateProps } from './QMLComponent';
 import {
+  getPrevValue,
   isAttribute,
   isElement,
   makeAttributeNode,
   makeElementNode,
-  setChildren,
   release,
+  setAttribute,
 } from './object-factory';
 
 // FIXME: remove this
@@ -35,6 +37,8 @@ export const QMLRenderer = Reconciler({
 
   appendInitialChild(parent, child) {
     console.log('appendInitialChild');
+    console.log(`  parent: ${parent.name}#${parent.id}`);
+    console.log(`  child: ${child.name}#${child.id}`);
     // creating an attribute node
     if (isAttribute(parent)) {
       parent.value = child;
@@ -43,7 +47,15 @@ export const QMLRenderer = Reconciler({
 
     // assigning an attribute node
     if (isAttribute(child)) {
-      setChildren(parent.value, child.name, child.value);
+      const prevValue = parent.value[child.name];
+
+
+      console.log(
+        '  assigning attr',
+        child.name,
+        require('util').inspect(child, { depth: 0, colors: true })
+      );
+      setAttribute(parent, child.name, child);
     }
 
     // assign a child element to its parent
@@ -53,7 +65,7 @@ export const QMLRenderer = Reconciler({
   },
 
   finalizeInitialChildren(element, type, props, rootContainerInstance) {
-    console.log('finalizeInitialChildren ---', element.name);
+    console.log('finalizeInitialChildren ---', element.name, element.id);
     // attribute node doesn't need finalization
     if (isAttribute(element)) {
       return;
@@ -71,7 +83,7 @@ export const QMLRenderer = Reconciler({
       console.log('  -', child.name);
     });
 
-    setChildren(element.value, element.defaultProp, element.children);
+    setAttribute(element, element.defaultProp, element.children);
   },
 
   createTextInstance(text, rootContainerInstance) {
@@ -83,7 +95,7 @@ export const QMLRenderer = Reconciler({
   getPublicInstance(inst) {
     console.log('getPublicInstance', inst.name);
     if (!isElement(inst) && !isAttribute(inst)) {
-      console.log(require('util').inspect(inst, { depth: 0, colors: true }));
+      console.log('invalid instance', require('util').inspect(inst, { depth: 0, colors: true }));
       throw new Error('invalid instance');
     }
     return inst.value;
@@ -115,12 +127,12 @@ export const QMLRenderer = Reconciler({
   },
 
   getChildHostContext(instance) {
-    console.log('getChildHostContext');
+    // console.log('getChildHostContext');
     return {};
   },
 
   shouldSetTextContent(type, props) {
-    console.log('shouldSetTextContent ---', type);
+    // console.log('shouldSetTextContent ---', type);
     // return (
     //   type === 'textarea' ||
     //   typeof props.data === 'string' ||
@@ -139,10 +151,11 @@ export const QMLRenderer = Reconciler({
   mutation: {
     appendChild(parent, child) {
       console.log('appendChild');
-      console.log('  parent', parent);
-      console.log('  child', child);
-      // setChildren(parent.value, parent.defaultProp, [child.value]);
-      parent.value[parent.defaultProp].push(child.value);
+      console.log('  parent', parent.id, parent.name);
+      console.log('  child', child.id, child.name);
+
+      const propKey = isElement(child) ? parent.defaultProp : child.name;
+      setAttribute(parent, propKey, child)
     },
 
     appendChildToContainer(containerQmlElement, topLevelChild) {
@@ -151,7 +164,9 @@ export const QMLRenderer = Reconciler({
     },
 
     removeChild(parent, child) {
-      console.log('removeChild ---', parent.value, child.value);
+      console.log('removeChild');
+      console.log(`  parent: ${parent.type} ${parent.name}#${parent.id}`);
+      console.log(`  child: ${child.type} ${child.name}#${child.id}`);
 
       const propKey = isElement(child) ? parent.defaultProp : child.name;
 
@@ -160,12 +175,21 @@ export const QMLRenderer = Reconciler({
       // assuming propKey is always an array prop
       const list = parent.value[propKey];
 
-      const index = findIndex(list, elm => elm === child.value);
-      const removingElm = list[index];
-      parent.value[propKey] = without(list, removingElm);
+      if (typeof list.push === 'function') {
+        const index = findIndex(list, elm => elm === child.value);
+        const removingElm = list[index];
+        parent.value[propKey] = without(list, removingElm);
 
-      // TODO: move this back to pool
-      release(removingElm);
+        // TODO: move this back to pool
+        release(removingElm);
+      } else {
+        console.log(
+          '  removing attr',
+          propKey,
+          require('util').inspect(child, { depth: 0 })
+        );
+        parent.value[propKey] = null;
+      }
     },
 
     removeChildFromContainer(containerQmlElement, child) {

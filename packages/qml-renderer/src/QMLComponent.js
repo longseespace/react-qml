@@ -96,16 +96,6 @@ export function diffProps(qmlElement, lastProps, nextProps) {
 }
 
 export function updateProps(element, updateQueue) {
-  console.log(
-    'updateProps ---',
-    // require('util').inspect(element, { depth: 0, colors: true })
-  );
-
-  // console.log(
-  //   '  updateQueue',
-  //   require('util').inspect(updateQueue, { depth: 2, colors: true })
-  // );
-
   const qmlElement = element.value;
 
   updateQueue.forEach(([propKey, propValue]) => {
