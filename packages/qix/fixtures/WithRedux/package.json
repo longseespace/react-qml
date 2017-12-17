@@ -11,6 +11,7 @@
     "qml-react": "^2.1.1",
     "qt-react": "^2.0.1",
     "react": "16.0.0",
+    "react-redux": "^5.0.6",
     "redux": "^3.7.2"
   },
   "devDependencies": {

@@ -3,6 +3,18 @@ import Text from 'qt-react/QtQuick/2.7/Text';
 import Button from 'qt-react/QtQuick/Controls/2.0/Button';
 import * as React from 'react';
 
+import { connect } from 'react-redux';
+
+const connectToRedux = connect(
+  state => ({
+    value: state
+  }),
+  {
+    onIncrement: () => ({ type: 'INCREMENT' }),
+    onDecrement: () => ({ type: 'DECREMENT' }),
+  }
+);
+
 class Counter extends React.Component {
   constructor(props) {
     super(props);
@@ -39,4 +51,4 @@ class Counter extends React.Component {
   }
 }
 
-export default Counter;
+export default connectToRedux(Counter);
