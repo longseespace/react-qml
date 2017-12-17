@@ -12,6 +12,7 @@ Item {
   property string bundleFileName: "macos.bundle.js"
   property bool liveReload: false
   property bool hotReload: false
+  property bool debugJs: false
   property alias devWindowVisible: devwindow.visible
   // -----------------
 
@@ -96,11 +97,17 @@ Item {
         }
 
         Button {
-          text: qsTr("Launch Debug DevTools")
+          text: debugJs ? qsTr("Disable JS Debugging") : qsTr("Debug JS Remotely")
           Layout.fillWidth: true
           anchors.horizontalCenter: parent.horizontalCenter
 
-          onClicked: launchJsDevTools();
+          onClicked: {
+            if (debugJs) {
+              disableDebugging();
+            } else {
+              enableDebugging();
+            }
+          }
         }
 
         Button {
@@ -147,7 +154,7 @@ Item {
 
       id: ws
       url: 'ws://localhost:'+devServerPort+'/debugger-proxy?role=client'
-      active: true
+      active: false
 
       onStatusChanged: {
         if (status === WebSocket.Error) {
@@ -187,7 +194,7 @@ Item {
 
       id: hotws
       url: 'ws://localhost:'+devServerPort+'/hot'
-      active: false
+      active: hotReload
 
       onStatusChanged: {
         if (status === WebSocket.Error) {
@@ -229,12 +236,23 @@ Item {
 
   function disableHotReload() {
     hotReload = false;
-    hotws.active = false;
   }
 
   function enableHotReload() {
     hotReload = true;
-    hotws.active = true;
+  }
+
+  function disableDebugging() {
+    debugJs = false;
+    ws.active = false;
+  }
+
+  function enableDebugging() {
+    debugJs = true;
+
+    request('GET', 'http://localhost:'+devServerPort+'/launch-js-devtools', function() {
+      ws.active = true;
+    });
   }
 
   function liveReloadSubscribe() {
@@ -246,10 +264,6 @@ Item {
         }
       }
     });
-  }
-
-  function launchJsDevTools() {
-    request('GET', 'http://localhost:'+devServerPort+'/launch-js-devtools');
   }
 
   function request(method, url, callback) {
