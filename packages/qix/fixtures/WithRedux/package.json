@@ -10,7 +10,8 @@
     "qix": "^0.1.1",
     "qml-react": "^2.0.0",
     "qt-react": "^2.0.1",
-    "react": "16.0.0"
+    "react": "16.0.0",
+    "redux": "^3.7.2"
   },
   "devDependencies": {
     "babel-preset-react-native": "^4.0.0"
