@@ -119,7 +119,7 @@ const getDefaultConfig = ({
          */
         'process.env': {
           NODE_ENV: dev ? '"development"' : '"production"',
-          DEV_SERVER_ORIGIN: JSON.stringify(`http://localhost:${port}`),
+          DEV_SERVER_ORIGIN: JSON.stringify(`ws://localhost:${port}`),
         },
         __DEV__: dev,
       }),

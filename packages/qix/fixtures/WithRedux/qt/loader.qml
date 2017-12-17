@@ -30,13 +30,15 @@ Item {
       source = 'http://localhost:'+devServerPort+'/'+qmlFileName+'?t='+Date.now()
 
       console.log("application reload", source);
-      
+
+      // restart websocket
+      ws.active = false;
+      ws.active = true;
+
       // resubscribe to liveReload
       if (liveReload) {
         liveReloadSubscribe();
       }
-
-      ws.executeApplicationScript();
     }
   }
 

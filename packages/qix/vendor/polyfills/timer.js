@@ -1,7 +1,3 @@
-/**
- * js-timeout-polyfill
- * @see https://blogs.oracle.com/nashorn/entry/setinterval_and_settimeout_javascript_functions
- */
 function setupTimer(global) {
     'use strict';
 

@@ -1,4 +1,4 @@
-import 'qix/hot';
+// import 'qix/hot';
 import { createStore } from 'redux';
 import * as React from 'react';
 import { render } from 'qml-react';
