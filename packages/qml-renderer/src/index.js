@@ -1,80 +1,104 @@
 import Reconciler from 'react-reconciler';
-import * as QMLComponent from './QMLComponent';
-export { registerNativeComponentClass } from './Registry';
-import { Registry } from './Registry';
+import findIndex from 'lodash/findIndex';
+import toArray from 'lodash/toArray';
+import without from 'lodash/without';
 
-function createElement(type, props, rootContainerElement) {
-  console.log('createElement');
-  console.log('  type', type);
-  // console.log('  props', JSON.stringify(props));
+import { Registry, registerNativeComponentClass } from './Registry';
+import { diffProps, setInitialProps, updateProps } from './QMLComponent';
+import {
+  getPrevValue,
+  isAttribute,
+  isElement,
+  makeAttributeNode,
+  makeElementNode,
+  release,
+  setAttribute,
+} from './object-factory';
 
-  if (Registry[type]) {
-    // return Registry[type];
-    const { qmlContent, defautlProp } = Registry[type];
-    console.log('  createQmlObject', type);
-    const obj = Qt.createQmlObject(qmlContent, rootContainerElement, type);
-
-    return obj;
-    // return {
-    //   qmlObject: obj
-    // }
-  }
-
-  console.error('------ unknown type', type);
-
-  return null;
-}
-
-const children = new WeakMap();
+// FIXME: remove this
+export { registerNativeComponentClass };
 
 export const QMLRenderer = Reconciler({
-  appendInitialChild(parentInstance, child) {
-    console.log('appendInitialChild', parentInstance, child);
+  createInstance(type, props, rootInstance) {
+    console.log('createInstance ------------', type);
 
-    // parentInstance._children = [child];
-    const childrenArray = children.get(parentInstance) || [];
-    childrenArray.push(child);
-    children.set(parentInstance, childrenArray);
+    if (type === 'attribute') {
+      const { name } = props;
+      return makeAttributeNode(name);
+    }
+
+    if (Registry[type]) {
+      const { qmlContent, defaultProp } = Registry[type];
+      return makeElementNode(type, defaultProp, qmlContent, rootInstance);
+    }
+
+    throw new Error(`unknown type ${type}`);
   },
 
-  createInstance(type, props, rootInstance) {
-    console.log('createInstance', type);
-    return createElement(type, props, rootInstance);
+  appendInitialChild(parent, child) {
+    console.log('appendInitialChild');
+    console.log(`  parent: ${parent.name}#${parent.id}`);
+    console.log(`  child: ${child.name}#${child.id}`);
+    // creating an attribute node
+    if (isAttribute(parent)) {
+      parent.value = child;
+      return;
+    }
+
+    // assigning an attribute node
+    if (isAttribute(child)) {
+      const prevValue = parent.value[child.name];
+
+
+      console.log(
+        '  assigning attr',
+        child.name,
+        require('util').inspect(child, { depth: 0, colors: true })
+      );
+      setAttribute(parent, child.name, child);
+    }
+
+    // assign a child element to its parent
+    // at this point we're only assign a child node to a parent node
+    // notice that node.value is the actual QML Object
+    parent.children.push(child);
+  },
+
+  finalizeInitialChildren(element, type, props, rootContainerInstance) {
+    console.log('finalizeInitialChildren ---', element.name, element.id);
+    // attribute node doesn't need finalization
+    if (isAttribute(element)) {
+      return;
+    }
+
+    setInitialProps(element.value, props);
+
+    // child-less elements don't need finalization as well
+    if (!element.children || element.children.length === 0) {
+      return;
+    }
+
+    console.log('  children: ', element.children.length);
+    element.children.forEach(child => {
+      console.log('  -', child.name);
+    });
+
+    setAttribute(element, element.defaultProp, element.children);
   },
 
   createTextInstance(text, rootContainerInstance) {
     console.log('createTextInstance');
+    // TODO
     return getOwnerDocument(rootContainerInstance).createTextNode(text);
   },
 
-  finalizeInitialChildren(parent, type, props, rootContainerInstance) {
-    console.log('finalizeInitialChildren', parent);
-
-    const reactChild = children.get(parent);
-    const { defaultProp } = Registry[type];
-    console.log('  defaultProp', defaultProp);
-
-    if (reactChild) {
-      console.log('  children length', reactChild.length);
-      // console.log('  reactChild.parent', reactChild.parent);
-      if (parent[defaultProp].push) {
-        console.log('  parent accepts a list');
-        parent[defaultProp].length = 0;
-        reactChild.forEach(child => {
-          parent[defaultProp].push(child);
-        });
-      } else {
-        console.log('  parent accepts a single child');
-        parent[defaultProp] = reactChild[0];
-      }
-    }
-
-    QMLComponent.setInitialProps(parent, props, rootContainerInstance);
-  },
-
   getPublicInstance(inst) {
-    console.log('getPublicInstance');
-    return inst;
+    console.log('getPublicInstance', inst.name);
+    if (!isElement(inst) && !isAttribute(inst)) {
+      console.log('invalid instance', require('util').inspect(inst, { depth: 0, colors: true }));
+      throw new Error('invalid instance');
+    }
+    return inst.value;
   },
 
   prepareForCommit() {
@@ -84,7 +108,7 @@ export const QMLRenderer = Reconciler({
 
   prepareUpdate(domElement, type, oldProps, newProps) {
     console.log('prepareUpdate');
-    return QMLComponent.diffProps(domElement, oldProps, newProps);
+    return diffProps(domElement.value, oldProps, newProps);
   },
 
   resetAfterCommit() {
@@ -103,20 +127,21 @@ export const QMLRenderer = Reconciler({
   },
 
   getChildHostContext(instance) {
-    console.log('getChildHostContext');
+    // console.log('getChildHostContext');
     return {};
   },
 
   shouldSetTextContent(type, props) {
-    console.log('shouldSetTextContent');
-    return (
-      type === 'textarea' ||
-      typeof props.data === 'string' ||
-      typeof props.data === 'number' ||
-      (typeof props.dangerouslySetInnerHTML === 'object' &&
-        props.dangerouslySetInnerHTML !== null &&
-        typeof props.dangerouslySetInnerHTML.__html === 'string')
-    );
+    // console.log('shouldSetTextContent ---', type);
+    // return (
+    //   type === 'textarea' ||
+    //   typeof props.data === 'string' ||
+    //   typeof props.data === 'number' ||
+    //   (typeof props.dangerouslySetInnerHTML === 'object' &&
+    //     props.dangerouslySetInnerHTML !== null &&
+    //     typeof props.dangerouslySetInnerHTML.__html === 'string')
+    // );
+    return false;
   },
 
   now: () => {},
@@ -124,55 +149,85 @@ export const QMLRenderer = Reconciler({
   useSyncScheduling: true,
 
   mutation: {
-    appendChild(parentInstance, child) {
+    appendChild(parent, child) {
       console.log('appendChild');
-      console.log('  parent', parentInstance);
-      console.log('  child', child);
-      (parentInstance.contentItem || parentInstance).data.push(child);
+      console.log('  parent', parent.id, parent.name);
+      console.log('  child', child.id, child.name);
+
+      const propKey = isElement(child) ? parent.defaultProp : child.name;
+      setAttribute(parent, propKey, child)
     },
 
-    appendChildToContainer(parentInstance, child) {
+    appendChildToContainer(containerQmlElement, topLevelChild) {
       console.log('appendChildToContainer');
-      console.log('  parent', parentInstance);
-      console.log('  child', child);
-      (parentInstance.contentItem || parentInstance).data.push(child);
+      containerQmlElement.data.push(topLevelChild.value);
     },
 
-    removeChild(parentInstance, child) {
+    removeChild(parent, child) {
       console.log('removeChild');
-      for (var i = parentInstance.data.length; i > 0; i--) {
-        if (child == parentInstance.data[i]) {
-          parentInstance.data[i].destroy();
+      console.log(`  parent: ${parent.type} ${parent.name}#${parent.id}`);
+      console.log(`  child: ${child.type} ${child.name}#${child.id}`);
+
+      const propKey = isElement(child) ? parent.defaultProp : child.name;
+
+      console.log('  propKey', propKey);
+
+      // assuming propKey is always an array prop
+      const list = parent.value[propKey];
+
+      if (typeof list.push === 'function') {
+        const index = findIndex(list, elm => elm === child.value);
+        const removingElm = list[index];
+        parent.value[propKey] = without(list, removingElm);
+
+        // TODO: move this back to pool
+        release(removingElm);
+      } else {
+        console.log(
+          '  removing attr',
+          propKey,
+          require('util').inspect(child, { depth: 0 })
+        );
+        parent.value[propKey] = null;
+      }
+    },
+
+    removeChildFromContainer(containerQmlElement, child) {
+      console.log(
+        'removeChildFromContainer ---',
+        containerQmlElement,
+        child.value
+      );
+      for (var i = containerQmlElement.data.length; i > 0; i--) {
+        if (child == containerQmlElement.data[i]) {
+          containerQmlElement.data[i].destroy();
           break;
         }
       }
     },
 
-    removeChildFromContainer(parentInstance, child) {
-      console.log('removeChildFromContainer');
-      for (var i = parentInstance.data.length; i > 0; i--) {
-        if (child == parentInstance.data[i]) {
-          parentInstance.data[i].destroy();
-          break;
-        }
-      }
-    },
-
-    insertBefore(parentInstance, child, beforeChild) {
+    insertBefore(parent, child, beforeChild) {
       console.log('insertBefore');
-      for (var i = parentInstance.data.length; i > 0; i--) {
-        parentInstance.data[i + 1] = parentInstance.data[i];
-        if (beforeChild == parentInstance.data[i]) {
-          parentInstance.data[i] = child;
-          child.parent = parentInstance;
-          break;
-        }
-      }
+      const propKey = isElement(child) ? parent.defaultProp : child.name;
+
+      console.log('  propKey', propKey);
+
+      // assuming propKey is always an array prop
+      const list = toArray(parent.value[propKey]);
+      const beforeChildIndex = findIndex(
+        list,
+        elem => elem === beforeChild.value
+      );
+      list.splice(beforeChild - 1, 0, child.value);
+
+      parent.value[propKey] = list;
+
+      console.log('  length aftermath', list.length);
     },
 
     commitUpdate(instance, preparedUpdateQueue) {
       console.log('commitUpdate');
-      QMLComponent.updateProps(instance, preparedUpdateQueue);
+      updateProps(instance, preparedUpdateQueue);
     },
 
     commitMount(instance, updatePayload, type, oldProps, newProps) {
@@ -192,12 +247,9 @@ export const QMLRenderer = Reconciler({
   },
 });
 
-let ContainerMap = new WeakMap();
-export function render(reactElements, domContainer) {
-  const container = QMLRenderer.createContainer(domContainer);
+export function render(reactElements, qmlContainer) {
+  const container = QMLRenderer.createContainer(qmlContainer);
   const root = new Root(container, QMLRenderer);
-
-  ContainerMap.set(domContainer, root);
 
   root.render(reactElements);
 }

@@ -7,8 +7,7 @@
     "build_lib": "webpack --config lib.webpack.js",
     "build": "webpack --config webpack.config.js",
     "devserver": "webpack-dev-server",
-    "make": "(cd ../build-Example-Desktop-Debug && make)",
-    "dev": "../build-Example-Desktop-Debug/Example.app/Contents/MacOS/Example --remote-debugging-port=9222",
+    "dev": "Example.app/Contents/MacOS/Example --remote-debugging-port=9222",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Long Nguyen <long@podzim.co>",
@@ -20,9 +19,14 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
+    "chokidar": "^1.7.0",
+    "finalhandler": "^1.1.0",
     "qml-loader": "^0.1.1",
+    "serve-static": "^1.13.1",
+    "string-replace-webpack-plugin": "^0.1.3",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "2.7.1"
+    "webpack-dev-server": "2.7.1",
+    "ws": "^3.3.2"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
@@ -30,9 +34,10 @@
     "core-js": "^2.5.3",
     "es6-map": "^0.1.5",
     "es6-set": "^0.1.5",
+    "es6-symbol": "^3.1.1",
     "es6-weak-map": "^2.0.2",
-    "qml-renderer": "^0.2.4",
-    "qtquick-react": "^1.4.2",
+    "qml-react": "^2.0.0",
+    "qt-react": "^2.1.0",
     "react": "^16.2.0",
     "react-reconciler": "^0.7.0"
   }
