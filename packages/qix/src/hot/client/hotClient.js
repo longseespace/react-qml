@@ -53,14 +53,12 @@ function processPayload(payload, { logger, reporter, ...opts }) {
   switch (payload.action) {
     case 'building':
       logger.log(
-        `[Haul HMR] Bundle ${payload.name
-          ? `'${payload.name}' `
-          : ''}rebuilding`
+        `[HMR] Bundle ${payload.name ? `'${payload.name}' ` : ''}rebuilding`
       );
       break;
     case 'built':
       logger.log(
-        `[Haul HMR] Bundle ${payload.name
+        `[HMR] Bundle ${payload.name
           ? `'${payload.name}' `
           : ''}rebuilt in ${payload.time}ms`
       );
@@ -101,29 +99,27 @@ module.exports = function connect(options: Object) {
 
   ws.onopen = () => {
     logger.log(
-      '[Haul HMR] Client connected, however until you `Enable Hot Reloading`, ' +
+      '[HMR] Client connected, however until you `Enable Hot Reloading`, ' +
         'you will not get any updates'
     );
   };
 
   ws.onerror = error => {
     logger.error(
-      `[Haul HMR] Client could not connect to the server ${opts.path}`,
+      `[HMR] Client could not connect to the server ${opts.path}`,
       error
     );
   };
 
   ws.onmessage = (message: MessageEvent) => {
     if (typeof message.data !== 'string') {
-      throw new Error(
-        `[Haul HMR] Data from websocker#onmessage must be a string`
-      );
+      throw new Error(`[HMR] Data from websocker#onmessage must be a string`);
     }
     const payload = JSON.parse(message.data);
     try {
       processPayload(payload, { logger, ...opts });
     } catch (error) {
-      logger.warn(`[Haul HMR] Invalid message: ${payload}`, error);
+      logger.warn(`[HMR] Invalid message: ${payload}`, error);
     }
   };
 };

@@ -4,12 +4,29 @@ import * as React from 'react';
 
 import Counter from './Counter';
 
-const App = ({ store }) => (
-  <Provider store={store}>
-    <ApplicationWindow title="WithRedux" visible width={600} height={400} x={100} y={100} color="#F5FCFF">
-      <Counter />
-    </ApplicationWindow>
-  </Provider>
-);
+class App extends React.Component {
+
+  componentWillMount() {
+    console.log('App', 'componentWillMount');
+  }
+
+  componentDidMount() {
+    console.log('App', 'componentDidMount');
+  }
+
+  componentWillUnmount() {
+    console.log('App', 'componentWillUnmount');
+  }
+
+  render() {
+    return (
+      <Provider store={this.props.store}>
+        <ApplicationWindow title="WithRedux 1212121" visible width={600} height={400} x={100} y={100} color="#F5FCFF">
+          <Counter />
+        </ApplicationWindow>
+      </Provider>
+    )
+  }
+}
 
 export default App;

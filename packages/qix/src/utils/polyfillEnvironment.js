@@ -14,6 +14,8 @@ require('es6-set/implement');
 require('../../vendor/polyfills/console.js')(global);
 require('../../vendor/polyfills/timer.js')(global);
 require('../../vendor/polyfills/websocket.js')(global);
+require('../../vendor/polyfills/promise.js')(global);
+require('../../vendor/polyfills/fetch.js')(global);
 require('../../vendor/polyfills/error-guard.js');
 require('../../vendor/polyfills/Number.es6.js');
 require('../../vendor/polyfills/String.prototype.es6.js');

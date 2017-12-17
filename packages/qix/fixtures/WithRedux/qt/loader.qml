@@ -11,6 +11,7 @@ Item {
   property string qmlFileName: "main.qml"
   property string bundleFileName: "macos.bundle.js"
   property bool liveReload: false
+  property bool hotReload: false
   property alias devWindowVisible: devwindow.visible
   // -----------------
 
@@ -122,6 +123,20 @@ Item {
           }
         }
 
+        Button {
+          text: hotReload ? qsTr("Disable Hot Reloading") : qsTr("Enable Hot Reloading")
+          Layout.fillWidth: true
+          anchors.horizontalCenter: parent.horizontalCenter
+
+          onClicked: {
+            if (hotReload) {
+              disableHotReload();
+            } else {
+              enableHotReload();
+            }
+          }
+        }
+
       }
     }
 
@@ -167,6 +182,29 @@ Item {
       }
     }
 
+    // websocket for HMR
+    WebSocket {
+
+      id: hotws
+      url: 'ws://localhost:'+devServerPort+'/hot'
+      active: false
+
+      onStatusChanged: {
+        if (status === WebSocket.Error) {
+          console.log("HMR WebSocker error:", errorString)
+          return;
+        }
+        if (status === WebSocket.Open) {
+          console.log("HMR WebSocker connected:", url)
+        }
+      }
+
+      onTextMessageReceived: {
+        console.log("HMR WebSocket message:", message)
+      }
+    }
+
+    // ApplicationWindow
   }
 
 
@@ -187,6 +225,16 @@ Item {
   function enableLiveReload() {
     liveReload = true;
     liveReloadSubscribe();
+  }
+
+  function disableHotReload() {
+    hotReload = false;
+    hotws.active = false;
+  }
+
+  function enableHotReload() {
+    hotReload = true;
+    hotws.active = true;
   }
 
   function liveReloadSubscribe() {

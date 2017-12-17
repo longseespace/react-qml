@@ -1,4 +1,4 @@
-// import 'qix/hot';
+import 'qix/hot';
 import { createStore } from 'redux';
 import * as React from 'react';
 import { render } from 'qml-react';
@@ -12,7 +12,7 @@ export function init(root) {
   render(<App store={store} />, root)
 
   if (module.hot) {
-    console.log('module.hot');
+    console.log('module.hot', module.hot.accept);
     module.hot.accept('./App', () => {
       console.log('App hot reloaded');
       // eslint-disable-next-line global-require
