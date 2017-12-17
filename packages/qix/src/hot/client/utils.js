@@ -1,7 +1,7 @@
 /**
  * Copyright 2017-present, Callstack.
  * All rights reserved.
- * 
+ *
  * @flow
  */
 
@@ -10,17 +10,17 @@
 /* eslint-disable no-unused-expressions */
 
 // $FlowFixMe
-import { Platform } from 'react-native';
 
+// TODO: implement this
 export default function resetRedBox() {
-  if (Platform.OS === 'ios') {
-    const RCTRedBox = require('NativeModules').RedBox;
-    RCTRedBox && RCTRedBox.dismiss && RCTRedBox.dismiss();
-  } else {
-    // $FlowFixMe
-    const RCTExceptionsManager = require('NativeModules').ExceptionsManager;
-    RCTExceptionsManager &&
-      RCTExceptionsManager.dismissRedbox &&
-      RCTExceptionsManager.dismissRedbox();
-  }
+  // if (Platform.OS === 'ios') {
+  //   const RCTRedBox = require('NativeModules').RedBox;
+  //   RCTRedBox && RCTRedBox.dismiss && RCTRedBox.dismiss();
+  // } else {
+  //   // $FlowFixMe
+  //   const RCTExceptionsManager = require('NativeModules').ExceptionsManager;
+  //   RCTExceptionsManager &&
+  //     RCTExceptionsManager.dismissRedbox &&
+  //     RCTExceptionsManager.dismissRedbox();
+  // }
 }

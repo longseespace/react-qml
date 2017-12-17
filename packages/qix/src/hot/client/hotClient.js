@@ -1,14 +1,14 @@
 /**
  * Copyright 2017-present, Callstack.
  * All rights reserved.
- * 
+ *
  * @flow
  * global WebSocket, MessageEvent
  */
 
 const processUpdate = require('webpack-hot-middleware/process-update');
 // $FlowFixMe
-const { Platform } = require('react-native'); // eslint-disable-line import/no-unresolved
+// const { Platform } = require('react-native');
 
 function normalizeOptions({ path, quiet, overlay, reload, name }) {
   const shouldLog = !quiet;
@@ -96,7 +96,8 @@ function processPayload(payload, { logger, reporter, ...opts }) {
  */
 module.exports = function connect(options: Object) {
   const { logger, ...opts } = normalizeOptions(options);
-  const ws = new WebSocket(`${opts.path}?platform=${Platform.OS}`);
+  // FIXME: do not hardcode macos
+  const ws = new WebSocket(`${opts.path}?platform=macos`);
 
   ws.onopen = () => {
     logger.log(
