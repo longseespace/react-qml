@@ -14,7 +14,7 @@
 /**
  * IMPORTANT: Do not add "use strict"
  * https://github.com/callstack/haul/issues/278
- * 
+ *
  * Some libraries like react-native-safe-module try to patch native modules to mock them
  * and prevent crashes, but don't account for the case when `requireNativeComponent` returns
  * a string. In strict mode, trying to modify properties of the string primitive throws an
@@ -59,21 +59,23 @@ onmessage = (function() {
 
       shouldQueueMessages = true;
 
-      function evalJS(js) {
-        try {
-          eval(
-            js
-              .replace(/this\["webpackHotUpdate"\]/g, 'self["webpackHotUpdate"]')
-          );
-        } catch (e) {
-          self.ErrorUtils.reportFatalError(e);
-        } finally {
-          self.postMessage({ replyID: message.id });
-          processEnqueuedMessages();
-        }
-      }
+      // function evalJS(js) {
+      //   try {
+      //     eval(
+      //       js
+      //         .replace(/this\["webpackHotUpdate"\]/g, 'self["webpackHotUpdate"]')
+      //     );
+      //   } catch (e) {
+      //     self.ErrorUtils.reportFatalError(e);
+      //   } finally {
+      //     self.postMessage({ replyID: message.id });
+      //     processEnqueuedMessages();
+      //   }
+      // }
+      //
+      // fetch(message.url).then(resp => resp.text()).then(evalJS);
 
-      fetch(message.url).then(resp => resp.text()).then(evalJS);
+      importScripts(message.url);
     },
     setDebuggerVisibility(message) {
       visibilityState = message.visibilityState;

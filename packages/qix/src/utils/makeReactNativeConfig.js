@@ -132,6 +132,10 @@ const getDefaultConfig = ({
         dev
           ? [
               new webpack.HotModuleReplacementPlugin(),
+              new webpack.SourceMapDevToolPlugin({
+                test: /\.(js|css|(js)?bundle)($|\?)/i,
+                filename: '[file].map',
+              }),
               // new webpack.EvalSourceMapDevToolPlugin({
               //   module: true,
               // }),
