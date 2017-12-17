@@ -538,9 +538,9 @@ qix@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/qix/-/qix-0.1.1.tgz#fe0f0b6a9baf4b7adfe00233a5b6014985995a4c"
 
-qml-react@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/qml-react/-/qml-react-2.0.0.tgz#2a3dcafd6e9aa131c60109608be514dd59e3911f"
+qml-react@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/qml-react/-/qml-react-2.1.1.tgz#d2c9ea436fc089f3b79c938d7e68e9ce7b1ab274"
   dependencies:
     lodash "^4.17.4"
     react-reconciler "^0.7.0"

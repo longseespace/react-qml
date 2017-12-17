@@ -247,6 +247,13 @@ export const QMLRenderer = Reconciler({
   },
 });
 
+QMLRenderer.injectIntoDevTools({
+  bundleType: 1, // 0 for PROD, 1 for DEV
+  version: '0.1.0', // version for your renderer
+  rendererPackageName: 'qml-renderer', // package name
+  findHostInstanceByFiber: QMLRenderer.findHostInstance, // host instance (root)
+})
+
 export function render(reactElements, qmlContainer) {
   const container = QMLRenderer.createContainer(qmlContainer);
   const root = new Root(container, QMLRenderer);
