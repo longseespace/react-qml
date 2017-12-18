@@ -1,3 +1,4 @@
+import 'qix/hot';
 import { render } from 'qml-react';
 import * as React from 'react';
 
