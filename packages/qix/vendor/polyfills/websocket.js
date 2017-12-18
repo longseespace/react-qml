@@ -73,6 +73,13 @@ function setupWebSocket(global) {
     WebSocket.CLOSED     = 3;
     WebSocket.ERROR      = 4; // qt only
 
+    // fix for SCTransport
+    WebSocket.prototype.CONNECTING = 0;
+    WebSocket.prototype.OPEN       = 1;
+    WebSocket.prototype.CLOSING    = 2;
+    WebSocket.prototype.CLOSED     = 3;
+    WebSocket.prototype.ERROR      = 4; // qt only
+
     Object.defineProperty(WebSocket.prototype, 'readyState', {
         get: function() { return this.qtWebSocket.status; },
         enumerable: true

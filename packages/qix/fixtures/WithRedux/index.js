@@ -1,11 +1,10 @@
-import { createStore } from 'redux';
-import * as React from 'react';
 import { render } from 'qml-react';
+import * as React from 'react';
 
 import App from './App';
-import reducers from './reducers';
+import makeStore from './makeStore';
 
-const store = createStore(reducers);
+const store = makeStore();
 
 export function init(root) {
   render(<App store={store} />, root)

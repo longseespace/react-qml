@@ -7,12 +7,15 @@
     "build": "qix bundle --platform=macos --bundleOutput=qt/macos.bundle.js"
   },
   "dependencies": {
+    "lodash": "^4.17.4",
     "qix": "^0.1.1",
     "qml-react": "^2.1.1",
     "qt-react": "^2.0.1",
     "react": "16.0.0",
     "react-redux": "^5.0.6",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "remote-redux-devtools": "^0.5.12"
   },
   "devDependencies": {
     "babel-preset-react-native": "^4.0.0"

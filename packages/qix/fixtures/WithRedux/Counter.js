@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 const connectToRedux = connect(
   state => ({
-    value: state
+    value: state.counter
   }),
   {
     onIncrement: () => ({ type: 'INCREMENT' }),
