@@ -7,6 +7,11 @@ import QtQuick.Window 2.2
 Item {
 
   // props and signals
+  id: __qml_dev_root__
+
+  signal reloading()
+  signal reloaded()
+
   property int devServerPort: 8081
   property string qmlFileName: "main.qml"
   property string bundleFileName: "macos.bundle.js"
@@ -16,16 +21,18 @@ Item {
   property alias devWindowVisible: devwindow.visible
   // -----------------
 
-  // loader
+  // __app_loader__
   Loader {
     source: 'http://localhost:'+devServerPort+'/'+qmlFileName+'?t='+Date.now()
-    id: loader
+    id: __app_loader__
     asynchronous: false
 
     function reload() {
-      if (loader.status === Loader.Loading) {
+      if (__app_loader__.status === Loader.Loading) {
         return console.log("Ignoring reload request, reload in progress");
       }
+
+      __qml_dev_root__.reloading();
 
       source = "";
       __platform.clearCache();
@@ -41,6 +48,8 @@ Item {
       if (liveReload) {
         liveReloadSubscribe();
       }
+
+      __qml_dev_root__.reloaded();
     }
   }
 
@@ -49,7 +58,7 @@ Item {
     enabled: true
     sequence: StandardKey.Refresh
     context: Qt.ApplicationShortcut
-    onActivated: loader.reload()
+    onActivated: __app_loader__.reload()
   }
 
   // cmd+D
@@ -93,7 +102,7 @@ Item {
           Layout.fillWidth: true
           anchors.horizontalCenter: parent.horizontalCenter
 
-          onClicked: loader.reload();
+          onClicked: __app_loader__.reload();
         }
 
         Button {
@@ -246,7 +255,7 @@ Item {
     request('GET', 'http://localhost:'+devServerPort+'/onchange', function(xhr) {
       if (xhr.readyState === 4) {
         if (liveReload) {
-          loader.reload();
+          __app_loader__.reload();
         }
       }
     });

@@ -4061,6 +4061,10 @@ punycode@^1.2.4, punycode@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
 
+qmlpragmalibrary-webpack-plugin@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/qmlpragmalibrary-webpack-plugin/-/qmlpragmalibrary-webpack-plugin-0.0.1.tgz#f5cb8d7040682354bd875863a629e4b5e34e8d8d"
+
 qs@6.5.0:
   version "6.5.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.0.tgz#8d04954d364def3efc55b5a0793e1e2c8b1e6e49"
