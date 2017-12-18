@@ -39,6 +39,12 @@ if (!global.self) {
   global.self = global; /* eslint-disable-line */
 }
 
+if (!global.window) {
+  global.window = global;
+}
+
+require('./setupDevTools')(global);
+
 // require('InitializeCore');
 
 require('../hot/client/importScriptsPolyfill');

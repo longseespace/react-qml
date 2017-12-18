@@ -96,7 +96,6 @@ module.exports = function connect(options: Object) {
   const { logger, ...opts } = normalizeOptions(options);
   // FIXME: do not hardcode macos
   const ws = new WebSocket(`${opts.path}?platform=macos`);
-
   ws.onopen = () => {
     logger.log(
       '[HMR] Client connected, however until you `Enable Hot Reloading`, ' +

@@ -29,6 +29,7 @@ class Counter extends React.Component {
   }
 
   incrementAsync() {
+    console.log('incrementAsync');
     setTimeout(this.props.onIncrement, 1000)
   }
 
