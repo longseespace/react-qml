@@ -7,11 +7,19 @@ function setup(global) {
     return;
   }
 
+  if (!window.__REACT_DEVTOOLS_PORT__) {
+    return;
+  }
+
   const reactDevTools = require('react-devtools-core');
-  reactDevTools.connectToDevTools({
-    host: 'localhost',
-    port: window.__REACT_DEVTOOLS_PORT__,
-  });
+  try {
+    reactDevTools.connectToDevTools({
+      host: 'localhost',
+      port: window.__REACT_DEVTOOLS_PORT__,
+    });
+  } catch (e) {
+    console.error('Cannot connect to React DevTools')
+  }
 };
 
 if (typeof module !== 'undefined') {
