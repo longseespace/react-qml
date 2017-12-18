@@ -199,7 +199,7 @@ export const QMLRenderer = Reconciler({
         child.value
       );
       for (var i = containerQmlElement.data.length; i > 0; i--) {
-        if (child == containerQmlElement.data[i]) {
+        if (child.value == containerQmlElement.data[i]) {
           containerQmlElement.data[i].destroy();
           break;
         }
@@ -254,11 +254,29 @@ QMLRenderer.injectIntoDevTools({
   findHostInstanceByFiber: QMLRenderer.findHostInstance, // host instance (root)
 })
 
-export function render(reactElements, qmlContainer) {
+
+const containerMap = new WeakMap();
+
+export function getRoot(qmlContainer) {
+  const prevRoot = containerMap.get(qmlContainer);
+
+  if (prevRoot) {
+    console.log('reuse root');
+    return prevRoot
+  }
+
+  console.log('create new root');
+
   const container = QMLRenderer.createContainer(qmlContainer);
   const root = new Root(container, QMLRenderer);
+  containerMap.set(qmlContainer, root);
+  return root;
+}
 
-  root.render(reactElements);
+export function render(elements, container) {
+  const root = getRoot(container);
+  root.render(elements);
+  return QMLRenderer.getPublicRootInstance(elements);
 }
 
 class Root {
