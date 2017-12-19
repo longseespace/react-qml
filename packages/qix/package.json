@@ -1,5 +1,5 @@
 {
-  "version": "2.1.3",
+  "version": "2.2.0",
   "name": "qix",
   "description": "Native Desktop App development with modern ES6 javascript (qt5, qml, qtquick)",
   "bin": {
