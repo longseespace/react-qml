@@ -30,7 +30,7 @@ module.exports = {
     'QtQuick.Layouts': '1.1',
   },
   '5.10': {
-    QtQuick: '2.1',
+    QtQuick: '2.10',
     'QtQuick.Controls': '2.3',
     'QtQuick.Controls.Material': '2.3',
     'QtQuick.Controls.Universal': '2.3',
