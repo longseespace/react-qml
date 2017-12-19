@@ -276,7 +276,6 @@ export function getRoot(qmlContainer) {
 export function render(elements, container) {
   const root = getRoot(container);
   root.render(elements);
-  return QMLRenderer.getPublicRootInstance(elements);
 }
 
 class Root {
