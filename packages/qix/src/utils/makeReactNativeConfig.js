@@ -13,6 +13,7 @@ const haulProgressBar = require('./haulProgressBar');
 const AssetResolver = require('../resolvers/AssetResolver');
 const getBabelConfig = require('./getBabelConfig');
 const QmlPragmaLibraryWebpackPlugin = require('qmlpragmalibrary-webpack-plugin');
+const StringReplacePlugin = require('string-replace-webpack-plugin');
 
 const PLATFORMS = ['macos', 'windows'];
 
@@ -100,6 +101,19 @@ const getDefaultConfig = ({
           test: /\.qml$/,
           loader: 'babel-loader!qml-loader',
         },
+        {
+          test: /runtime\.js$/,
+          loader: StringReplacePlugin.replace({
+            replacements: [
+              {
+                pattern: /GeneratorFunctionPrototype\.constructor = GeneratorFunction;/gi,
+                replacement: () => {
+                  return `Object.defineProperty(GeneratorFunctionPrototype, 'constructor', { value: GeneratorFunction })`;
+                },
+              },
+            ],
+          }),
+        },
       ],
     },
     plugins: [
@@ -134,6 +148,7 @@ const getDefaultConfig = ({
         minimize: !!minify,
         debug: dev,
       }),
+      new StringReplacePlugin(),
     ]
       .concat(
         dev
