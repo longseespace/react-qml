@@ -10,4 +10,15 @@ module.exports = {
     }
     `,
   },
+  'QtQuick.Controls.Pane': {
+    defaultProp: 'contentData',
+    customDeps: ['QtQuick.Layouts'],
+    customQml: `
+    property alias children: content.data;
+
+    contentItem: ColumnLayout {
+      id: content;
+    }
+    `,
+  },
 };
