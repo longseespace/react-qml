@@ -1384,16 +1384,9 @@ punycode@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
 
-qml-react@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/qml-react/-/qml-react-2.0.0.tgz#2a3dcafd6e9aa131c60109608be514dd59e3911f"
-  dependencies:
-    lodash "^4.17.4"
-    react-reconciler "^0.7.0"
-
-qml-renderer@^0.2.4:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/qml-renderer/-/qml-renderer-0.2.4.tgz#0d8fb1c925ad2b990f0dcd7747f6bad29077572a"
+qml-react@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/qml-react/-/qml-react-2.2.0.tgz#b540db3a905260c614287acc4ab0ef81a6d0e544"
   dependencies:
     lodash "^4.17.4"
     react-reconciler "^0.7.0"
