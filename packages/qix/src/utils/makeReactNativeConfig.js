@@ -114,6 +114,19 @@ const getDefaultConfig = ({
             ],
           }),
         },
+        {
+          test: /(invariant|invariant\/browser)\.js$/,
+          loader: StringReplacePlugin.replace({
+            replacements: [
+              {
+                pattern: /error\.name =/gi,
+                replacement: () => {
+                  return `// error.name =`;
+                },
+              },
+            ],
+          }),
+        },
       ],
     },
     plugins: [
