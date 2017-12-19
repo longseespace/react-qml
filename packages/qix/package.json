@@ -1,7 +1,7 @@
 {
-  "version": "0.1.0",
+  "version": "2.1.3",
   "name": "qix",
-  "description": "Haul is a new command line tools for React Native",
+  "description": "Native Desktop App development with modern ES6 javascript (qt5, qml, qtquick)",
   "bin": {
     "qix": "./bin/cli.js"
   },
@@ -15,15 +15,15 @@
     "format": "eslint --fix .",
     "add-contributor": "all-contributors add"
   },
-  "author": "Mike Grabowski <mike@callstack.io>",
-  "repository": "github:callstack-io/haul",
+  "author": "Long Nguyen <long@podzim.co>",
+  "repository": "github:longseespace/qix",
   "contributors": [
     "Satyajit Sahoo <satyajit.sahoo@callstack.io>",
     "Piotr Drapich <piotr.drapich@callstack.io>",
     "Pawel Trysla <pawel.trysla@callstack.io>"
   ],
   "license": "MIT",
-  "bugs": "https://github.com/callstack-io/haul/issues",
+  "bugs": "https://github.com/longseespace/qix/issues",
   "peerDependencies": {
     "babel-preset-react-native": "^2.0.0",
     "react": "*",
