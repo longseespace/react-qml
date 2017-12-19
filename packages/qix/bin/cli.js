@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 require('babel-register')({
-  ignore: /node_modules(?!\/haul)/,
+  ignore: /node_modules(?!\/qix)/,
   retainLines: true,
   sourceMaps: 'inline',
 });
