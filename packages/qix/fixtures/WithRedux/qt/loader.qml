@@ -139,6 +139,20 @@ Item {
           }
         }
 
+        Button {
+          text: hotReload ? qsTr("Disable Hot Reloading") : qsTr("Enable Hot Reloading")
+          Layout.fillWidth: true
+          anchors.horizontalCenter: parent.horizontalCenter
+
+          onClicked: {
+            if (hotReload) {
+              disableHotReload();
+            } else {
+              enableHotReload();
+            }
+          }
+        }
+
       }
     }
 

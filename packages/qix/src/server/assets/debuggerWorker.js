@@ -59,23 +59,24 @@ onmessage = (function() {
 
       shouldQueueMessages = true;
 
-      // function evalJS(js) {
-      //   try {
-      //     eval(
-      //       js
-      //         .replace(/this\["webpackHotUpdate"\]/g, 'self["webpackHotUpdate"]')
-      //     );
-      //   } catch (e) {
-      //     self.ErrorUtils.reportFatalError(e);
-      //   } finally {
-      //     self.postMessage({ replyID: message.id });
-      //     processEnqueuedMessages();
-      //   }
-      // }
-      //
-      // fetch(message.url).then(resp => resp.text()).then(evalJS);
+      function evalJS(js) {
+        try {
+          eval(
+            js
+              .replace(/this\["webpackHotUpdate"\]/g, 'self["webpackHotUpdate"]')
+              .replace(".pragma library", '// .pragma library')
+          );
+        } catch (e) {
+          self.ErrorUtils.reportFatalError(e);
+        } finally {
+          self.postMessage({ replyID: message.id });
+          processEnqueuedMessages();
+        }
+      }
 
-      importScripts(message.url);
+      fetch(message.url).then(resp => resp.text()).then(evalJS);
+
+      // importScripts(message.url);
     },
     setDebuggerVisibility(message) {
       visibilityState = message.visibilityState;

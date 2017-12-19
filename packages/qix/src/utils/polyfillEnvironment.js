@@ -9,8 +9,10 @@
 
 /* eslint-disable import/no-extraneous-dependencies */
 require('es6-map/implement');
-require('es6-weak-map/implement');
 require('es6-set/implement');
+
+// WeakMap polyfill not working in qml js environment
+global.WeakMap = Map;
 require('../../vendor/polyfills/console.js')(global);
 require('../../vendor/polyfills/timer.js')(global);
 require('../../vendor/polyfills/websocket.js')(global);

@@ -7,7 +7,7 @@ function setup(global) {
     return;
   }
 
-  if (!window.__REACT_DEVTOOLS_PORT__) {
+  if (!process.env.__REACT_DEVTOOLS_PORT__) {
     return;
   }
 
@@ -15,7 +15,7 @@ function setup(global) {
   try {
     reactDevTools.connectToDevTools({
       host: 'localhost',
-      port: window.__REACT_DEVTOOLS_PORT__,
+      port: process.env.__REACT_DEVTOOLS_PORT__,
     });
   } catch (e) {
     console.error('Cannot connect to React DevTools')
