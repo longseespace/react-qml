@@ -78,6 +78,7 @@
   "devDependencies": {
     "all-contributors-cli": "^4.5.1",
     "babel-jest": "test",
+    "babel-plugin-async-to-promises": "^1.0.5",
     "babel-preset-react-native": "^2.0.0",
     "eslint": "^4.3.0",
     "eslint-config-callstack-io": "^1.0.1",
