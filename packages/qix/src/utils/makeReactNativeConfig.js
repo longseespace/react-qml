@@ -12,7 +12,6 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const haulProgressBar = require('./haulProgressBar');
 const AssetResolver = require('../resolvers/AssetResolver');
 const getBabelConfig = require('./getBabelConfig');
-const QmlPragmaLibraryWebpackPlugin = require('qmlpragmalibrary-webpack-plugin');
 const StringReplacePlugin = require('string-replace-webpack-plugin');
 
 const PLATFORMS = ['macos', 'windows'];
@@ -130,11 +129,6 @@ const getDefaultConfig = ({
       ],
     },
     plugins: [
-      /**
-       * Adds a .pragma library declaration at the beginning of a file as mentioned in
-       * Defining JavaScript Resources In QML.
-       */
-      new QmlPragmaLibraryWebpackPlugin(),
       /**
        * MacOS has a case insensitive filesystem
        * This is needed so we can error on incorrect case
