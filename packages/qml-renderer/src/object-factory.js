@@ -55,14 +55,17 @@ export const makeElementNode = (name, defaultProp, qmlContent, rootElem) => (
 export const isElement = obj => obj.type && obj.type === ELEMENT;
 export const isAttribute = obj => obj.type && obj.type === ATTRIBUTE;
 
+const arrify = v => Array.isArray(v) ? v : [v];
+
 export const setAttribute = (parent, key, children) => {
-  const obj = parent.value;
-  const prev = get(obj, key);
-  // console.log(require('util').inspect(children, { depth: 0 }));
+  const qmlObject = parent.value;
+  const prev = get(qmlObject, key);
+  console.log(require('util').inspect(prev, { depth: 1 }));
+  console.log(require('util').inspect(children, { depth: 1 }));
   if (prev && typeof prev.push === 'function') {
     prev.length = 0;
-    children.forEach(child => {
-      console.debug(obj, 'push', key, child.value);
+    arrify(children).forEach(child => {
+      console.debug(qmlObject, 'push', key, child.value);
       prev.push(child.value);
     });
   } else {
@@ -72,7 +75,7 @@ export const setAttribute = (parent, key, children) => {
       // require('util').inspect(children.value.value, { depth: 0 })
     );
 
-    set(obj, key, children.value.value);
+    set(qmlObject, key, children.value.value);
   }
 };
 
