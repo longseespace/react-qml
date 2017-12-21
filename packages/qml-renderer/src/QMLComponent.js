@@ -43,11 +43,14 @@ export function setInitialProps(qmlElement, nextProps) {
     }
 
     if (typeof propValue === 'object') {
-      if (qmlElement[propKey]) {
-        entries(propValue).forEach(([configKey, configValue]) => {
-          qmlElement[propKey][configKey] = configValue;
-        });
+      if (!qmlElement[propKey]) {
+        console.warn(`Cannot assign to non-existent property "${propKey}"`);
+        return;
       }
+
+      entries(propValue).forEach(([configKey, configValue]) => {
+        qmlElement[propKey][configKey] = configValue;
+      });
       return;
     }
 
