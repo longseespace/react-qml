@@ -1,5 +1,8 @@
 {
 	"devDependencies": {
 		"lerna": "^2.5.1"
+	},
+	"dependencies": {
+		"es6-symbol": "^3.1.1"
 	}
 }

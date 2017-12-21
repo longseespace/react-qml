@@ -10,6 +10,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 require('es6-map/implement');
 require('es6-set/implement');
+require('es6-symbol/implement');
 
 // WeakMap polyfill not working in qml js environment
 global.WeakMap = Map;
