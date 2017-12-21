@@ -107,7 +107,20 @@ const getDefaultConfig = ({
               {
                 pattern: /GeneratorFunctionPrototype\.constructor = GeneratorFunction;/gi,
                 replacement: () => {
-                  return `Object.defineProperty(GeneratorFunctionPrototype, 'constructor', { value: GeneratorFunction })`;
+                  return `Object.defineProperty(GeneratorFunctionPrototype, 'constructor', { value: GeneratorFunction });`;
+                },
+              },
+            ],
+          }),
+        },
+        {
+          test: /rxjs\/.*\.js$/,
+          loader: StringReplacePlugin.replace({
+            replacements: [
+              {
+                pattern: /this\.constructor = d;/gi,
+                replacement: () => {
+                  return `Object.defineProperty(this, 'constructor', { value: d });`;
                 },
               },
             ],
