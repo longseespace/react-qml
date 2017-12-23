@@ -36,6 +36,10 @@ export function setInitialProps(qmlElement, nextProps) {
       return;
     }
 
+    if (propKey === '__qmlRawContent') {
+      return;
+    }
+
     if (propKey.match(isEventRegex)) {
       const match = propKey.match(isEventRegex);
       listenTo(qmlElement, match[1], propValue, null);

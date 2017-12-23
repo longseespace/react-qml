@@ -22,6 +22,12 @@ export const QMLRenderer = Reconciler({
   createInstance(type, props, rootInstance) {
     console.log('createInstance ------------', type);
 
+    if (type === 'qml') {
+      const qmlContent = props.__qmlRawContent;
+      const defaultProp = props.defaultProp || 'data';
+      return makeElementNode(type, defaultProp, qmlContent, rootInstance);
+    }
+
     if (type === 'attribute') {
       const { name } = props;
       return makeAttributeNode(name);

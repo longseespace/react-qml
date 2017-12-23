@@ -86,19 +86,31 @@ const getDefaultConfig = ({
           ],
         },
         {
-          test: AssetResolver.test,
-          use: {
-            /**
-             * Asset loader enables asset management based on image scale
-             * This needs the AssetResolver plugin in resolver.plugins to work
-             */
-            loader: require.resolve('../loaders/assetLoader'),
-            query: { platform, root, bundle },
-          },
+          test: /\.(bmp|gif|jpg|jpeg|png|psd|svg|webp|m4v|aac|aiff|caf|m4a|mp3|wav|html|pdf)$/,
+          use: [
+            {
+              loader: require.resolve('file-loader'),
+            },
+          ],
         },
         {
           test: /\.qml$/,
-          loader: 'babel-loader!qml-loader',
+          use: [
+            {
+              loader: require.resolve('babel-loader'),
+              options: Object.assign({}, getBabelConfig(root), {
+                /**
+                 * to improve the rebuild speeds
+                 * This enables caching results in ./node_modules/.cache/babel-loader/
+                 * This is a feature of `babel-loader` and not babel
+                 */
+                cacheDirectory: dev,
+              }),
+            },
+            {
+              loader: require.resolve('qml-loader'),
+            },
+          ],
         },
         {
           test: /runtime\.js$/,
