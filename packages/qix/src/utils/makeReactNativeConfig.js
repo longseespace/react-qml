@@ -77,6 +77,9 @@ const getDefaultConfig = ({
           exclude: /node_modules\/(?!react|@expo|pretty-format|qix)/,
           use: [
             {
+              loader: require.resolve('thread-loader'),
+            },
+            {
               loader: require.resolve('babel-loader'),
               options: Object.assign({}, getBabelConfig(root), {
                 /**
