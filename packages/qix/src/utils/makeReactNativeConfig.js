@@ -6,13 +6,17 @@
  */
 /* eslint-disable no-param-reassign */
 
-const webpack = require('webpack');
-const path = require('path');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const haulProgressBar = require('./haulProgressBar');
+const GenerateAssetPlugin = require('generate-asset-webpack-plugin');
+const StringReplacePlugin = require('string-replace-webpack-plugin');
+const webpack = require('webpack');
+
+const path = require('path');
+
 const AssetResolver = require('../resolvers/AssetResolver');
 const getBabelConfig = require('./getBabelConfig');
-const StringReplacePlugin = require('string-replace-webpack-plugin');
+const haulProgressBar = require('./haulProgressBar');
+const createQrc = require('./createQrc');
 
 const PLATFORMS = ['macos', 'windows'];
 
@@ -181,6 +185,12 @@ const getDefaultConfig = ({
         debug: dev,
       }),
       new StringReplacePlugin(),
+      new GenerateAssetPlugin({
+        filename: 'bundle.qrc',
+        fn: (compilation, cb) => {
+          cb(null, createQrc(compilation));
+        },
+      }),
     ]
       .concat(
         dev

@@ -49,6 +49,7 @@
     "express": "^4.15.2",
     "fetch-ie8": "^1.5.0",
     "file-loader": "^1.1.6",
+    "generate-asset-webpack-plugin": "^0.3.0",
     "hasha": "^2.2.0",
     "hoist-non-react-statics": "^2.2.1",
     "image-size": "^0.5.1",
