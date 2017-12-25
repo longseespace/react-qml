@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": "react-qml",
   "description": "Native Desktop App development with modern javascript (qt5, qml, qtquick, react)",
   "bin": {
