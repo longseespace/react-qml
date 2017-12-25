@@ -1,6 +1,6 @@
 {
-  "name": "qml-react",
-  "version": "2.2.7",
+  "name": "react-qml-renderer",
+  "version": "0.1.0",
   "description": "React QML Renderer",
   "main": "dist/index.js",
   "files": [
