@@ -2,7 +2,7 @@
 	"devDependencies": {
 		"lerna": "^2.5.1"
 	},
-	"script": {
+	"scripts": {
 		"release": "lerna publish --independent"
 	},
 	"dependencies": {}

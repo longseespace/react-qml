@@ -74,7 +74,7 @@ const getDefaultConfig = ({
         { parser: { requireEnsure: false } },
         {
           test: /\.js$/,
-          exclude: /node_modules\/(?!react|@expo|pretty-format|qix)/,
+          exclude: /node_modules\/(?!react|@expo|pretty-format|react-qml)/,
           use: [
             {
               loader: require.resolve('thread-loader'),

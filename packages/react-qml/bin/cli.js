@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 require('babel-register')({
-  ignore: /node_modules(?!\/qix)/,
+  ignore: /node_modules(?!\/react-qml)/,
   retainLines: true,
   sourceMaps: 'inline',
 });

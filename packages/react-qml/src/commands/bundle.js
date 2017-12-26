@@ -145,7 +145,7 @@ module.exports = ({
           description: 'Builds Windows bundle',
         },
       ],
-      example: 'qix bundle --platform macos',
+      example: 'react-qml bundle --platform macos',
     },
     {
       name: 'bundleOutput',

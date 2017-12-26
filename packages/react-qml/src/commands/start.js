@@ -172,7 +172,7 @@ module.exports = ({
     {
       name: 'platform',
       description: 'Platform to bundle for',
-      example: 'qix start --platform macos',
+      example: 'react-qml start --platform macos',
       required: true,
       choices: [
         {

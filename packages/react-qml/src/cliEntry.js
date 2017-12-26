@@ -53,7 +53,7 @@ const getDisplayName = (command: string, opts: { [key: string]: mixed }) => {
 
   // Haul has been called directly
   if (!execPath || !scriptName || !npmArgv) {
-    return `qix ${command} ${list.join(' ')}`;
+    return `react-qml ${command} ${list.join(' ')}`;
   }
 
   const client = path.basename(execPath) === 'yarn.js' ? 'yarn' : 'npm';
@@ -72,7 +72,7 @@ const getDisplayName = (command: string, opts: { [key: string]: mixed }) => {
   // Yarn doesn't have `npmArgv` support
   const lifecycleScript = process.env[`npm_package_scripts_${scriptName}`];
 
-  // If it's `npm script` that already defines command, e.g. "start": "qix start"
+  // If it's `npm script` that already defines command, e.g. "start": "react-qml start"
   // then, `yarn run start --` is enough. Otherwise, command has to be set.
   const exec =
     lifecycleScript && lifecycleScript.includes(command)
@@ -142,7 +142,7 @@ async function run(args: Array<string>) {
   }
 
   if (['--help', '-h', 'help'].includes(args[0])) {
-    console.log(messages.qixHelp(COMMANDS));
+    console.log(messages.haulHelp(COMMANDS));
     return;
   }
 
@@ -154,7 +154,7 @@ async function run(args: Array<string>) {
   const command = COMMANDS.find(cmd => cmd.name === args[0]) || DEFAULT_COMMAND;
 
   if (args.includes('--help') || args.includes('-h')) {
-    console.log(messages.qixCommandHelp(command));
+    console.log(messages.haulCommandHelp(command));
     return;
   }
 

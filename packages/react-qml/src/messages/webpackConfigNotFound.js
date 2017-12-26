@@ -11,10 +11,10 @@ module.exports = (directory: string) => dedent`
    Couldn't find configuration file ${chalk.bold(directory)}
 
    Make sure:
-   • You are running qix from your project directory
+   • You are running react-qml from your project directory
    • You have a ${chalk.bold('webpack.qix.js')} file
 
-   Run ${chalk.bold('qix init')} to automatically generate a ${chalk.bold(
+   Run ${chalk.bold('react-qml init')} to automatically generate a ${chalk.bold(
   'webpack.qix.js'
 )} file
 `;
