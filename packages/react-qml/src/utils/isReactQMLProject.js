@@ -7,7 +7,7 @@
 const fs = require('fs');
 const path = require('path');
 
-module.exports = function isQixProject(cwd: string) {
+module.exports = function isReactQMLProject(cwd: string) {
   try {
     const pak = JSON.parse(
       fs.readFileSync(path.join(cwd, 'package.json')).toString()

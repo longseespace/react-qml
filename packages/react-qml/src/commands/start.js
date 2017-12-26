@@ -30,7 +30,10 @@ async function start(opts: *) {
       type: 'list',
       name: 'userChoice',
       message: `Port ${opts.port} is already in use. What should we do?`,
-      choices: [`Kill process using port ${opts.port} and start Qix`, 'Quit'],
+      choices: [
+        `Kill process using port ${opts.port} and start react-qml`,
+        'Quit',
+      ],
     });
     if (userChoice === 'Quit') {
       process.exit();

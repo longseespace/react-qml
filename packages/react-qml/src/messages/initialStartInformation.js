@@ -22,7 +22,7 @@ module.exports = (config: Params) => {
   return dedent`
   Ready at ${chalk.cyan(`http://localhost:${config.port}`)}
 
-  Qix is now bundling your app, starting from:
+  Haul is now bundling your app, starting from:
 
   ${messages.join('\n')}
 

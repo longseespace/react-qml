@@ -12,7 +12,7 @@ const dedent = require('dedent');
 const ora = require('ora');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
-const isQixProject = require('../utils/isQixProject');
+const isReactQMLProject = require('../utils/isReactQMLProject');
 
 const messages = require('../messages');
 
@@ -24,7 +24,7 @@ async function init() {
   const cwd = process.cwd();
 
   // Are we inside a React Native project?
-  if (isQixProject(cwd)) {
+  if (isReactQMLProject(cwd)) {
     progress.succeed(messages.verifiedProject());
   } else {
     progress.fail(messages.invalidProject());

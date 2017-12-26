@@ -1384,13 +1384,6 @@ punycode@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
 
-qml-react@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/qml-react/-/qml-react-2.2.0.tgz#b540db3a905260c614287acc4ab0ef81a6d0e544"
-  dependencies:
-    lodash "^4.17.4"
-    react-reconciler "^0.7.0"
-
 qs@~6.4.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.4.0.tgz#13e26d28ad6b0ffaa91312cd3bf708ed351e7233"
@@ -1410,6 +1403,13 @@ rc@^1.1.7:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
+
+react-qml-renderer@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/react-qml-renderer/-/react-qml-renderer-0.2.0.tgz#2372c4c130ae6fbfe309fbf6c2fbd282c08f40fb"
+  dependencies:
+    lodash "^4.17.4"
+    react-reconciler "^0.7.0"
 
 react-reconciler@^0.7.0:
   version "0.7.0"
