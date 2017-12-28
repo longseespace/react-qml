@@ -1,5 +1,5 @@
 {
-  "name": "qml-loader",
+  "name": "react-qml-loader",
   "version": "0.1.1",
   "description": "React QML loader: create React Component from qml files",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/longseespace/qix.git"
+    "url": "git+https://github.com/longseespace/react-qml.git"
   },
   "keywords": [
     "React",
@@ -19,7 +19,7 @@
   "author": "Long Nguyen <long@podzim.co>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/longseespace/qix/issues"
+    "url": "https://github.com/longseespace/react-qml/issues"
   },
-  "homepage": "https://github.com/longseespace/qix#readme"
+  "homepage": "https://github.com/longseespace/react-qml#readme"
 }
