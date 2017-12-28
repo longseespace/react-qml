@@ -1,6 +1,6 @@
 {
   "version": "0.2.1",
-  "name": "react-qml",
+  "name": "react-qml-cli",
   "description": "Native Desktop App development with modern javascript (qt5, qml, qtquick, react)",
   "bin": {
     "react-qml": "./bin/cli.js"
@@ -21,8 +21,7 @@
   "bugs": "https://github.com/longseespace/react-qml/issues",
   "peerDependencies": {
     "babel-preset-react-native": "^2.0.0",
-    "react": "*",
-    "react-native": "*"
+    "react": "*"
   },
   "dependencies": {
     "babel-core": "^6.24.0",

@@ -10,7 +10,7 @@ BEFORE YOU SUBMIT please search open/closed issues since someone might have aske
 <!--- If you're describing a bug, tell us what should happen -->
 <!--- If you're suggesting a change/improvement, tell us how it should work -->
 
-### Haul Configuration (webpack.haul.js)
+### Configuration (react-qml.config.js)
 <!--- If describing a bug, tell us what your Haul configuration looks like -->
 
 ### Your Environment
@@ -18,7 +18,7 @@ BEFORE YOU SUBMIT please search open/closed issues since someone might have aske
 
 | software         | version
 | ---------------- | -------
-| Haul             |  
-| react-native     |  
-| node             | 
+| react-qml        |  
+| qt-react         |  
+| node             |
 | npm or yarn      |
