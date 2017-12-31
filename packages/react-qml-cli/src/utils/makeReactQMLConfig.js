@@ -53,7 +53,6 @@ const getDefaultConfig = ({
   root,
   dev,
   minify,
-  bundle,
   port,
 }): WebpackConfig => {
   process.env.NODE_ENV = dev ? 'development' : 'production';
@@ -274,7 +273,7 @@ const getDefaultConfig = ({
  * Creates an array of configs based on changing `env` for every
  * platform and returns
  */
-function makeReactNativeConfig(
+function makeReactQMLConfig(
   userWebpackConfig: WebpackConfigFactory,
   options: ConfigOptions
 ): [Array<WebpackConfig>, typeof PLATFORMS] {
@@ -332,4 +331,4 @@ function injectPolyfillIntoEntry(
   return userEntry;
 }
 
-module.exports = { makeReactNativeConfig, injectPolyfillIntoEntry };
+module.exports = { makeReactQMLConfig, injectPolyfillIntoEntry };

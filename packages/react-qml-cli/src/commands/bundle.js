@@ -12,7 +12,7 @@ const clear = require('clear');
 
 const { MessageError } = require('../errors');
 const messages = require('../messages');
-const { makeReactNativeConfig } = require('../utils/makeReactNativeConfig');
+const { makeReactQMLConfig } = require('../utils/makeReactQMLConfig');
 const getWebpackConfig = require('../utils/getWebpackConfig');
 const logger = require('../logger');
 
@@ -26,7 +26,7 @@ async function bundle(opts: *) {
   const [
     configs,
     availablePlatforms,
-  ] = makeReactNativeConfig(
+  ] = makeReactQMLConfig(
     // $FlowFixMe: Dynamic require
     require(configPath),
     {

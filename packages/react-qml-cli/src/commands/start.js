@@ -18,7 +18,7 @@ const exec = require('../utils/exec');
 const getWebpackConfig = require('../utils/getWebpackConfig');
 const { isPortTaken, killProcess } = require('../utils/haulPortHandler');
 
-const { makeReactNativeConfig } = require('../utils/makeReactNativeConfig');
+const { makeReactQMLConfig } = require('../utils/makeReactQMLConfig');
 
 /**
  * Starts development server
@@ -51,7 +51,7 @@ async function start(opts: *) {
   const configPath = getWebpackConfig(directory, opts.config);
 
   // eslint-disable-next-line prefer-const
-  let [config, platforms] = makeReactNativeConfig(
+  let [config, platforms] = makeReactQMLConfig(
     // $FlowFixMe: Dynamic require
     require(configPath),
     {

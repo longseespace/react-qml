@@ -8,13 +8,13 @@
 import path from 'path';
 import { replacePathsInObject } from 'jest/helpers'; // eslint-disable-line import/no-unresolved
 import {
-  makeReactNativeConfig,
+  makeReactQMLConfig,
   injectPolyfillIntoEntry,
-} from '../makeReactNativeConfig';
+} from '../makeReactQMLConfig';
 
 test('creates config from defaults', () => {
   const webpackConfig = require('./fixtures/webpack.config.js');
-  const [configs, platforms] = makeReactNativeConfig(webpackConfig, {
+  const [configs, platforms] = makeReactQMLConfig(webpackConfig, {
     dev: true,
     root: path.resolve(__dirname, 'fixtures'),
   });
@@ -27,7 +27,7 @@ test('creates config from defaults', () => {
 
 test('merges existing config', () => {
   const webpackConfig = require('./fixtures/webpack.custom.config.js');
-  const [configs] = makeReactNativeConfig(webpackConfig, {
+  const [configs] = makeReactQMLConfig(webpackConfig, {
     dev: true,
     root: path.resolve(__dirname, 'fixtures'),
   });
