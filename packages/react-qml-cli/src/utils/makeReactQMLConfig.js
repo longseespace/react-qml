@@ -92,22 +92,28 @@ const getDefaultConfig = ({
           ],
         },
         {
-          test: /\.(bmp|gif|jpg|jpeg|png|psd|svg|webp|m4v|aac|aiff|caf|m4a|mp3|wav|html|pdf|qml)$/,
-          use: [
-            {
-              loader: require.resolve('file-loader'),
-            },
-          ],
-        },
-        // FIXME: no need to explain, this is so bad
-        {
-          test: /main.qml$/,
+          test: /^(.+).qml$/,
           use: [
             {
               loader: require.resolve('file-loader'),
               options: {
-                name: 'main.qml',
+                name: file => {
+                  const filepath = file.replace(root, '');
+                  // FIXME: no need to explain, this is so bad
+                  if (filepath === '/main.qml') {
+                    return 'main.qml';
+                  }
+                  return '[hash].[ext]';
+                },
               },
+            },
+          ],
+        },
+        {
+          test: /\.(bmp|gif|jpg|jpeg|png|psd|svg|webp|m4v|aac|aiff|caf|m4a|mp3|wav|html|pdf)$/,
+          use: [
+            {
+              loader: require.resolve('file-loader'),
             },
           ],
         },
