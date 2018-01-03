@@ -99,6 +99,18 @@ const getDefaultConfig = ({
             },
           ],
         },
+        // FIXME: no need to explain, this is so bad
+        {
+          test: /main.qml$/,
+          use: [
+            {
+              loader: require.resolve('file-loader'),
+              options: {
+                name: 'main.qml',
+              },
+            },
+          ],
+        },
         {
           test: /runtime\.js$/,
           loader: StringReplacePlugin.replace({
