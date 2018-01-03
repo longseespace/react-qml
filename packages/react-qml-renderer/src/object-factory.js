@@ -29,6 +29,10 @@ const createQmlObject = (qmlContent, rootElem, name) => {
   return Qt.createQmlObject(qmlContent, getRoot(rootElem), name);
 };
 
+const createQmlObjectFromQtComponent = (component, rootElem, name) => {
+  return component.createObject(getRoot(rootElem));
+};
+
 export const makeAttributeNode = (name, value = null) => (
   console.log('makeAttributeNode'),
   {
@@ -49,6 +53,18 @@ export const makeElementNode = (name, defaultProp, qmlContent, rootElem) => (
     defaultProp,
     children: [],
     value: createQmlObject(qmlContent, rootElem, name),
+  }
+);
+
+export const makeElementNodeFromQtComponent = (name, defaultProp, component, rootElem) => (
+  console.log('makeElementNodeFromQtComponent'),
+  {
+    id: ++activeCounter,
+    type: ELEMENT,
+    name,
+    defaultProp,
+    children: [],
+    value: createQmlObjectFromQtComponent(component, rootElem, name),
   }
 );
 

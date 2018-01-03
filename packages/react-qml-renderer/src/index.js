@@ -3,7 +3,7 @@ import findIndex from 'lodash/findIndex';
 import toArray from 'lodash/toArray';
 import without from 'lodash/without';
 
-import { Registry, registerNativeComponentClass } from './Registry';
+import { Registry, registerNativeComponentClass, registerQtComponentClass } from './Registry';
 import { diffProps, setInitialProps, updateProps } from './QMLComponent';
 import {
   getPrevValue,
@@ -11,17 +11,19 @@ import {
   isElement,
   makeAttributeNode,
   makeElementNode,
+  makeElementNodeFromQtComponent,
   release,
   setAttribute,
 } from './object-factory';
 
 // FIXME: remove this
-export { registerNativeComponentClass };
+export { registerNativeComponentClass, registerQtComponentClass };
 
 export const QMLRenderer = Reconciler({
   createInstance(type, props, rootInstance) {
     console.log('createInstance ------------', type);
 
+    // FIXME: remove this
     if (type === 'qml') {
       const qmlContent = props.__qmlRawContent;
       const defaultProp = props.defaultProp || 'data';
@@ -34,8 +36,14 @@ export const QMLRenderer = Reconciler({
     }
 
     if (Registry[type]) {
-      const { qmlContent, defaultProp } = Registry[type];
-      return makeElementNode(type, defaultProp, qmlContent, rootInstance);
+      const { qmlContent, component, defaultProp } = Registry[type];
+      if (qmlContent) {
+        return makeElementNode(type, defaultProp, qmlContent, rootInstance);
+      }
+      if (component) {
+        return makeElementNodeFromQtComponent(type, defaultProp, component, rootInstance);
+      }
+      throw new Error(`bad implementation for type ${type}`);
     }
 
     throw new Error(`unknown type ${type}`);
