@@ -157,8 +157,8 @@ module.exports = ({
     },
     {
       name: 'config',
-      description: 'Path to config file, eg. webpack.qix.js',
-      default: 'webpack.qix.js',
+      description: 'Path to config file, eg. react-qml.config.js',
+      default: 'react-qml.config.js',
     },
   ],
 }: Command);

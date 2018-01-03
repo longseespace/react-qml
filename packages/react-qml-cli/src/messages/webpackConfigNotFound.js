@@ -12,9 +12,9 @@ module.exports = (directory: string) => dedent`
 
    Make sure:
    • You are running react-qml from your project directory
-   • You have a ${chalk.bold('webpack.qix.js')} file
+   • You have a ${chalk.bold('react-qml.config.js')} file
 
    Run ${chalk.bold('react-qml init')} to automatically generate a ${chalk.bold(
-  'webpack.qix.js'
+  'react-qml.config.js'
 )} file
 `;

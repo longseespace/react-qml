@@ -298,7 +298,7 @@ function makeReactQMLConfig(
 }
 
 /*
- * Takes user entries from webpack.qix.js,
+ * Takes user entries from react-qml.config.js,
  * change them to multi-point entries
  * and injects polyfills
  */
