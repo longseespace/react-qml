@@ -4177,10 +4177,6 @@ punycode@^1.2.4, punycode@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
 
-qml-loader@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/qml-loader/-/qml-loader-0.1.1.tgz#1ee1ddc2dd0d0b562187bacb47612c126ee5ae63"
-
 qs@6.5.0:
   version "6.5.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.0.tgz#8d04954d364def3efc55b5a0793e1e2c8b1e6e49"

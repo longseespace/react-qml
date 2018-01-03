@@ -56,7 +56,6 @@
     "opn": "^4.0.2",
     "ora": "^1.2.0",
     "promise-polyfill": "^6.1.0",
-    "qml-loader": "^0.1.1",
     "react-deep-force-update": "^2.0.1",
     "react-devtools-core": "^3.0.0",
     "react-hot-loader": "3.0.0-beta.7",
