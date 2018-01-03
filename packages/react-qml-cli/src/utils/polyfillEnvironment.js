@@ -11,8 +11,9 @@
 require('es6-map/implement');
 require('es6-set/implement');
 require('es6-symbol/implement');
-require('es6-weak-map/implement');
 
+// WeakMap polyfill not working in qml js environment
+global.WeakMap = Map;
 require('../../vendor/polyfills/console.js')(global);
 require('../../vendor/polyfills/timer.js')(global);
 require('../../vendor/polyfills/websocket.js')(global);
