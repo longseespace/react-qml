@@ -39,7 +39,7 @@ const DEFAULT_BABELRC = {
     'transform-react-jsx-source',
     'transform-react-jsx',
     'transform-es2015-for-of',
-    'async-to-promises',
+    // 'async-to-promises',
   ],
 };
 

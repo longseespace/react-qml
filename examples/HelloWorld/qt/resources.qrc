@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/">
+    <file>loader_dev.qml</file>
+    <file>loader_prod.qml</file>
+  </qresource>
+</RCC>

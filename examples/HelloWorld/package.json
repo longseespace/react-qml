@@ -3,16 +3,15 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "qix start --dev=true --platform=macos",
-    "build": "qix bundle --platform=macos --bundleOutput=qt/macos.bundle.js"
+    "start": "react-qml start --dev --platform=macos",
+    "build": "NODE_ENV=production react-qml bundle --platform=macos"
   },
   "dependencies": {
-    "qix": "^0.1.1",
-    "qml-react": "^2.0.0",
-    "qt-react": "^2.0.1",
-    "react": "16.0.0"
+    "react": "16.0.0",
+    "react-qml-renderer": "^0.2.1"
   },
   "devDependencies": {
-    "babel-preset-react-native": "^4.0.0"
+    "babel-preset-react-native": "^4.0.0",
+    "react-qml-cli": "^0.2.2"
   }
 }

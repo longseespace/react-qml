@@ -1,6 +1,0 @@
-<RCC>
-  <qresource prefix="/">
-    <file>macos.bundle.js</file>
-    <file>main.qml</file>
-  </qresource>
-</RCC>

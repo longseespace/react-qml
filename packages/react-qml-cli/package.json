@@ -26,6 +26,7 @@
   "dependencies": {
     "babel-core": "^6.24.0",
     "babel-loader": "^7.1.2",
+    "babel-plugin-async-to-promises": "^1.0.5",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-env": "^1.2.2",
@@ -74,7 +75,6 @@
   "devDependencies": {
     "all-contributors-cli": "^4.5.1",
     "babel-jest": "test",
-    "babel-plugin-async-to-promises": "^1.0.5",
     "babel-preset-react-native": "^2.0.0",
     "eslint": "^4.3.0",
     "eslint-config-callstack-io": "^1.0.1",
