@@ -3,15 +3,13 @@ QT += qml quick quickcontrols2 websockets
 CONFIG += c++14
 
 SOURCES += main.cpp
-HEADERS += platform.h
+RESOURCES += resources.qrc
 
 CONFIG(debug, debug|release) {
   message("debug mode")
   DEFINES += DEBUG
-
-  RESOURCES += debug.qrc
 } else {
   message("release mode")
 
-  RESOURCES += release.qrc
+  RESOURCES += dist/bundle.qrc
 }
