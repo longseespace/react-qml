@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "react-qml start --dev=true --platform=macos",
-    "build": "NODE_ENV=production react-qml bundle --platform=macos"
+    "build": "NODE_ENV=production react-qml bundle --platform=macos",
+    "remotedev": "remotedev --port=8000"
   },
   "dependencies": {
     "lodash": "^4.17.4",
@@ -18,6 +19,7 @@
   },
   "devDependencies": {
     "babel-preset-react-native": "^4.0.0",
-    "react-qml-cli": "^0.2.2"
+    "react-qml-cli": "^0.2.2",
+    "remotedev-server": "^0.2.4"
   }
 }

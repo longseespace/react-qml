@@ -1,15 +1,15 @@
-import { applyMiddleware, createStore, compose } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'remote-redux-devtools';
 import reduxThunk from 'redux-thunk';
 
 import rootReducer from './reducers';
 
-console.log('process.env.NODE_ENV', process.env.NODE_ENV);
-
-const composeEnhancers =
-  process.env.NODE_ENV === 'development'
-    ? composeWithDevTools({ suppressConnectErrors: false })
-    : compose;
+const composeEnhancers = composeWithDevTools({
+  suppressConnectErrors: false,
+  host: 'localhost',
+  port: 8000,
+  realtime: true,
+});
 
 const enhancers = composeEnhancers(applyMiddleware(reduxThunk));
 
