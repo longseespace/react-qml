@@ -73,7 +73,7 @@ const getDefaultConfig = ({
         { parser: { requireEnsure: false } },
         {
           test: /\.js$/,
-          exclude: /node_modules\/(?!react|@expo|pretty-format|react-qml)/,
+          exclude: /node_modules\/(?!react|@expo|pretty-format|react-qml|react-qml-cli)/,
           use: [
             {
               loader: require.resolve('thread-loader'),
@@ -186,12 +186,6 @@ const getDefaultConfig = ({
         debug: dev,
       }),
       new StringReplacePlugin(),
-      new GenerateAssetPlugin({
-        filename: 'bundle.qrc',
-        fn: (compilation, cb) => {
-          cb(null, createQrc(compilation));
-        },
-      }),
     ]
       .concat(
         dev
@@ -217,6 +211,12 @@ const getDefaultConfig = ({
                 filename: '[file].map',
               }),
               new webpack.optimize.ModuleConcatenationPlugin(),
+              new GenerateAssetPlugin({
+                filename: 'bundle.qrc',
+                fn: (compilation, cb) => {
+                  cb(null, createQrc(compilation));
+                },
+              }),
             ]
       )
       .concat(
