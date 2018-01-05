@@ -1,0 +1,29 @@
+{
+  "name": "react-qml",
+  "version": "0.2.2",
+  "description": "React QML - Qt QML Plugin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/longseespace/react-qml.git"
+  },
+  "keywords": [
+    "react",
+    "react-qml",
+    "qml",
+    "qt",
+    "desktop",
+    "native",
+    "qtquick",
+    "qt5"
+  ],
+  "author": "Long Nguyen <long@podzim.co>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/longseespace/react-qml/issues"
+  },
+  "homepage": "https://github.com/longseespace/react-qml#readme"
+}

@@ -37,7 +37,4 @@ Makefile*
 # QtCtreator CMake
 CMakeLists.txt.user*
 
-dist/*
-*.build.js
-macos.bundle.js
-macos.bundle.js.map
+*/dist/*
