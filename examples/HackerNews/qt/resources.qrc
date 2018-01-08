@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="/">
+    <file>qtquickcontrols2.conf</file>
+    <file>loader_dev.qml</file>
+    <file>loader_prod.qml</file>
+    <file>fonts/Roboto-Light.ttf</file>
+    <file>fonts/Roboto-Regular.ttf</file>
+  </qresource>
+</RCC>
