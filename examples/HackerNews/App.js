@@ -4,8 +4,6 @@ import { Switch } from 'react-router';
 import * as React from 'react';
 
 import HomePage from './src/pages/HomePage';
-import LoginPage from './src/pages/LoginPage';
-import ProtectedRoute from './src/components/ProtectedRoute';
 import Route from './src/components/Route';
 
 class App extends React.Component {
@@ -33,9 +31,7 @@ class App extends React.Component {
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <Switch>
-            <Route path="/login" component={LoginPage} />
             <Route exact path="/" component={HomePage} />
-            <ProtectedRoute exact path="/profile" component={HomePage} />
           </Switch>
         </ConnectedRouter>
       </Provider>
