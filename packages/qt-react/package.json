@@ -1,6 +1,6 @@
 {
   "name": "qt-react",
-  "version": "2.2.12",
+  "version": "2.2.13",
   "description": "",
   "main": "index.js",
   "files": [
@@ -25,10 +25,10 @@
     "lodash": "^4.17.4",
     "mkdirp": "^0.5.1",
     "react": "^16.2.0",
-    "react-qml-renderer": "^0.2.1"
+    "react-qml-renderer": "^0.2.2"
   },
   "peerDependencies": {
     "react": "*",
-    "react-qml-renderer": "*"
+    "react-qml-renderer": "^0.2.2"
   }
 }

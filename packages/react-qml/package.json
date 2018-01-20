@@ -1,6 +1,6 @@
 {
   "name": "react-qml",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "React QML - Qt QML Plugin",
   "main": "index.js",
   "scripts": {
