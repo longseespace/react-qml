@@ -1,3 +1,5 @@
+include('./MaterialIcon/MaterialIcon.pri')
+
 QT += qml quick quickcontrols2 websockets
 
 CONFIG += c++14

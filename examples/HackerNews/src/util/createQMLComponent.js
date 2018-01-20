@@ -25,6 +25,10 @@ const createQMLComponent = (source, name, defaultProp = 'data') => {
       component.statusChanged.connect(this.updateStatus);
     }
 
+    componentWillUnmount() {
+      component.statusChanged.disconnect(this.updateStatus);
+    }
+
     render() {
       const { status } = this.state;
       if (status === 1) {

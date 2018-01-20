@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.0
 import QtWebSockets 1.0
 import QtQuick.Window 2.2
 import Qt.labs.settings 1.0
+import MaterialIcon 1.0
 
 Item {
 
@@ -46,6 +47,7 @@ Item {
   FontLoader {
     source: "/fonts/Roboto-Light.ttf"
   }
+  MaterialIconLoader {}
 
   ApplicationWindow {
     id: __window__

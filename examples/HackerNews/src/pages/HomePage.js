@@ -17,7 +17,12 @@ class HomePage extends React.Component {
     return (
       <Rectangle color="#f5f5f6" {...fillWindow}>
         <ColumnLayout {...fillWindow}>
-          <AppBar Layout={{ fillWidth: true, alignment: 'AlignTop' }} z={1} />
+          <AppBar
+            Layout={{ fillWidth: true, alignment: 'AlignTop' }}
+            z={1}
+            title="Hacker News"
+            leftButtonIcon="menu"
+          />
         </ColumnLayout>
       </Rectangle>
     );

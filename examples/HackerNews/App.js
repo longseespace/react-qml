@@ -21,6 +21,12 @@ class App extends React.Component {
     console.log('App', 'componentWillUnmount');
   }
 
+  componentDidCatch(error, info) {
+    // You can also log the error to an error reporting service
+    console.log('Error');
+    console.log(error, info);
+  }
+
   render() {
     const { store, history } = this.props;
     return (

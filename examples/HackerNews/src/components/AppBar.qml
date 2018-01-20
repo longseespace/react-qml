@@ -3,11 +3,14 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import QtQuick.Window 2.2
 import QtQuick.Controls.Material 2.0
+import MaterialIcon 1.0
 
 ToolBar {
-  property alias backIcon: backButtonImage.source
+  id: toolbar
+
+  property string leftButtonIcon
   property alias title: titleLabel.text
-  signal backButtonClicked()
+  signal leftButtonClicked()
 
   Material.foreground: "white"
   Material.background: Material.Indigo
@@ -19,25 +22,23 @@ ToolBar {
     anchors.fill: parent
 
     ToolButton {
-      id: backButton
+      id: leftButton
 
-      contentItem: Image {
-        id: backButtonImage
-
-        horizontalAlignment: Image.AlignHCenter
-        verticalAlignment: Image.AlignVCenter
-        fillMode: Image.Pad
-        sourceSize.width: 16
-        sourceSize.height: 16
+      contentItem: MaterialIcon {
+        source: toolbar.leftButtonIcon
+        size: 16
+        color: 'white'
       }
+
       onClicked: {
-        backButtonClicked()
+        leftButtonClicked()
       }
     }
 
     Label {
       id: titleLabel
-      font.pixelSize: 20
+      font.pixelSize: 18
+      font.family: "Roboto"
 
       elide: Label.ElideRight
       horizontalAlignment: Qt.AlignHCenter
@@ -46,7 +47,7 @@ ToolBar {
     }
 
     Item {
-      width: backButton.width
+      width: leftButton.width
     }
   }
 }
