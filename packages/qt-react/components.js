@@ -303,6 +303,7 @@ const components = {
       'XAnimator',
       'YAnimator',
       'RegExpValidator',
+      'Component',
     ],
   },
   'QtQuick.Window': {
