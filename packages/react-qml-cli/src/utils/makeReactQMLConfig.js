@@ -262,7 +262,7 @@ const getDefaultConfig = ({
        * Match what React Native packager supports
        * First entry takes precendece
        */
-      mainFields: ['react-native', 'browser', 'main'],
+      mainFields: ['browser', 'main'],
       extensions: [`.${platform}.js`, '.native.js', '.js'],
     },
     /**
