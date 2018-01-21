@@ -13,7 +13,7 @@
     "history": "^4.7.2",
     "lodash": "^4.17.4",
     "md5": "^2.2.1",
-    "qt-react": "^2.2.11",
+    "qt-react": "^2.2.13",
     "query-string": "^5.0.1",
     "react": "16.0.0",
     "react-qml-renderer": "^0.2.0",

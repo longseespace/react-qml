@@ -2607,9 +2607,9 @@ qs@~6.4.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.4.0.tgz#13e26d28ad6b0ffaa91312cd3bf708ed351e7233"
 
-qt-react@^2.2.11:
-  version "2.2.12"
-  resolved "https://registry.yarnpkg.com/qt-react/-/qt-react-2.2.12.tgz#de55472919a4b4af4df6c89621dc4685ca919437"
+qt-react@^2.2.13:
+  version "2.2.13"
+  resolved "https://registry.yarnpkg.com/qt-react/-/qt-react-2.2.13.tgz#019cce9b0bbf814aebae29e52d2976affccb8a92"
 
 query-string@^5.0.1:
   version "5.0.1"

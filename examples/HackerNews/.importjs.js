@@ -1,5 +1,5 @@
 module.exports = {
-  environments: ['browser', 'jest'],
+  environments: ['browser', 'jest', 'node'],
   declarationKeyword: 'import',
   namedExports: {
     reselect: ['createSelector', 'createStructuredSelector'],

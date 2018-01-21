@@ -22,7 +22,8 @@ class App extends React.Component {
   componentDidCatch(error, info) {
     // You can also log the error to an error reporting service
     console.log('Error');
-    console.log(error, info);
+    console.log(error);
+    console.log(require('util').inspect(info, { depth: 2 }));
   }
 
   render() {
