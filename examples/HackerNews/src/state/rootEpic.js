@@ -1,4 +1,6 @@
 /* @flow */
 import { combineEpics } from 'redux-observable';
 
-export default combineEpics();
+import storyEpic from '../components/StoryEpic';
+
+export default combineEpics(storyEpic);

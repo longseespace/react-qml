@@ -9,7 +9,6 @@
     "build": "NODE_ENV=production react-qml bundle --platform=macos"
   },
   "dependencies": {
-    "firebase": "^4.8.1",
     "history": "^4.7.2",
     "lodash": "^4.17.4",
     "md5": "^2.2.1",

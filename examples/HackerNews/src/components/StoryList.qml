@@ -4,51 +4,41 @@ import QtQuick.Controls 2.0
 import QtQuick.Controls.Material 2.0
 
 ListView {
+  id: listView
+
+  property var stories: []
+  property string hash
+
+  onHashChanged: {
+    var count = model.count;
+    if (stories.length > count) {
+      var appendedStories = stories.slice(count, stories.length);
+      stories.forEach(model.appendStory);
+    }
+  }
 
   width: 360
   Layout.fillHeight: true
-
   anchors.fill: parent
 
   model: ListModel {
-      ListElement {
-          title: "My YC app: Dropbox - Throw away your USB drive"
-          by: "dhouston"
-          url: "http://www.getdropbox.com/u/2/screencast.html"
-          time: ""
-      }
-      ListElement {
-          title: "Justin.tv is looking for a Lead Flash Engineer!"
-          by: "justin"
-          url: ""
-          time: ""
-      }
-      ListElement {
-          title: "Ask HN: The Arc Effect"
-          by: "tel"
-          url: ""
-          time: ""
-      }
-      ListElement {
-          title: "Clinical trial finds blood-plasma infusions for Alzheimer’s safe, promising"
-          by: "monort"
-          url: ""
-          time: ""
-      }
-      ListElement {
-          title: "How drug lords make billions smuggling gold to Miami for your jewelry and phones"
-          by: "johnny313"
-          url: ""
-          time: ""
-      }
-      ListElement {
-          title: "Brushing up on operating systems and C programming"
-          by: "shbhrsaha"
-          url: "http://www.shubhro.com/2018/01/20/brushing-up-os-c/"
-          time: "3 hrs"
-          descendants: 14
-          score: 70
-      }
+    id: model
+
+    function appendStory(story) {
+      append({
+        title: story.title,
+        by: story.by,
+        comments: story.descendants || 0,
+        time: story.time,
+        score: story.score,
+        text: story.text,
+        url: story.url
+      })
+    }
+
+    Component.onCompleted: {
+      stories.forEach(appendStory);
+    }
   }
 
   delegate: Component {
@@ -56,22 +46,32 @@ ListView {
 
       Column {
         padding: 12
-        spacing: 3
+        spacing: 5
 
         Text {
           text: title
 
-          width: 300
+          width: 336
           font.family: "Roboto"
           font.pointSize: 16
           wrapMode: Text.WordWrap
         }
         Row {
-          width: 300
+          width: 336
           spacing: 12
 
           Text {
-            text: by
+            text: score + ' points by ' + by
+
+            font.family: "Roboto"
+            font.pointSize: 12
+            color: '#888'
+            wrapMode: Text.WordWrap
+          }
+
+          Text {
+            text: comments + ' comments'
+            visible: comments > 0
 
             font.family: "Roboto"
             font.pointSize: 12
@@ -94,7 +94,7 @@ ListView {
           text: url
           visible: url.length > 0
 
-          width: 300
+          width: 336
           font.family: "Roboto"
           font.pointSize: 12
           color: '#888'
@@ -105,7 +105,7 @@ ListView {
       Rectangle {
         width: 360
         height: 1
-        color: '#ccc'
+        color: '#ddd'
       }
     }
   }
