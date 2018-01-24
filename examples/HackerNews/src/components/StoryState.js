@@ -1,7 +1,7 @@
 /* @flow */
 import { ACTIONS, makeFetchAction } from 'redux-api-call';
 import { combineReducers } from 'redux';
-import { findIndex, flow, last, map, path, slice } from 'lodash/fp';
+import { flow, last, map, path, slice } from 'lodash/fp';
 
 export type ItemType = 'job' | 'story' | 'comment' | 'poll' | 'pollopt';
 
@@ -68,11 +68,9 @@ export const loadMoreTopStory = (howMany: number = 10) => (
   const topStoryList = topStoryListSelector(state);
   const lastStory = flow(topStoryItemsSelector, last)(state);
   const lastStoryIndex = topStoryList.indexOf(lastStory.id);
-  console.log('lastStoryIndex', lastStoryIndex);
   const newIds = slice(lastStoryIndex + 1, lastStoryIndex + howMany)(
     topStoryList
   );
-  console.log('newIds', newIds);
   const actions = map(id => getStoryItem(id, 'topstories'))(newIds);
   return dispatch(actions);
 };

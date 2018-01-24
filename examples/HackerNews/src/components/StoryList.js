@@ -28,15 +28,6 @@ const connectToRedux = connect(
 const computeHash = flow(map('id'), join(','), md5);
 
 class StoryList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.topStoryItems && this.model) {
-      console.log('right');
-    }
-  }
-
   componentWillMount() {
     const { getStoryList } = this.props;
     getStoryList('topstories');
