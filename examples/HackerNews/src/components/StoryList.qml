@@ -13,13 +13,17 @@ ListView {
     var count = model.count;
     if (stories.length > count) {
       var appendedStories = stories.slice(count, stories.length);
-      stories.forEach(model.appendStory);
+      appendedStories.forEach(model.appendStory);
     }
   }
 
   width: 360
   Layout.fillHeight: true
   anchors.fill: parent
+
+  ScrollIndicator.vertical: ScrollIndicator {
+    active: true
+  }
 
   model: ListModel {
     id: model

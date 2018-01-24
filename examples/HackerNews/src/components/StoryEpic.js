@@ -10,7 +10,7 @@ const fetchStoryItemsAfterIDsReceived = action$ =>
     .ofType(ACTIONS.COMPLETE)
     .pipe(
       filter(flow(path('payload.name'), eq(GET_STORY_LIST))),
-      map(over([path('payload.type'), flow(path('payload.json'), take(10))])),
+      map(over([path('payload.type'), flow(path('payload.json'), take(30))])),
       map(([storyType, storyIds]) =>
         storyIds.map(id => getStoryItem(id, storyType))
       )
