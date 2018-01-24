@@ -3,7 +3,12 @@ import { flow, join, map } from 'lodash/fp';
 import React from 'react';
 import md5 from 'md5';
 
-import { getStoryList, topStoryItemsSelector } from './StoryState';
+import {
+  loadMoreTopStory,
+  getStoryList,
+  isGettingStoryItemSelector,
+  topStoryItemsSelector,
+} from './StoryState';
 import createQMLComponent from '../util/createQMLComponent';
 import qmlSource from './StoryList.qml';
 
@@ -12,15 +17,20 @@ const StoryListQML = createQMLComponent(qmlSource, 'App.StoryList');
 const connectToRedux = connect(
   state => ({
     topStoryItems: topStoryItemsSelector(state),
+    loading: isGettingStoryItemSelector(state),
   }),
   {
     getStoryList,
+    onLoadMoreClicked: loadMoreTopStory,
   }
 );
 
 const computeHash = flow(map('id'), join(','), md5);
 
 class StoryList extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   componentWillReceiveProps(nextProps) {
     if (nextProps.topStoryItems && this.model) {
       console.log('right');
@@ -34,9 +44,14 @@ class StoryList extends React.Component {
 
   render() {
     // eslint-disable-next-line no-unused-vars
-    const { topStoryItems, getStoryList, ...otherProps } = this.props;
+    const { topStoryItems, loading, onLoadMoreClicked } = this.props;
     return (
-      <StoryListQML stories={topStoryItems} hash={computeHash(topStoryItems)} />
+      <StoryListQML
+        loading={loading}
+        stories={topStoryItems}
+        hash={computeHash(topStoryItems)}
+        onLoadMoreClicked={onLoadMoreClicked}
+      />
     );
   }
 }

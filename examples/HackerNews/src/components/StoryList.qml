@@ -6,8 +6,11 @@ import QtQuick.Controls.Material 2.0
 ListView {
   id: listView
 
+  property bool loading: false
   property var stories: []
   property string hash
+
+  signal loadMoreClicked();
 
   onHashChanged: {
     var count = model.count;
@@ -111,6 +114,19 @@ ListView {
         height: 1
         color: '#ddd'
       }
+    }
+  }
+
+  footer: Component {
+    Button {
+      onClicked: loadMoreClicked()
+
+      text: listView.loading ? 'Loading...' : 'Load More...'
+      enabled: !listView.loading
+      visible: model.count > 0
+      width: 360
+      height: 40
+      flat: true
     }
   }
 }

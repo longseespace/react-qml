@@ -1,7 +1,7 @@
 /* @flow */
 import { ACTIONS, makeFetchAction } from 'redux-api-call';
 import { combineReducers } from 'redux';
-import { path } from 'lodash/fp';
+import { findIndex, flow, last, map, path, slice } from 'lodash/fp';
 
 export type ItemType = 'job' | 'story' | 'comment' | 'poll' | 'pollopt';
 
@@ -60,9 +60,27 @@ export const GetStoryItemAPI = makeFetchAction(
 export const getStoryList = GetStoryListAPI.actionCreator;
 export const getStoryItem = GetStoryItemAPI.actionCreator;
 
+export const loadMoreTopStory = (howMany: number = 10) => (
+  dispatch: Function,
+  getState: Function
+) => {
+  const state = getState();
+  const topStoryList = topStoryListSelector(state);
+  const lastStory = flow(topStoryItemsSelector, last)(state);
+  const lastStoryIndex = topStoryList.indexOf(lastStory.id);
+  console.log('lastStoryIndex', lastStoryIndex);
+  const newIds = slice(lastStoryIndex + 1, lastStoryIndex + howMany)(
+    topStoryList
+  );
+  console.log('newIds', newIds);
+  const actions = map(id => getStoryItem(id, 'topstories'))(newIds);
+  return dispatch(actions);
+};
+
 // selectors
 // ---------
 export const topStoryItemsSelector = path('story.topStoryItems');
+export const topStoryListSelector = path('story.topStoryList');
 
 export const isGettingStoryListSelector = GetStoryListAPI.isFetchingSelector;
 export const getStoryListErrorSelector = GetStoryListAPI.errorSelector;
