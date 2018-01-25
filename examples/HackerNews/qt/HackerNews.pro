@@ -1,6 +1,6 @@
 include('./MaterialIcon/MaterialIcon.pri')
 
-QT += qml quick quickcontrols2 websockets
+QT += qml quick quickcontrols2 websockets webengine
 
 CONFIG += c++14
 

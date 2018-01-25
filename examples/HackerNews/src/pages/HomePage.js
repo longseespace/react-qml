@@ -5,15 +5,23 @@ import * as React from 'react';
 import Rectangle from 'qt-react/QtQuick/2.7/Rectangle';
 
 import { fillWindow } from '../util/binding';
+import { getStoryList } from '../components/StoryState';
 import AppBar from '../components/AppBar';
 import StoryList from '../components/StoryList';
+import WebView from '../components/WebView';
 
 const connectToRedux = connect(null, {
   calibrate: () => push('/calibration'),
   scan: () => push('/scan'),
+  onPageLoaded: () => getStoryList('topstories'),
 });
 
 class HomePage extends React.Component {
+  componentWillMount() {
+    const { onPageLoaded } = this.props;
+    onPageLoaded();
+  }
+
   render() {
     return (
       <GridLayout {...fillWindow} columns={2} columnSpacing={0}>
@@ -34,14 +42,7 @@ class HomePage extends React.Component {
         >
           <StoryList width={360} />
         </Rectangle>
-        <Rectangle
-          color="#eee"
-          Layout={{
-            fillWidth: true,
-            fillHeight: true,
-            alignment: 'AlignTop',
-          }}
-        />
+        <WebView />
       </GridLayout>
     );
   }

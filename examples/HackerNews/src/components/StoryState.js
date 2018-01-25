@@ -113,7 +113,9 @@ const topStoryList = (state: number[] = [], { type, payload }): number[] => {
   return state;
 };
 
-export default combineReducers({
-  topStoryItems,
-  topStoryList,
-});
+export default {
+  story: combineReducers({
+    topStoryItems,
+    topStoryList,
+  }),
+};

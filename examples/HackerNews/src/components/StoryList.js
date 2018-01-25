@@ -5,10 +5,10 @@ import md5 from 'md5';
 
 import {
   loadMoreTopStory,
-  getStoryList,
   isGettingStoryItemSelector,
   topStoryItemsSelector,
 } from './StoryState';
+import { loadStory } from './WebViewState';
 import createQMLComponent from '../util/createQMLComponent';
 import qmlSource from './StoryList.qml';
 
@@ -20,28 +20,29 @@ const connectToRedux = connect(
     loading: isGettingStoryItemSelector(state),
   }),
   {
-    getStoryList,
     onLoadMoreClicked: loadMoreTopStory,
+    onStoryClicked: loadStory,
   }
 );
 
 const computeHash = flow(map('id'), join(','), md5);
 
 class StoryList extends React.Component {
-  componentWillMount() {
-    const { getStoryList } = this.props;
-    getStoryList('topstories');
-  }
-
   render() {
     // eslint-disable-next-line no-unused-vars
-    const { topStoryItems, loading, onLoadMoreClicked } = this.props;
+    const {
+      topStoryItems,
+      loading,
+      onLoadMoreClicked,
+      onStoryClicked,
+    } = this.props;
     return (
       <StoryListQML
         loading={loading}
         stories={topStoryItems}
         hash={computeHash(topStoryItems)}
         onLoadMoreClicked={onLoadMoreClicked}
+        onStoryClicked={onStoryClicked}
       />
     );
   }
