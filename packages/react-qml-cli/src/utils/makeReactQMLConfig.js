@@ -57,6 +57,8 @@ const getDefaultConfig = ({
 }): WebpackConfig => {
   process.env.NODE_ENV = dev ? 'development' : 'production';
 
+  const devServerHost = process.env.DEV_SERVER_HOST || 'localhost';
+
   // Getting Minor version
   const platformProgressBar = haulProgressBar(platform);
   return {
@@ -176,7 +178,7 @@ const getDefaultConfig = ({
          */
         'process.env': {
           NODE_ENV: dev ? '"development"' : '"production"',
-          DEV_SERVER_ORIGIN: JSON.stringify(`ws://localhost:${port}`),
+          DEV_SERVER_ORIGIN: JSON.stringify(`ws://${devServerHost}:${port}`),
           __REACT_DEVTOOLS_PORT__: process.env.__REACT_DEVTOOLS_PORT__,
         },
         __DEV__: dev,
