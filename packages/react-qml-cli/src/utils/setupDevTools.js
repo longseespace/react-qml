@@ -14,7 +14,7 @@ function setup(global) {
   const reactDevTools = require('react-devtools-core');
   try {
     reactDevTools.connectToDevTools({
-      host: process.env.__REACT_DEVTOOLS_HOST__ || 'localhost',
+      host: 'localhost',
       port: process.env.__REACT_DEVTOOLS_PORT__,
     });
   } catch (e) {
