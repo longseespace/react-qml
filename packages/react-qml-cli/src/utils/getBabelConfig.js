@@ -38,7 +38,12 @@ const DEFAULT_BABELRC = {
     'transform-react-display-name',
     'transform-react-jsx-source',
     'transform-react-jsx',
-    'transform-es2015-for-of',
+    [
+      'transform-es2015-for-of',
+      {
+        loose: true,
+      },
+    ],
     // 'async-to-promises',
   ],
 };
