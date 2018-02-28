@@ -75,7 +75,7 @@ const getDefaultConfig = ({
         { parser: { requireEnsure: false } },
         {
           test: /\.js$/,
-          exclude: /node_modules\/(?!react|@expo|pretty-format|react-qml|react-qml-cli)/,
+          exclude: /node_modules(\/|\\)(?!react|@expo|pretty-format|react-qml|react-qml-cli)/,
           use: [
             {
               loader: require.resolve('thread-loader'),
@@ -133,7 +133,7 @@ const getDefaultConfig = ({
           }),
         },
         {
-          test: /rxjs\/.*\.js$/,
+          test: /rxjs(\/|\\).*\.js$/,
           loader: StringReplacePlugin.replace({
             replacements: [
               {
@@ -146,7 +146,7 @@ const getDefaultConfig = ({
           }),
         },
         {
-          test: /(invariant|invariant\/browser)\.js$/,
+          test: /(invariant|invariant(\/|\\)browser)\.js$/,
           loader: StringReplacePlugin.replace({
             replacements: [
               {
