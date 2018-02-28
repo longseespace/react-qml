@@ -102,7 +102,7 @@ const getDefaultConfig = ({
                 name: file => {
                   const filepath = file.replace(root, '');
                   // FIXME: no need to explain, this is so bad
-                  if (filepath === '/main.qml') {
+                  if (filepath === '/main.qml' || filepath === '\\main.qml') {
                     return 'main.qml';
                   }
                   return '[hash].[ext]';
