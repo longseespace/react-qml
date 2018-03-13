@@ -53,14 +53,19 @@ function setupWebSocket(global) {
         this.binaryMessageReceived = this.binaryMessageReceived.bind(this);
         this.textMessageReceived = this.textMessageReceived.bind(this);
 
-        this.qtWebSocket = Qt.createQmlObject('import QtWebSockets 1.1; WebSocket { url: "' + url + '"}', Qt.application); // url should be set inside qml object or socket won't work (qml bug?)
+        if (RQ) {
+          this.qtWebSocket = RQ.createWebSocket();
+        } else {
+          this.qtWebSocket = Qt.createQmlObject('import QtWebSockets 1.1; WebSocket { url: "' + url + '"}', Qt.application); // url should be set inside qml object or socket won't work (qml bug?)
+        }
+
         this.qtWebSocket.statusChanged.connect(this.statusChanged);
         this.qtWebSocket.binaryMessageReceived.connect(this.binaryMessageReceived);
         this.qtWebSocket.textMessageReceived.connect(this.textMessageReceived);
 
-        console.log('url', url);
+        // console.log('url', url);
 
-    //            this.qtWebSocket.url = url; // socket won't work (qt bug?)
+        this.qtWebSocket.url = url; // socket won't work (qt bug?)
         this.qtWebSocket.active = true;
     }
 
