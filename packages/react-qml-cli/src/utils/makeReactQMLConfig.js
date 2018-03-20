@@ -99,13 +99,11 @@ const getDefaultConfig = ({
             {
               loader: require.resolve('file-loader'),
               options: {
-                name: file => {
-                  const filepath = file.replace(root, '');
-                  // FIXME: no need to explain, this is so bad
-                  if (filepath === '/main.qml' || filepath === '\\main.qml') {
-                    return 'main.qml';
+                name: () => {
+                  if (dev) {
+                    return '[path][name].[ext]?[hash]';
                   }
-                  return '[hash].[ext]';
+                  return '[path][name].[ext]';
                 },
               },
             },
@@ -116,6 +114,14 @@ const getDefaultConfig = ({
           use: [
             {
               loader: require.resolve('file-loader'),
+              options: {
+                name: () => {
+                  if (dev) {
+                    return '[path][name].[ext]?[hash]';
+                  }
+                  return '[path][name].[ext]';
+                },
+              },
             },
           ],
         },
