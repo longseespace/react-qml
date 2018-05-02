@@ -187,6 +187,8 @@ const getDefaultConfig = ({
         'process.env.DEV_SERVER_ORIGIN': JSON.stringify(
           `ws://${devServerHost}:${port}`
         ),
+        'process.env.__REACT_DEVTOOLS_HOST__':
+          process.env.__REACT_DEVTOOLS_HOST__ || JSON.stringify(devServerHost),
         'process.env.__REACT_DEVTOOLS_PORT__':
           process.env.__REACT_DEVTOOLS_PORT__,
         __DEV__: dev,
