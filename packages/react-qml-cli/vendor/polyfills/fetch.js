@@ -13,6 +13,11 @@ function setup(global) {
   global.Response = function() {};
 }
 
+// needed for sentry's fetch detection
+function Headers() {}
+function Request() {}
+function Response() {}
+
 if (typeof module !== 'undefined') {
   module.exports = setup;
 } else {
