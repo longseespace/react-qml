@@ -36,7 +36,6 @@
     "babel-plugin-async-to-promises": "^1.0.5",
     "babel-plugin-transform-remove-console": "^6.8.5",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-react-native": "^4.0.0",
     "react": "^16.2.0"
   }
 }
