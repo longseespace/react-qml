@@ -303,7 +303,7 @@ babel-helper-get-function-arity@^6.24.1:
     babel-runtime "^6.22.0"
     babel-types "^6.24.1"
 
-babel-helper-hoist-variables@^6.24.1:
+babel-helper-hoist-variables@^6.24.1, babel-helper-hoist-variables@^6.5.0:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-helper-hoist-variables/-/babel-helper-hoist-variables-6.24.1.tgz#1ecb27689c9d25513eadbc9914a73f5408be7a76"
   dependencies:
@@ -366,6 +366,15 @@ babel-messages@^6.23.0:
   resolved "https://registry.yarnpkg.com/babel-messages/-/babel-messages-6.23.0.tgz#f3cdf4703858035b2a2951c6ec5edf6c62f2630e"
   dependencies:
     babel-runtime "^6.22.0"
+
+babel-plugin-async-to-promises@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/babel-plugin-async-to-promises/-/babel-plugin-async-to-promises-1.0.5.tgz#cfdc47d1468ce32bee6d38862bfccd2b59daf25b"
+  dependencies:
+    babel-helper-hoist-variables "^6.5.0"
+    babel-template "^6.3.13"
+    babel-types "^6.5.2"
+    js-extend "^1.0.1"
 
 babel-plugin-check-es2015-constants@^6.22.0, babel-plugin-check-es2015-constants@^6.5.0:
   version "6.22.0"
@@ -748,7 +757,7 @@ babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
     core-js "^2.4.0"
     regenerator-runtime "^0.11.0"
 
-babel-template@^6.24.1, babel-template@^6.26.0, babel-template@^6.7.0:
+babel-template@^6.24.1, babel-template@^6.26.0, babel-template@^6.3.13, babel-template@^6.7.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-template/-/babel-template-6.26.0.tgz#de03e2d16396b069f46dd9fff8521fb1a0e35e02"
   dependencies:
@@ -772,7 +781,7 @@ babel-traverse@^6.24.1, babel-traverse@^6.26.0:
     invariant "^2.2.2"
     lodash "^4.17.4"
 
-babel-types@^6.19.0, babel-types@^6.24.1, babel-types@^6.26.0:
+babel-types@^6.19.0, babel-types@^6.24.1, babel-types@^6.26.0, babel-types@^6.5.2:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-types/-/babel-types-6.26.0.tgz#a3b073f94ab49eb6fa55cd65227a334380632497"
   dependencies:
@@ -2214,6 +2223,10 @@ js-data@^2.9.0:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/js-data/-/js-data-2.10.0.tgz#8ddaa1b5e5b81384b29bc4d949bc8cc09be16d84"
 
+js-extend@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/js-extend/-/js-extend-1.0.1.tgz#50551ab1ac71d4bb302e4040ebbe59033ba2b1f7"
+
 js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
@@ -3067,12 +3080,13 @@ react-proxy@^3.0.0-alpha.0:
   dependencies:
     lodash "^4.6.1"
 
-react-qml-cli@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/react-qml-cli/-/react-qml-cli-0.2.2.tgz#396fcee138b0fdb76da87eab3c7a8a65cb948f77"
+react-qml-cli@^0.2.11:
+  version "0.2.11"
+  resolved "https://registry.yarnpkg.com/react-qml-cli/-/react-qml-cli-0.2.11.tgz#4c9f665c31c99584ba38e1701c0c020de0bd1684"
   dependencies:
     babel-core "^6.24.0"
     babel-loader "^7.1.2"
+    babel-plugin-async-to-promises "^1.0.5"
     babel-plugin-transform-flow-strip-types "^6.22.0"
     babel-plugin-transform-object-rest-spread "^6.23.0"
     babel-preset-env "^1.2.2"
@@ -3118,9 +3132,9 @@ react-qml-cli@^0.2.2:
     webpack-hot-middleware "^2.19.1"
     ws "^2.2.2"
 
-react-qml-renderer@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/react-qml-renderer/-/react-qml-renderer-0.2.1.tgz#4f08ed353a4c29021477b0f7fe276c1719547829"
+react-qml-renderer@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/react-qml-renderer/-/react-qml-renderer-0.2.2.tgz#fa5fdb636c0b8f3ed256b135b2e961cb643dc7af"
   dependencies:
     lodash "^4.17.4"
     react-reconciler "^0.7.0"

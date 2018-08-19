@@ -2,7 +2,8 @@ QT += qml quick quickcontrols2 websockets
 
 CONFIG += c++14
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    rq.cpp
 RESOURCES += resources.qrc
 
 CONFIG(debug, debug|release) {
@@ -13,3 +14,6 @@ CONFIG(debug, debug|release) {
 
   RESOURCES += dist/bundle.qrc
 }
+
+HEADERS += \
+    rq.h
