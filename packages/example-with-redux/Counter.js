@@ -1,6 +1,6 @@
-import ColumnLayout from 'qt-react/QtQuick/Layouts/1.0/ColumnLayout';
-import Text from 'qt-react/QtQuick/2.7/Text';
-import Button from 'qt-react/QtQuick/Controls/2.0/Button';
+import ColumnLayout from 'qt-react/QtQuick/Layouts/1.3/ColumnLayout';
+import Text from 'qt-react/QtQuick/2.10/Text';
+import Button from 'qt-react/QtQuick/Controls/2.2/Button';
 import * as React from 'react';
 
 import { connect } from 'react-redux';

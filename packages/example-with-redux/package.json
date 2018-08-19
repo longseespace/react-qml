@@ -8,9 +8,8 @@
     "remotedev": "remotedev --port=8000"
   },
   "dependencies": {
-    "lodash": "^4.17.4",
     "qt-react": "^2.2.12",
-    "react": "16.0.0",
+    "react": "16.4.2",
     "react-qml-renderer": "^0.2.2",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
