@@ -8,8 +8,8 @@ ApplicationWindow {
 
   id: __window__
   visible: true
-  width: 1024
-  height: 768
+  width: 400
+  height: 500
 
   Settings {
     id: __settings__

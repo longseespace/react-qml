@@ -4,12 +4,21 @@ import reduxThunk from 'redux-thunk';
 
 import rootReducer from './reducers';
 
+// integrate with redux-dev-tools
 const composeEnhancers = composeWithDevTools({
   suppressConnectErrors: false,
-  host: 'localhost',
-  port: 8000,
   realtime: true,
 });
+
+// uncomment codes below to use local server
+// don't forget to start it first (yarn remotedev)
+
+// const composeEnhancers = composeWithDevTools({
+//   suppressConnectErrors: false,
+//   host: 'localhost',
+//   port: 8000,
+//   realtime: true,
+// });
 
 const enhancers = composeEnhancers(applyMiddleware(reduxThunk));
 
