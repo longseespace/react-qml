@@ -1,6 +1,6 @@
 {
   "name": "HelloWorld",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "start": "react-qml start --dev --platform=macos",
@@ -8,10 +8,10 @@
   },
   "dependencies": {
     "react": "16.0.0",
-    "react-qml-renderer": "^0.2.1"
+    "react-qml-renderer": "^0.2.3"
   },
   "devDependencies": {
     "babel-preset-react-native": "^4.0.0",
-    "react-qml-cli": "^0.2.2"
+    "react-qml-cli": "^0.2.12"
   }
 }
