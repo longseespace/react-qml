@@ -100,6 +100,7 @@ const getDefaultConfig = ({
             {
               loader: require.resolve('file-loader'),
               options: {
+                publicPath: '/',
                 name: () => {
                   if (dev) {
                     return '[path][name].[ext]?[hash]';
@@ -116,6 +117,7 @@ const getDefaultConfig = ({
             {
               loader: require.resolve('file-loader'),
               options: {
+                publicPath: '/',
                 name: () => {
                   if (dev) {
                     return '[path][name].[ext]?[hash]';
