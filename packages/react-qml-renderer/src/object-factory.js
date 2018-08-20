@@ -79,7 +79,9 @@ export const setAttribute = (parent, key, children) => {
   console.log(require('util').inspect(prev, { depth: 1 }));
   console.log(require('util').inspect(children, { depth: 1 }));
   if (prev && typeof prev.push === 'function') {
-    prev.length = 0;
+    if (typeof prev.clear === 'function') {
+      prev.clear();
+    }
     arrify(children).forEach(child => {
       console.debug(qmlObject, 'push', key, child.value);
       prev.push(child.value);

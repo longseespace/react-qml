@@ -1,0 +1,24 @@
+{
+  "name": "WithRedux",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "react-qml start --dev=true --platform=macos",
+    "build": "NODE_ENV=production react-qml bundle --platform=macos",
+    "remotedev": "remotedev --port=8000"
+  },
+  "dependencies": {
+    "qt-react": "^2.2.12",
+    "react": "16.4.2",
+    "react-qml-renderer": "^0.2.2",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "remote-redux-devtools": "^0.5.12"
+  },
+  "devDependencies": {
+    "babel-preset-react-native": "^4.0.0",
+    "react-qml-cli": "^0.2.11",
+    "remotedev-server": "^0.2.4"
+  }
+}

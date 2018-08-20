@@ -61,6 +61,7 @@ const getDefaultConfig = ({
 
   // Getting Minor version
   const platformProgressBar = haulProgressBar(platform);
+  const jsExcludePattern = /((node_modules(\/|\\)(?!react|@expo|pretty-format|react-qml|react-qml-cli|react-qml-renderer|qt-react))|qt-react|react-qml-renderer)/;
   return {
     context: root,
     entry: [],
@@ -75,7 +76,7 @@ const getDefaultConfig = ({
         { parser: { requireEnsure: false } },
         {
           test: /\.js$/,
-          exclude: /node_modules(\/|\\)(?!react|@expo|pretty-format|react-qml|react-qml-cli)/,
+          exclude: jsExcludePattern,
           use: [
             {
               loader: require.resolve('thread-loader'),
