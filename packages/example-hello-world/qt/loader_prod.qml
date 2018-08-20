@@ -1,10 +1,15 @@
-import QtQuick 2.7
-import QtQuick.Controls 2.0
+import QtQuick 2.10
+import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.0
-import QtQuick.Window 2.2
+import QtQuick.Window 2.3
 import Qt.labs.settings 1.0
 
-Item {
+ApplicationWindow {
+
+  id: __window__
+  visible: true
+  width: 400
+  height: 500
 
   Settings {
     id: __settings__
@@ -17,18 +22,10 @@ Item {
     }
   }
 
-  ApplicationWindow {
-    id: __window__
-
-    visible: true
-    width: 1024
-    height: 768
-
-    // __app_loader__
-    Loader {
-      id: __app_loader__
-      asynchronous: false
-    }
+  // __app_loader__
+  Loader {
+    id: __app_loader__
+    asynchronous: false
   }
 
 }

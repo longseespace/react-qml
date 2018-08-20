@@ -1,3 +1,5 @@
+#include "rq.h"
+
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -6,6 +8,9 @@
 int main(int argc, char *argv[]) {
   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
+
+  // setup ReactQML helper
+  qmlRegisterSingletonType<RQ>("ReactQML", 1, 0, "RQ", &RQ::qmlInstance);
 
   QQmlApplicationEngine engine;
   engine.addImportPath(QStringLiteral("qrc:/"));
