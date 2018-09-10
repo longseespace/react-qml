@@ -1,9 +1,14 @@
 {
-	"devDependencies": {
-		"lerna": "^2.5.1"
-	},
+	"private": true,
 	"scripts": {
+		"bootstrap": "lerna bootstrap",
 		"release": "lerna publish --conventional-commits --independent"
 	},
-	"dependencies": {}
+	"workspaces": [
+    "packages/*"
+  ],
+	"dependencies": {},
+	"devDependencies": {
+		"lerna": "^2.5.1"
+	}
 }
