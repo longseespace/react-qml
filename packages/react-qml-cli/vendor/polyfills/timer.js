@@ -18,10 +18,11 @@ function setupTimer(global) {
         if (timerPool.length !== 0)
             return timerPool.pop();
 
-        if (RQ) {
+        try {
           return RQ.createTimer();
+        } catch (e) {
+          return Qt.createQmlObject('import QtQml 2.2; Timer {}', Qt.application);
         }
-        return Qt.createQmlObject('import QtQml 2.2; Timer {}', Qt.application);
     }
 
     function insertTimer(timer) {

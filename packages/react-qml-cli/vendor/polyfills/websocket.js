@@ -53,12 +53,12 @@ function setupWebSocket(global) {
     this.binaryMessageReceived = this.binaryMessageReceived.bind(this);
     this.textMessageReceived = this.textMessageReceived.bind(this);
 
-    if (RQ) {
+    try {
       this.qtWebSocket = RQ.createWebSocket();
       RQ.reloadStarted.connect(() => {
         this.destroy();
       });
-    } else {
+    } catch (e) {
       this.qtWebSocket = Qt.createQmlObject(
         'import QtWebSockets 1.1; WebSocket { url: "' + url + '"}',
         Qt.application
