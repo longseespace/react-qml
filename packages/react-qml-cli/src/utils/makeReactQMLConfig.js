@@ -112,6 +112,23 @@ const getDefaultConfig = ({
           ],
         },
         {
+          test: /\.(ttf)$/,
+          use: [
+            {
+              loader: require.resolve('file-loader'),
+              options: {
+                publicPath: '/',
+                name: () => {
+                  if (dev) {
+                    return '[path][name].[ext]?[hash]';
+                  }
+                  return '[path][name].[ext]';
+                },
+              },
+            },
+          ],
+        },
+        {
           test: /\.(bmp|gif|jpg|jpeg|png|psd|svg|webp|m4v|aac|aiff|caf|m4a|mp3|wav|html|pdf)$/,
           use: [
             {
@@ -167,6 +184,20 @@ const getDefaultConfig = ({
             ],
           }),
         },
+        {
+          test: /connected-react-router.*\.js$/,
+          loader: StringReplacePlugin.replace({
+            replacements: [
+              {
+                pattern:
+                  '_RewireModuleId__ = __$$GLOBAL_REWIRE_NEXT_MODULE_ID__++;',
+                replacement: () => {
+                  return '_RewireModuleId__ = globalVariable.__$$GLOBAL_REWIRE_NEXT_MODULE_ID__++;';
+                },
+              },
+            ],
+          }),
+        },
       ],
     },
     plugins: [
@@ -206,10 +237,10 @@ const getDefaultConfig = ({
         dev
           ? [
               new webpack.HotModuleReplacementPlugin(),
-              new webpack.SourceMapDevToolPlugin({
-                test: /\.(js|css|(js)?bundle)($|\?)/i,
-                filename: '[file].map',
-              }),
+              // new webpack.SourceMapDevToolPlugin({
+              //   test: /\.(js|css|(js)?bundle)($|\?)/i,
+              //   filename: '[file].map',
+              // }),
               // new webpack.EvalSourceMapDevToolPlugin({
               //   module: true,
               // }),
@@ -221,10 +252,10 @@ const getDefaultConfig = ({
                * We need to use the plugin to configure *.bundle (Android, iOS - development)
                * and *.jsbundle (iOS - production) to emit sourcemap
                */
-              new webpack.SourceMapDevToolPlugin({
-                test: /\.(js|css|(js)?bundle)($|\?)/i,
-                filename: '[file].map',
-              }),
+              // new webpack.SourceMapDevToolPlugin({
+              //   test: /\.(js|css|(js)?bundle)($|\?)/i,
+              //   filename: '[file].map',
+              // }),
               new webpack.optimize.ModuleConcatenationPlugin(),
               new GenerateAssetPlugin({
                 filename: 'bundle.qrc',
