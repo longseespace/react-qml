@@ -1,0 +1,11 @@
+[version]
+0.65.0
+
+[ignore]
+.*/example
+.*/node_modules/react-native
+.*/node_modules/fbjs/*
+<PROJECT_ROOT>/fixtures/.*
+
+[options]
+module.name_mapper='^jest/\(.*\)$' -> '<PROJECT_ROOT>/jest/\1.js'
