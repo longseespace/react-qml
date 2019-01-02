@@ -12,7 +12,7 @@ const clear = require('clear');
 
 const { MessageError } = require('../errors');
 const messages = require('../messages');
-const { makeReactNativeConfig } = require('../utils/makeReactNativeConfig');
+const { makeReactQMLConfig } = require('../utils/makeReactQMLConfig');
 const getWebpackConfig = require('../utils/getWebpackConfig');
 const logger = require('../logger');
 
@@ -23,7 +23,7 @@ async function bundle(opts: *) {
   const directory = process.cwd();
   const configPath = getWebpackConfig(directory, opts.config);
 
-  const [configs, availablePlatforms] = makeReactNativeConfig(
+  const [configs, availablePlatforms] = makeReactQMLConfig(
     // $FlowFixMe: Dynamic require
     require(configPath),
     {
@@ -133,19 +133,35 @@ module.exports = ({
       required: true,
       choices: [
         {
+          value: 'macos',
+          description: 'Serves MacOS bundle',
+        },
+        {
+          value: 'windows',
+          description: 'Serves Windows bundle',
+        },
+        {
+          value: 'linux',
+          description: 'Serves Linux bundle',
+        },
+        {
           value: 'ios',
-          description: 'Builds iOS bundle',
+          description: 'Serves iOS bundle',
         },
         {
           value: 'android',
-          description: 'Builds Android bundle',
+          description: 'Serves Android bundle',
+        },
+        {
+          value: 'all',
+          description: 'Serves all platforms',
         },
       ],
-      example: 'haul bundle --platform ios',
+      example: 'react-qml bundle --platform macos',
     },
     {
       name: 'bundleOutput',
-      description: 'Path to use for the bundle file, eg. index.ios.bundle',
+      description: 'Path to use for the bundle file, eg. macos.bundle.js',
     },
     {
       name: 'assetsDest',
@@ -153,8 +169,8 @@ module.exports = ({
     },
     {
       name: 'config',
-      description: 'Path to config file, eg. webpack.haul.js',
-      default: 'webpack.haul.js',
+      description: 'Path to config file, eg. react-qml.config.js',
+      default: 'react-qml.config.js',
     },
   ],
 }: Command);

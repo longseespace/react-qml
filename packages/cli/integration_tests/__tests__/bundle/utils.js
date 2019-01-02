@@ -12,14 +12,14 @@ const fs = require('fs');
 
 export const TEST_PROJECT_DIR = path.resolve(
   __dirname,
-  '../../../fixtures/react-native-with-haul'
+  '../../../../example-hello-world'
 );
 
 export function bundleForPlatform(platform: string) {
   const bundlePath = path.resolve(
     TEST_PROJECT_DIR,
-    'dist',
-    `index.${platform}.bundle`
+    'qt/dist',
+    `${platform}.bundle.js`
   );
   const { stdout } = runHaulSync(TEST_PROJECT_DIR, [
     'bundle',
