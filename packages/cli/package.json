@@ -169,6 +169,8 @@
     },
     "testMatch": [
       "**/*.test.js"
-    ]
+    ],
+    "verbose": true,
+    "testURL": "http://localhost/"
   }
 }

@@ -1,22 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`display command help (start) 1`] = `
-"haul start [options]
+"react-qml start [options]
 Starts a new webpack server
 
 Options:
 
-  --port [number]                 Port to run your webpack server, 8081 by default
-  --dev [true|false]              Whether to build in development mode, true by default
-  --minify [true|false]           Whether to minify the bundle, 'true' by default when dev=false
-  --platform <ios|android|all>    Platform to bundle for
-  --config [string]               Path to config file, eg. webpack.haul.js, webpack.haul.js by
-                                  default"
+  --port [number]                                  Port to run your webpack server, 8081 by default
+  --dev [true|false]                               Whether to build in development mode, true by
+                                                   default
+  --minify [true|false]                            Whether to minify the bundle, 'true' by default
+                                                   when dev=false
+  --platform                                       Platform to bundle for
+  <macos|windows|linux|ios|android|all>
+  --config [string]                                Path to config file, eg. react-qml.config.js,
+                                                   react-qml.config.js by default"
 `;
 
 exports[`display help 1`] = `
 "
-Usage: haul [command] [options]
+Usage: react-qml [command] [options]
 
 Options:
 
@@ -30,12 +33,8 @@ Commands:
   bundle     Builds the app bundle for packaging
   reload     Sends reload request to all devices that enabled live reload
 
-Run haul COMMAND --help for more information on specific commands
+Run react-qml COMMAND --help for more information on specific commands
 "
 `;
 
-exports[`display unsupported command info (run-ios) 1`] = `
-" INFO  This command is not yet supported
-
-Call react-native run-ios instead"
-`;
+exports[`display unsupported command info (run-ios) 1`] = `" INFO  This command is not yet supported"`;

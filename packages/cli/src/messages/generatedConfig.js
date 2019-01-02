@@ -7,4 +7,4 @@
 
 const chalk = require('chalk');
 
-module.exports = () => `Generated ${chalk.bold('webpack.haul.js')}`;
+module.exports = () => `Generated ${chalk.bold('react-qml.config.js')}`;

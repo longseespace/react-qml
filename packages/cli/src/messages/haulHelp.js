@@ -14,7 +14,7 @@ module.exports = (commands: Array<Command>) => {
 
   ui.div(
     `
-${chalk.bold('Usage:')} haul [command] [options]
+${chalk.bold('Usage:')} react-qml [command] [options]
 
 ${chalk.bold('Options:')}
 
@@ -28,7 +28,7 @@ ${commands
       .join('\n')}
 
 Run ${chalk.bold(
-      'haul COMMAND --help'
+      'react-qml COMMAND --help'
     )} for more information on specific commands
 `
   );

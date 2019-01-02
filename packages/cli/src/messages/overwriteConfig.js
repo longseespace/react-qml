@@ -5,4 +5,5 @@
  * @flow
  */
 
-module.exports = () => `There is already a 'webpack.haul.js'. Overwrite it?`;
+module.exports = () =>
+  `There is already a 'react-qml.config.js'. Overwrite it?`;

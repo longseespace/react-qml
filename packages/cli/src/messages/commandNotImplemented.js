@@ -5,10 +5,7 @@
  * @flow
  */
 const dedent = require('dedent');
-const chalk = require('chalk');
 
-module.exports = (command: string) => dedent`
+module.exports = () => dedent`
   This command is not yet supported
-
-  Call ${chalk.bold(`react-native ${command}`)} instead
 `;

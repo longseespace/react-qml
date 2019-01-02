@@ -11,10 +11,10 @@ module.exports = (directory: string) => dedent`
    Couldn't find configuration file ${chalk.bold(directory)}
 
    Make sure:
-   • You are running haul from your project directory
-   • You have a ${chalk.bold('webpack.haul.js')} file
+   • You are running react-qml from your project directory
+   • You have a ${chalk.bold('react-qml.config.js')} file
 
-   Run ${chalk.bold('haul init')} to automatically generate a ${chalk.bold(
-  'webpack.haul.js'
+   Run ${chalk.bold('react-qml init')} to automatically generate a ${chalk.bold(
+  'react-qml.config.js'
 )} file
 `;

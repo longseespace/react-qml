@@ -38,7 +38,7 @@ module.exports = (command: Command) => {
     width: 100,
   });
 
-  ui.div(chalk.bold.cyan(`haul ${command.name} [options]`));
+  ui.div(chalk.bold.cyan(`react-qml ${command.name} [options]`));
 
   ui.div(`${command.description}`);
 
