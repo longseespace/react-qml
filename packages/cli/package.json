@@ -9,9 +9,8 @@
     "precommit": "lint-staged",
     "flow": "flow --include-warnings",
     "lint": "eslint .",
-    "jest": "jest",
-    "test": "yarn jest",
-    "test:ci": "yarn lint && yarn jest -- -i",
+    "test": "jest",
+    "test:ci": "yarn lint && yarn test -- -i",
     "format": "eslint --fix .",
     "add-contributor": "all-contributors add"
   },

@@ -3,7 +3,8 @@
 	"scripts": {
 		"bootstrap": "lerna bootstrap",
 		"release": "lerna publish --conventional-commits --independent",
-		"test": "lerna run test"
+		"test": "lerna run test",
+		"test:ci": "lerna run test:ci"
 	},
 	"workspaces": [
     "packages/*"
