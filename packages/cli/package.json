@@ -10,7 +10,7 @@
     "flow": "flow --include-warnings",
     "lint": "eslint .",
     "jest": "jest",
-    "test": "yarn lint && yarn jest",
+    "test": "yarn jest",
     "test:ci": "yarn lint && yarn jest -- -i",
     "format": "eslint --fix .",
     "add-contributor": "all-contributors add"
