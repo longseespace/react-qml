@@ -29,6 +29,18 @@ const labelOptions = {
     color: 'cyan',
     label: 'iOS',
   },
+  macos: {
+    color: 'cyan',
+    label: 'macOS',
+  },
+  windows: {
+    color: 'blue',
+    label: 'Windows',
+  },
+  linux: {
+    color: 'green',
+    label: 'Linux',
+  },
 };
 
 /*
@@ -39,9 +51,11 @@ const labelOptions = {
 function createLabel(platform: string) {
   if (labelOptions[platform]) {
     const { color, label } = labelOptions[platform];
-    return `${chalk.bold[color](label)}`.padEnd(30);
+    if (color && label) {
+      return `${chalk.bold[color](label)}`.padEnd(30);
+    }
   }
-  return `${chalk.bold.magenta(platform)}`.padEnd(30);
+  return `${chalk.bold(platform)}`.padEnd(30);
 }
 
 /*

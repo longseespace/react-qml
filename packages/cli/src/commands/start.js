@@ -17,7 +17,7 @@ const exec = require('../utils/exec');
 const getWebpackConfig = require('../utils/getWebpackConfig');
 const { isPortTaken, killProcess } = require('../utils/haulPortHandler');
 
-const { makeReactNativeConfig } = require('../utils/makeReactNativeConfig');
+const { makeReactQMLConfig } = require('../utils/makeReactQMLConfig');
 
 /**
  * Starts development server
@@ -47,7 +47,7 @@ async function start(opts: *) {
   const configPath = getWebpackConfig(directory, opts.config);
 
   // eslint-disable-next-line prefer-const
-  let [config, platforms] = makeReactNativeConfig(
+  let [config, platforms] = makeReactQMLConfig(
     // $FlowFixMe: Dynamic require
     require(configPath),
     {
@@ -168,9 +168,21 @@ module.exports = ({
     {
       name: 'platform',
       description: 'Platform to bundle for',
-      example: 'haul start --platform ios',
+      example: 'react-qml start --platform macos',
       required: true,
       choices: [
+        {
+          value: 'macos',
+          description: 'Serves MacOS bundle',
+        },
+        {
+          value: 'windows',
+          description: 'Serves Windows bundle',
+        },
+        {
+          value: 'linux',
+          description: 'Serves Linux bundle',
+        },
         {
           value: 'ios',
           description: 'Serves iOS bundle',
@@ -181,14 +193,14 @@ module.exports = ({
         },
         {
           value: 'all',
-          description: 'Serves both platforms',
+          description: 'Serves all platforms',
         },
       ],
     },
     {
       name: 'config',
-      description: 'Path to config file, eg. webpack.haul.js',
-      default: 'webpack.haul.js',
+      description: 'Path to config file, eg. react-qml.config.js',
+      default: 'react-qml.config.js',
     },
   ],
 }: Command);

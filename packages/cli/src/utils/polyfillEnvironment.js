@@ -6,18 +6,10 @@
  *
  * This file is loaded as a part of user bundle
  */
-import { NativeModules } from 'react-native';
+// import { NativeModules } from 'react-native';
 
 /* eslint-disable import/no-extraneous-dependencies */
-require('../../vendor/polyfills/console.js')(global);
-require('../../vendor/polyfills/error-guard.js');
-require('../../vendor/polyfills/Number.es6.js');
-require('../../vendor/polyfills/String.prototype.es6.js');
-require('../../vendor/polyfills/Array.prototype.es6.js');
-require('../../vendor/polyfills/Array.es6.js');
-require('../../vendor/polyfills/Object.es6.js');
-require('../../vendor/polyfills/Object.es7.js');
-require('../../vendor/polyfills/babelHelpers.js');
+require('core-js');
 
 // HACK:
 //   This is horrible.  I know.  But this hack seems to be needed due to the way
@@ -33,7 +25,27 @@ if (!global.self) {
   global.self = global; /* eslint-disable-line */
 }
 
-require('react-native/Libraries/Core/InitializeCore');
+global.Map = Map;
+global.Set = Set;
+global.Symbol = Symbol;
+global.WeakMap = WeakMap;
+
+require('../../vendor/polyfills/console.js')(global);
+require('../../vendor/polyfills/timer.js')(global);
+require('../../vendor/polyfills/websocket.js')(global);
+require('../../vendor/polyfills/promise.js')(global);
+require('../../vendor/polyfills/fetch.js')(global);
+require('../../vendor/polyfills/crypto.js')(global);
+require('../../vendor/polyfills/error-guard.js');
+require('../../vendor/polyfills/Number.es6.js');
+require('../../vendor/polyfills/String.prototype.es6.js');
+require('../../vendor/polyfills/Array.prototype.es6.js');
+require('../../vendor/polyfills/Array.es6.js');
+// require('../../vendor/polyfills/Object.es6.js');
+require('../../vendor/polyfills/Object.es7.js');
+require('../../vendor/polyfills/babelHelpers.js');
+
+// require('react-native/Libraries/Core/InitializeCore');
 
 require('../hot/client/importScriptsPolyfill');
 
@@ -54,10 +66,10 @@ if (process.env.NODE_ENV !== 'production') {
     // from URL from which the bundle was loaded. When using iOS simulator/Android emulator
     // or Android device it will be `localhost:<port>` but when using real iOS device
     // it will be `<ip>.xip.io:<port>`.
-    const { scriptURL } = NativeModules.SourceCode;
-    if (scriptURL) {
-      [protocol, , origin] = scriptURL.split('/');
-    }
+    // const { scriptURL } = NativeModules.SourceCode;
+    // if (scriptURL) {
+    //   [protocol, , origin] = scriptURL.split('/');
+    // }
   }
 
   if (protocol && origin) {
