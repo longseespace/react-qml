@@ -13,7 +13,7 @@
 // import { Platform, NativeModules } from 'react-native';
 
 export default function resetRedBox() {
-  // FIXME: reset red box
+  // TODO: reset red box
   // if (Platform.OS === 'ios') {
   //   const RCTRedBox = NativeModules.RedBox;
   //   RCTRedBox && RCTRedBox.dismiss && RCTRedBox.dismiss();

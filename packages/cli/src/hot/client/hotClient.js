@@ -96,7 +96,7 @@ function processPayload(payload, { logger, reporter, ...opts }) {
  */
 module.exports = function connect(options: Object) {
   const { logger, ...opts } = normalizeOptions(options);
-  // FIXME: do not hardcode macos
+  // TODO: do not hardcode macos
   const ws = new WebSocket(`${opts.path}?platform=macos`);
 
   ws.onopen = () => {
