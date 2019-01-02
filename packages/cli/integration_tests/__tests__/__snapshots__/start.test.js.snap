@@ -2,7 +2,10 @@
 
 exports[`start command displays "Select platform" message 1`] = `
 "? Select platform to bundle for (Use arrow keys)
-❯ ios - Serves iOS bundle 
+❯ macos - Serves MacOS bundle 
+  windows - Serves Windows bundle 
+  linux - Serves Linux bundle 
+  ios - Serves iOS bundle 
   android - Serves Android bundle 
-  all - Serves both platforms"
+  all - Serves all platforms"
 `;
