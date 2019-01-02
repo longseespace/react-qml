@@ -2,7 +2,8 @@
 	"private": true,
 	"scripts": {
 		"bootstrap": "lerna bootstrap",
-		"release": "lerna publish --conventional-commits --independent"
+		"release": "lerna publish --conventional-commits --independent",
+		"test": "lerna run test"
 	},
 	"workspaces": [
     "packages/*"

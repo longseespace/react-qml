@@ -8,7 +8,6 @@
   ],
   "scripts": {
     "build": "babel ./src -d ./dist",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "yarn build"
   },
   "repository": {
