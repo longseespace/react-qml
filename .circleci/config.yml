@@ -13,6 +13,7 @@ jobs:
           - node8-dependencies-
       - run: yarn install --frozen-lockfile
       - run: yarn bootstrap
+      - run: yarn build
       - run: yarn test:ci
       - save_cache:
           paths:

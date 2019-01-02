@@ -159,6 +159,7 @@
     }
   },
   "jest": {
+    "testEnvironment": "node",
     "setupTestFrameworkScriptFile": "<rootDir>/jest/setupTestFramework.js",
     "testPathIgnorePatterns": [
       "/integration_tests/.*/__tests__"
