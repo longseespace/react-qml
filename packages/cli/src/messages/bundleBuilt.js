@@ -40,8 +40,8 @@ module.exports = ({
     return dedent`
       ${heading}
 
-      Assets location: ${chalk.grey(assetsPath)}
-      Bundle location: ${chalk.grey(path.join(assetsPath, bundlePath))}      
+      Assets location: ${assetsPath}
+      Bundle location: ${path.join(assetsPath, bundlePath)}      
     `;
   }
 

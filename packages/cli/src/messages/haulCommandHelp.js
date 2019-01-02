@@ -49,10 +49,7 @@ module.exports = (command: Command) => {
       // $FlowFixMe: We already checked for undefined
       command.options
         .map(
-          option =>
-            `  ${printName(option)}   \t ${chalk.gray(
-              printDescription(option)
-            )}`
+          option => `  ${printName(option)}   \t ${printDescription(option)}`
         )
         .join('\n')
     );

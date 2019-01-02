@@ -17,12 +17,12 @@ module.exports = ({
   stack?: string,
 }) => {
   if (!stack) {
-    return `Error running ${chalk.bold(command)}: ${chalk.grey(error.message)}`;
+    return `Error running ${chalk.bold(command)}: ${error.message}`;
   }
 
   return dedent`
     Error running ${chalk.bold(command)}
 
-    ${chalk.grey(stack)}
+    ${stack}
   `;
 };

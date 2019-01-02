@@ -385,9 +385,7 @@ const addToXcodeBuild = async (cwd: string) => {
     progress.succeed('Added haul to your Xcode build scripts');
   } else {
     progress.fail(
-      `Failed to add Haul to your Xcode build scripts. See: ${chalk.grey(
-        'https://github.com/callstack-io/haul/blob/master/docs/Configuring%20Your%20Project.md#integrating-with-xcode'
-      )} for manual instructions`
+      `Failed to add Haul to your Xcode build scripts. See: https://github.com/callstack-io/haul/blob/master/docs/Configuring%20Your%20Project.md#integrating-with-xcode or manual instructions`
     );
   }
 };

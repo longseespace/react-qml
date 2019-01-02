@@ -18,13 +18,13 @@ ${chalk.bold('Usage:')} haul [command] [options]
 
 ${chalk.bold('Options:')}
 
-  --version \t ${chalk.gray('print the version number')}
-  --help \t ${chalk.gray('print usage information')}
+  --version \t print the version number
+  --help \t print usage information
 
 ${chalk.bold('Commands:')}
 
 ${commands
-      .map(command => `  ${command.name} \t ${chalk.gray(command.description)}`)
+      .map(command => `  ${command.name} \t ${command.description}`)
       .join('\n')}
 
 Run ${chalk.bold(

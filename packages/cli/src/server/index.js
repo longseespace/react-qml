@@ -38,6 +38,10 @@ const WebSocketServer = require('ws').Server;
 const webSocketProxy = require('./util/websocketProxy');
 const WebSocketDebuggerProxy = require('./util/WebsocketDebuggerProxy');
 
+function silentReporter() {
+  // silent is golden
+}
+
 /**
  * Packager-like Server running on top of Webpack
  */
@@ -50,7 +54,7 @@ function createServer(
   const webpackMiddleware = webpackDevMiddleware(compiler, {
     lazy: false,
     noInfo: true,
-    reporter: null,
+    reporter: silentReporter,
     /**
      * Quiet the default errors, we will handle error by our own
      */

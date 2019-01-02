@@ -16,10 +16,10 @@ type Params = {
 module.exports = (config: Params) => {
   const mode = config.dev ? 'development' : 'production';
   return dedent`
-    Haul is now bundling your React Native app in ${chalk.bold(mode)} mode.
-    
+    Haul is now bundling your React QML app in ${chalk.bold(mode)} mode.
+
     Starting from:
 
-    ${chalk.grey(getEntryFiles(config.entry))}
+    ${getEntryFiles(config.entry)}
   `;
 };

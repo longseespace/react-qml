@@ -9,13 +9,13 @@ const chalk = require('chalk');
 const dedent = require('dedent');
 
 module.exports = () => dedent`
-  This doesn't seem to be a React Native project.
+  This doesn't seem to be a React QML project.
 
   Make sure you have a ${chalk.bold('package.json')} file with ${chalk.bold(
   'react-native'
 )} in dependencies, and you have installed these dependencies.
 
-  To generate a React Native project, run ${chalk.bold(
+  To generate a React QML project, run ${chalk.bold(
     'react-native init <ProjectName>'
   )}. See ${chalk.cyan(
   'https://facebook.github.io/react-native/docs/getting-started.html'
