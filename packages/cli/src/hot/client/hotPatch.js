@@ -36,7 +36,7 @@ if (typeof global.__REACT_HOT_LOADER__ !== 'undefined') {
       typeof uniqueLocalName !== 'string' ||
       typeof fileName !== 'string' ||
       /**
-       * In case where someone extract function from a prototype 
+       * In case where someone extract function from a prototype
        * example: `const hasOwnProperty = Object.prototype.hasOwnProperty` in `react-native-safe-module`,
        * then `hasOwnProperty` will be patched by HMR
        * Here: https://github.com/gaearon/react-hot-loader/blob/master/src/patch.dev.js#L14-L20

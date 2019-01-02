@@ -152,10 +152,10 @@ const getDefaultConfig = ({
           ]
         : [
             /**
-               * By default, sourcemaps are only generated with *.js files
-               * We need to use the plugin to configure *.bundle (Android, iOS - development)
-               * and *.jsbundle (iOS - production) to emit sourcemap
-               */
+             * By default, sourcemaps are only generated with *.js files
+             * We need to use the plugin to configure *.bundle (Android, iOS - development)
+             * and *.jsbundle (iOS - production) to emit sourcemap
+             */
             new webpack.SourceMapDevToolPlugin({
               test: /\.(js|css|(js)?bundle)($|\?)/i,
               filename: '[file].map',

@@ -10,7 +10,6 @@ const path = require('path');
 const fs = require('fs');
 const dedent = require('dedent');
 const ora = require('ora');
-const chalk = require('chalk');
 const inquirer = require('inquirer');
 const semver = require('semver');
 const getReactNativeVersion = require('../utils/getReactNativeVersion');

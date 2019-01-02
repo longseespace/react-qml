@@ -23,10 +23,7 @@ async function bundle(opts: *) {
   const directory = process.cwd();
   const configPath = getWebpackConfig(directory, opts.config);
 
-  const [
-    configs,
-    availablePlatforms,
-  ] = makeReactNativeConfig(
+  const [configs, availablePlatforms] = makeReactNativeConfig(
     // $FlowFixMe: Dynamic require
     require(configPath),
     {

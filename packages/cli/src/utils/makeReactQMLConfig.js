@@ -60,7 +60,6 @@ const getDefaultConfig = ({
   root,
   dev,
   minify,
-  bundle,
   port,
 }): WebpackConfig => {
   // Getting Minor version

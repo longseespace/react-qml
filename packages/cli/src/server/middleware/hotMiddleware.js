@@ -1,7 +1,7 @@
 /**
  * Copyright 2017-present, Callstack.
  * All rights reserved.
- * 
+ *
  * @flow
  * global WebSocket
  */
@@ -85,9 +85,9 @@ function hotMiddleware(
 
         sockets.forEach(socket => {
           logger.log(
-            `Sending message '${body.action || body.type}'${body.hash
-              ? `with hash '${body.hash}'`
-              : ''} to ${target}:${platform} client`
+            `Sending message '${body.action || body.type}'${
+              body.hash ? `with hash '${body.hash}'` : ''
+            } to ${target}:${platform} client`
           );
 
           socket.send(JSON.stringify(body), error => {

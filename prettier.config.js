@@ -25,13 +25,6 @@ module.exports = {
    */
   parser: 'babylon',
   /**
-   * Do not print semicolons, except at the beginning of lines which may need them.
-   * Valid options:
-   * - true - add a semicolon at the end of every line
-   * - false - only add semicolons at the beginning of lines that may introduce ASI failures
-   */
-  noSemi: false,
-  /**
    * Add additional logging from prettierrc (not prettier itself).
    * Defaults to false
    * Valid options:

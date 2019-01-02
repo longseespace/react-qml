@@ -16,8 +16,8 @@ if (!module.hot || process.env.NODE_ENV === 'production') {
   module.exports = {
     makeHot(rootFactory: Function) {
       /**
-      * Return the original rootFactory and be quiet.
-      */
+       * Return the original rootFactory and be quiet.
+       */
       return rootFactory;
     },
     redraw() {},
