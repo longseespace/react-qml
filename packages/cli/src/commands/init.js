@@ -31,8 +31,8 @@ async function init() {
     process.exit(1);
   }
 
-  // Does `webpack.haul.js` already exist?
-  if (fs.existsSync(path.join(cwd, 'webpack.haul.js'))) {
+  // Does `react-qml.config.js` already exist?
+  if (fs.existsSync(path.join(cwd, 'react-qml.config.js'))) {
     const result = await inquirer.prompt([
       {
         type: 'confirm',
@@ -59,7 +59,7 @@ async function init() {
   } else {
     const list = fs
       .readdirSync(cwd)
-      .filter(f => /\.js$/.test(f) && f !== 'webpack.haul.js');
+      .filter(f => /\.js$/.test(f) && f !== 'react-qml.config.js');
 
     if (list.length <= 5) {
       const result = await inquirer.prompt([
@@ -134,7 +134,7 @@ async function init() {
     });
   `;
 
-  fs.writeFileSync(path.join(cwd, 'webpack.haul.js'), config);
+  fs.writeFileSync(path.join(cwd, 'react-qml.config.js'), config);
 
   progress.succeed(messages.generatedConfig());
 }
