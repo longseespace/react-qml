@@ -52,6 +52,53 @@ type WebpackConfigFactory =
 // TODO: fix this
 process.noDeprecation = true;
 
+const assetsPattern = /\.(aac|aiff|bmp|caf|gif|html|jpeg|jpg|m4a|m4v|mov|mp3|mp4|mpeg|mpg|obj|otf|pdf|png|psd|svg|ttf|wav|webm|webp)$/;
+const jsExcludePattern = /((node_modules(\/|\\)(?!react|@expo|pretty-format|@react-qml|react-qml-cli|react-qml-renderer|qt-react))|qt-react|react-qml-renderer)/;
+
+const rewireModuleIdPatcher = StringReplacePlugin.replace({
+  replacements: [
+    {
+      pattern: '_RewireModuleId__ = __$$GLOBAL_REWIRE_NEXT_MODULE_ID__++;',
+      replacement: () => {
+        return '_RewireModuleId__ = globalVariable.__$$GLOBAL_REWIRE_NEXT_MODULE_ID__++;';
+      },
+    },
+  ],
+});
+
+const generatorFunctionConstructorPatcher = StringReplacePlugin.replace({
+  replacements: [
+    {
+      pattern: /GeneratorFunctionPrototype\.constructor = GeneratorFunction;/gi,
+      replacement: () => {
+        return `Object.defineProperty(GeneratorFunctionPrototype, 'constructor', { value: GeneratorFunction });`;
+      },
+    },
+  ],
+});
+
+const rxjsConstructorPatcher = StringReplacePlugin.replace({
+  replacements: [
+    {
+      pattern: /this\.constructor = d;/gi,
+      replacement: () => {
+        return `Object.defineProperty(this, 'constructor', { value: d });`;
+      },
+    },
+  ],
+});
+
+const errorNamePatcher = StringReplacePlugin.replace({
+  replacements: [
+    {
+      pattern: /error\.name =/gi,
+      replacement: () => {
+        return `// error.name =`;
+      },
+    },
+  ],
+});
+
 /**
  * Returns default config based on environment
  */
@@ -60,12 +107,11 @@ const getDefaultConfig = ({
   root,
   dev,
   minify,
-  port,
+  port = 8081,
 }): WebpackConfig => {
   // Getting Minor version
   const devServerHost = process.env.DEV_SERVER_HOST || 'localhost';
   const platformProgressBar = haulProgressBar(platform);
-  const jsExcludePattern = /((node_modules(\/|\\)(?!react|@expo|pretty-format|@react-qml|react-qml-cli|react-qml-renderer|qt-react))|qt-react|react-qml-renderer)/;
   return {
     mode: dev ? 'development' : 'production',
     context: root,
@@ -119,24 +165,7 @@ const getDefaultConfig = ({
           ],
         },
         {
-          test: /\.ttf$/,
-          use: [
-            {
-              loader: require.resolve('file-loader'),
-              options: {
-                publicPath: '/',
-                name: () => {
-                  if (dev) {
-                    return '[path][name].[ext]?[hash]';
-                  }
-                  return '[path][name].[ext]';
-                },
-              },
-            },
-          ],
-        },
-        {
-          test: /\.(bmp|gif|jpg|jpeg|png|psd|svg|webp|m4v|aac|aiff|caf|m4a|mp3|wav|html|pdf)$/,
+          test: assetsPattern,
           use: [
             {
               loader: require.resolve('file-loader'),
@@ -154,56 +183,19 @@ const getDefaultConfig = ({
         },
         {
           test: /runtime\.js$/,
-          loader: StringReplacePlugin.replace({
-            replacements: [
-              {
-                pattern: /GeneratorFunctionPrototype\.constructor = GeneratorFunction;/gi,
-                replacement: () => {
-                  return `Object.defineProperty(GeneratorFunctionPrototype, 'constructor', { value: GeneratorFunction });`;
-                },
-              },
-            ],
-          }),
+          loader: generatorFunctionConstructorPatcher,
         },
         {
           test: /rxjs(\/|\\).*\.js$/,
-          loader: StringReplacePlugin.replace({
-            replacements: [
-              {
-                pattern: /this\.constructor = d;/gi,
-                replacement: () => {
-                  return `Object.defineProperty(this, 'constructor', { value: d });`;
-                },
-              },
-            ],
-          }),
+          loader: rxjsConstructorPatcher,
         },
         {
           test: /(invariant|invariant(\/|\\)browser)\.js$/,
-          loader: StringReplacePlugin.replace({
-            replacements: [
-              {
-                pattern: /error\.name =/gi,
-                replacement: () => {
-                  return `// error.name =`;
-                },
-              },
-            ],
-          }),
+          loader: errorNamePatcher,
         },
         {
           test: /connected-react-router.*\.js$/,
-          loader: StringReplacePlugin.replace({
-            replacements: [
-              {
-                pattern:
-                  '_RewireModuleId__ = __$$GLOBAL_REWIRE_NEXT_MODULE_ID__++;',
-                replacement: () => {
-                  return '_RewireModuleId__ = globalVariable.__$$GLOBAL_REWIRE_NEXT_MODULE_ID__++;';
-                },
-              },
-            ],
-          }),
+          loader: rewireModuleIdPatcher,
         },
         // {
         //   test: AssetResolver.test,
@@ -257,9 +249,7 @@ const getDefaultConfig = ({
             //   module: true,
             // }),
             new webpack.BannerPlugin({
-              banner: `
-                if (this && !this.self) { this.self = this; };
-              `,
+              banner: 'if (this && !this.self) { this.self = this; };',
               raw: true,
             }),
           ]

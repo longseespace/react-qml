@@ -19,6 +19,10 @@ const replacePathsInObject = (object: mixed) => {
         ? entry
             .replace(/\/.*\/src/, '<<REPLACED>>')
             .replace(/\/.*\/node_modules/, '<<NODE_MODULE>>')
+            .replace(
+              /.*string-replace-webpack-plugin\/loader\.js\?id=.+/,
+              '<<string-replace-webpack-plugin>>'
+            )
         : entry
   );
 };
