@@ -13,7 +13,7 @@ jobs:
           - node8-dependencies-
       - run: yarn install --frozen-lockfile
       - run: yarn bootstrap
-      - run: yarn build
+      - run: (cd packages/react-qml-renderer && yarn build)
       - run: yarn test:ci
       - save_cache:
           paths:

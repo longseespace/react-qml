@@ -4,7 +4,6 @@
 		"bootstrap": "lerna bootstrap",
 		"release": "lerna publish --conventional-commits --independent",
 		"test": "lerna run test",
-		"build": "lerna run build",
 		"test:ci": "lerna run test:ci"
 	},
 	"workspaces": [
