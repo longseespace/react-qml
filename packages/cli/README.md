@@ -51,7 +51,7 @@ npm install -g npx
 npx haul init
 ```
 
-This will automatically add the configuration needed to make Haul work with your app, e.g. add `webpack.haul.js` to your project, which you can customise to add more functionality.
+This will automatically add the configuration needed to make Haul work with your app, e.g. add `react-qml.config.js` to your project, which you can customise to add more functionality.
 
 Next, you're ready to start the development server:
 

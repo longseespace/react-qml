@@ -5,9 +5,9 @@ title: CLI Commands
 
 ## `haul init`
 
-This creates `webpack.haul.js` file in your project directory which is required by `Haul` to function. The file contains the app's entry point used for creating the app bundle.
+This creates `react-qml.config.js` file in your project directory which is required by `Haul` to function. The file contains the app's entry point used for creating the app bundle.
 
-See [Configuration](Configuration.md) for more details on `webpack.haul.js`.
+See [Configuration](Configuration.md) for more details on `react-qml.config.js`.
 
 ## `haul start`
 
@@ -35,7 +35,7 @@ Port on which the server should run. defaults to `8081`.
 
 ### `--config [path]`
 
-Path to the webpack haul config. defaults to `webpack.haul.js`.
+Path to the webpack haul config. defaults to `react-qml.config.js`.
 
 ## `haul bundle`
 
@@ -67,4 +67,4 @@ Path to the directory to store the assets. e.g. - `build/assets`.
 
 ### `--config [path]`
 
-Path to the webpack haul config. defaults to `webpack.haul.js`.
+Path to the webpack haul config. defaults to `react-qml.config.js`.

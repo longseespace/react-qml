@@ -8,7 +8,7 @@ You will need to install `ts-loader` for Haul to work with TypeScript.
 
 ```yarn add --dev ts-loader```
 
-This is a `webpack.haul.js` that works with TypeScript.
+This is a `react-qml.config.js` that works with TypeScript.
 ```javascript
 module.exports = ({ platform }, { module, resolve }) => ({
   entry: `./src/index.${platform}.tsx`,
@@ -62,7 +62,7 @@ You will need `babel-loader` for this.
 
 ```yarn add --dev babel-loader```
 
-Revised `webpack.haul.js`
+Revised `react-qml.config.js`
 
 ```javascript
 module.exports = ({ platform }, { module, resolve }) => ({
@@ -108,7 +108,7 @@ react-native-repackager is built for the standard react-native packager, so your
 
 ```javascript
 
-// webpack.haul.js
+// react-qml.config.js
 
 resolve: {
     ...defaults.resolve,
