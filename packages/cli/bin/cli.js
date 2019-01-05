@@ -30,7 +30,7 @@ function resolve(presetsOrPlugins, type) {
 require('babel-register')(
   Object.assign(
     {
-      ignore: /node_modules(?!\/haul)/,
+      ignore: /node_modules(?!\/@react-qml)/,
       retainLines: true,
       sourceMaps: 'inline',
       babelrc: false,

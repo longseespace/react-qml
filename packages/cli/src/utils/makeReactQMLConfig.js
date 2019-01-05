@@ -53,7 +53,7 @@ type WebpackConfigFactory =
 process.noDeprecation = true;
 
 const assetsPattern = /\.(aac|aiff|bmp|caf|gif|html|jpeg|jpg|m4a|m4v|mov|mp3|mp4|mpeg|mpg|obj|otf|pdf|png|psd|svg|ttf|wav|webm|webp)$/;
-const jsExcludePattern = /((node_modules(\/|\\)(?!react|@expo|pretty-format|@react-qml|react-qml-cli|react-qml-renderer|qt-react))|qt-react|react-qml-renderer)/;
+const jsExcludePattern = /((node_modules(\/|\\)(?!react|@expo|pretty-format|@react-qml|react-qml-cli|react-qml-renderer|qt-react))|qt-react|react-qml-renderer)|(qix\/packages\/renderer)/;
 
 const rewireModuleIdPatcher = StringReplacePlugin.replace({
   replacements: [
