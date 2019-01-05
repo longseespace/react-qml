@@ -3,8 +3,7 @@
   "version": "0.2.3",
   "description": "React QML - Qt QML Plugin",
   "main": "index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/longseespace/react-qml.git"
@@ -24,5 +23,9 @@
   "bugs": {
     "url": "https://github.com/longseespace/react-qml/issues"
   },
-  "homepage": "https://github.com/longseespace/react-qml#readme"
+  "homepage": "https://github.com/longseespace/react-qml#readme",
+  "dependencies": {
+    "invariant": "^2.2.4",
+    "react-reconciler": "^0.18.0"
+  }
 }

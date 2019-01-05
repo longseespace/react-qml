@@ -101,7 +101,6 @@
     "jest": "^22.2.1",
     "lint-staged": "^3.4.0",
     "mkdirp": "^0.5.1",
-    "react-native": "^0.51.0",
     "rimraf": "^2.6.1",
     "traverse": "^0.6.6"
   },
