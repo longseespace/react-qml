@@ -1,0 +1,64 @@
+{
+  "name": "@react-qml/renderer",
+  "version": "0.0.1",
+  "description": "React QML Renderer",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "type-check": "tsc --noEmit",
+    "build": "yarn build:types && yarn build:js",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:js": "babel src --out-dir dist --extensions \".ts,.tsx\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/longseespace/react-qml.git"
+  },
+  "keywords": [
+    "react",
+    "react-qml",
+    "qml",
+    "qt",
+    "desktop",
+    "native",
+    "qtquick",
+    "qt5"
+  ],
+  "author": "Long Nguyen <long@podzim.co>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/longseespace/react-qml/issues"
+  },
+  "homepage": "https://github.com/longseespace/react-qml#readme",
+  "dependencies": {
+    "invariant": "^2.2.4",
+    "react-reconciler": "^0.18.0"
+  },
+  "peerDependencies": {
+    "react": "^16"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.0",
+    "@babel/plugin-proposal-class-properties": "^7.2.1",
+    "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/preset-typescript": "^7.1.0",
+    "@types/invariant": "^2.2.29",
+    "@types/node": "^10.12.18",
+    "@types/react-reconciler": "^0.16.0",
+    "typescript": "^3.2.2"
+  },
+  "babel": {
+    "presets": [
+      "@babel/env",
+      "@babel/typescript"
+    ],
+    "plugins": [
+      "@babel/proposal-class-properties",
+      "@babel/proposal-object-rest-spread"
+    ]
+  }
+}
