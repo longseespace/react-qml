@@ -1,4 +1,4 @@
-import { QmlComponent } from './Qml';
+import { QmlComponent } from './qml';
 
 export interface ComponentMetadata {
   defaultProp: string;

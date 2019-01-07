@@ -1,21 +1,27 @@
 import { HostConfig, OpaqueHandle, Deadline } from 'react-reconciler';
 
 import invariant from 'invariant';
-import registry from './registry';
-import { QmlObject } from './Qml';
+
+import {
+  QmlElement,
+  Props,
+  diffProps,
+  updateProps,
+  createElement,
+} from './qml';
+import { inspect } from 'util';
 
 type Type = string;
 interface HostContext {}
-interface Props {}
-type Instance = QmlObject;
+type Instance = QmlElement;
 type TextInstance = Instance;
-type Container = QmlObject;
+type Container = QmlElement;
 type HydratableInstance = Instance;
 type PublicInstance = Instance;
 interface UpdatePayload {}
 interface ChildSet {}
-interface TimeoutHandle {}
-interface NoTimeout {}
+type TimeoutHandle = NodeJS.Timeout;
+type NoTimeout = number;
 
 type QmlHostConfig = HostConfig<
   Type,
@@ -53,9 +59,16 @@ const hostConfig: QmlHostConfig = {
     handler: (...args: any[]) => void,
     timeout: number
   ): TimeoutHandle | NoTimeout {
-    return {};
+    if (global && global.setTimeout) {
+      return global.setTimeout(handler, timeout);
+    }
+    return -1;
   },
-  clearTimeout(handle: TimeoutHandle | NoTimeout): void {},
+  clearTimeout(handle: TimeoutHandle | NoTimeout): void {
+    if (typeof handle !== 'number' && global && global.clearTimeout) {
+      global.clearTimeout(handle);
+    }
+  },
   // general
   getPublicInstance(instance: Instance | TextInstance): PublicInstance {
     return instance;
@@ -112,14 +125,7 @@ const hostConfig: QmlHostConfig = {
       hostContext,
       internalInstanceHandle
     );
-    const componentDefinition = registry.getComponent(type);
-    if (componentDefinition) {
-      console.log('Create new element');
-      const { component } = componentDefinition;
-      return component.createObject(rootContainerInstance, props);
-    }
-
-    throw new Error(`Unknown type ${type}`);
+    return createElement(type, props, rootContainerInstance);
   },
   appendInitialChild(parent: Instance, child: Instance | TextInstance): void {
     console.log('appendInitialChild', parent, child);
@@ -186,10 +192,13 @@ const hostConfig: QmlHostConfig = {
     internalInstanceHandle
   ) {
     console.log('commitUpdate');
-    // const updatePayload = diff(oldProps, newProps);
-    // if (updatePayload != null) {
-    //   // update props
-    // }
+    const updatePayload = diffProps(instance, oldProps, newProps);
+    if (updatePayload != null) {
+      // update props
+      console.log('updatePayload');
+      console.log(inspect(updatePayload, { depth: 3 }));
+      updateProps(instance, updatePayload);
+    }
   },
   removeChild(parent: Instance, child: Instance | TextInstance): void {
     console.log('removeChild', parent, child);

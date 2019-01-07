@@ -1,6 +1,6 @@
 import ReactReconciler from 'react-reconciler';
 import hostConfig from './hostConfig';
-import { QmlObject } from './Qml';
+import { QmlObject } from './qml';
 
 import registry from './registry';
 
