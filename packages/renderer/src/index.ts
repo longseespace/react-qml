@@ -3,6 +3,7 @@ import hostConfig from './hostConfig';
 import { QmlObject } from './qml';
 
 import registry from './registry';
+import Anchor from './anchor';
 
 const ReactReconcilerInst = ReactReconciler(hostConfig);
 let rootContainer: ReactReconciler.OpaqueRoot;
@@ -44,6 +45,6 @@ const render = (
   ); // Start reconcilation and render the result
 };
 
-export { registry, render };
+export { registry, render, Anchor };
 
-export default { registry, render };
+export default { registry, render, Anchor };

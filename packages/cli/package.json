@@ -3,7 +3,7 @@
   "name": "@react-qml/cli",
   "description": "Native Desktop App development with modern javascript (qt5, qml, qtquick, react, es7)",
   "bin": {
-    "react-qml": "./bin/cli.js"
+    "rq": "./bin/cli.js"
   },
   "scripts": {
     "precommit": "lint-staged",

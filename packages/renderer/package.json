@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "type-check": "tsc --noEmit",
+    "test": "jest",
     "build": "yarn build:types && yarn build:js",
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "babel src --out-dir dist --extensions \".ts,.tsx\""
@@ -47,8 +48,12 @@
     "@babel/preset-env": "^7.2.0",
     "@babel/preset-typescript": "^7.1.0",
     "@types/invariant": "^2.2.29",
+    "@types/jest": "^23.3.12",
     "@types/node": "^10.12.18",
     "@types/react-reconciler": "^0.16.0",
+    "babel-jest": "^23.6.0",
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.5",
     "typescript": "^3.2.2"
   },
   "babel": {
@@ -60,5 +65,20 @@
       "@babel/proposal-class-properties",
       "@babel/proposal-object-rest-spread"
     ]
+  },
+  "jest": {
+    "moduleDirectories": [
+      "./node_modules",
+      "./src"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ],
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
+    }
   }
 }

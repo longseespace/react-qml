@@ -1,6 +1,6 @@
 import { inspect } from 'util';
 import registry from './registry';
-import { OutgoingMessage } from 'http';
+import Anchor, { AnchorRef, isAnchorKey } from './anchor';
 
 // Interface to native QmlObject
 // ie: object created by Qt.createQmlObject() or component.createObject()
@@ -23,9 +23,6 @@ export type QmlElement = QmlObject & Props;
 
 // QML signal handler convention
 const qmlSignalRegex = /^on([A-Z][a-zA-Z]+)$/;
-
-// Refer to `parent` in QML
-export const PARENT = Symbol('parent');
 
 type EventHandler = () => void;
 
@@ -54,6 +51,47 @@ function listenTo(
   }
 }
 
+// handle connections
+function handleAnchors(
+  qmlElement: QmlElement,
+  lastAnchors: Props | null,
+  nextAnchors: Props | null
+) {
+  // TODO: handle last anchors
+  for (const propName in nextAnchors) {
+    if (nextAnchors.hasOwnProperty(propName)) {
+      if (isAnchorKey(propName)) {
+        // anchor, set value when anchor ready
+        const anchorRef: AnchorRef = nextAnchors[propName];
+        if (anchorRef.isReady()) {
+          qmlElement.anchors[propName] = anchorRef.value();
+        } else {
+          // TODO: leak?
+          anchorRef.subscribe(() => {
+            qmlElement.anchors[propName] = anchorRef.value();
+          });
+        }
+      } else {
+        // primitive, set values right away
+        const propValue = nextAnchors[propName];
+        qmlElement.anchors[propName] = propValue;
+      }
+    }
+  }
+}
+
+// handle anchor ref
+function handleAnchorRef(
+  qmlElement: QmlElement,
+  lastRef: Anchor | null,
+  nextRef: Anchor | null
+) {
+  // TODO: handle last ref
+  if (nextRef) {
+    nextRef.setQmlElement(qmlElement);
+  }
+}
+
 function setInitialProps(qmlElement: QmlElement, props: Props) {
   for (const propKey in props) {
     const propValue = props[propKey];
@@ -71,13 +109,29 @@ function setInitialProps(qmlElement: QmlElement, props: Props) {
       continue;
     }
 
+    // anchor ref
+    if (propKey === 'anchorRef') {
+      handleAnchorRef(qmlElement, null, propValue);
+      continue;
+    }
+
+    // anchors handling
+    if (propKey === 'anchors') {
+      handleAnchors(qmlElement, null, propValue);
+      continue;
+    }
+
     // attached property
     if (
       typeof propValue === 'object' &&
       typeof qmlElement[propKey] === 'object'
     ) {
       console.log('setInitialProps', propKey);
-      console.log(inspect(propValue, { depth: 1 }));
+      console.log(
+        inspect(propValue, {
+          depth: 1,
+        })
+      );
 
       if (qmlElement[propKey]) {
         Object.assign(qmlElement[propKey], propValue);
@@ -92,24 +146,6 @@ function setInitialProps(qmlElement: QmlElement, props: Props) {
 
     qmlElement[propKey] = propValue;
   }
-}
-
-// Create new QmlElement
-export function createElement(
-  type: string,
-  props: Props,
-  rootContainerInstance: QmlElement
-) {
-  const componentDefinition = registry.getComponent(type);
-  if (componentDefinition) {
-    console.log('Create new element');
-    const { component } = componentDefinition;
-    const element = component.createObject(rootContainerInstance, {});
-    setInitialProps(element, props);
-    return element;
-  }
-
-  throw new Error(`Unknown type ${type}`);
 }
 
 // Calculate the diff between the two objects.
@@ -153,6 +189,12 @@ export function diffProps(
       continue;
     }
 
+    // anchors handling
+    if (propKey === 'anchors' || propKey === 'anchorRef') {
+      updatePayload.push(propKey, [lastProp, nextProp]);
+      continue;
+    }
+
     updatePayload.push(propKey, nextProp);
   }
 
@@ -179,14 +221,36 @@ export function updateProps(qmlElement: QmlElement, updatePayload: Array<any>) {
       continue;
     }
 
+    // anchor ref
+    if (propKey === 'anchorRef') {
+      const [lastRef, nextRef] = propValue;
+      handleAnchorRef(qmlElement, lastRef, nextRef);
+      continue;
+    }
+
+    // anchors handling
+    if (propKey === 'anchors') {
+      const [lastAnchors, nextAnchors] = propValue;
+      handleAnchors(qmlElement, lastAnchors, nextAnchors);
+      continue;
+    }
+
     // attached property
     if (
       typeof propValue === 'object' &&
       typeof qmlElement[propKey] === 'object'
     ) {
       console.log('updateProps', propKey);
-      console.log(inspect(propValue, { depth: 1 }));
-      Object.assign(qmlElement[propKey], propValue);
+      console.log(
+        inspect(propValue, {
+          depth: 1,
+        })
+      );
+
+      if (qmlElement[propKey]) {
+        Object.assign(qmlElement[propKey], propValue);
+      }
+
       continue;
     }
 
@@ -197,4 +261,22 @@ export function updateProps(qmlElement: QmlElement, updatePayload: Array<any>) {
 
     qmlElement[propKey] = propValue;
   }
+}
+
+// Create new QmlElement
+export function createElement(
+  type: string,
+  props: Props,
+  rootContainerInstance: QmlElement
+) {
+  const componentDefinition = registry.getComponent(type);
+  if (componentDefinition) {
+    console.log('Create new element');
+    const { component } = componentDefinition;
+    const element = component.createObject(rootContainerInstance, {});
+    setInitialProps(element, props);
+    return element;
+  }
+
+  throw new Error(`Unknown type ${type}`);
 }
