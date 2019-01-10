@@ -1,6 +1,6 @@
 import { inspect } from 'util';
 import registry from './registry';
-import Anchor, { AnchorRef, isAnchorKey } from './anchor';
+import Anchor, { AnchorRef, isAnchorProp, AnchorRefProp } from './anchor';
 
 // Interface to native QmlObject
 // ie: object created by Qt.createQmlObject() or component.createObject()
@@ -57,20 +57,22 @@ function handleAnchors(
   lastAnchors: Props | null,
   nextAnchors: Props | null
 ) {
-  // TODO: handle last anchors
+  // last anchors
+  for (const propName in lastAnchors) {
+    if (lastAnchors.hasOwnProperty(propName)) {
+      if (isAnchorProp(propName)) {
+        const anchorRef: AnchorRef = lastAnchors[propName];
+        anchorRef.removeSubscription(qmlElement, <AnchorRefProp>propName);
+      }
+    }
+  }
+  // next anchors
   for (const propName in nextAnchors) {
     if (nextAnchors.hasOwnProperty(propName)) {
-      if (isAnchorKey(propName)) {
+      if (isAnchorProp(propName)) {
         // anchor, set value when anchor ready
         const anchorRef: AnchorRef = nextAnchors[propName];
-        if (anchorRef.isReady()) {
-          qmlElement.anchors[propName] = anchorRef.value();
-        } else {
-          // TODO: leak?
-          anchorRef.subscribe(() => {
-            qmlElement.anchors[propName] = anchorRef.value();
-          });
-        }
+        anchorRef.addSubscription(qmlElement, <AnchorRefProp>propName);
       } else {
         // primitive, set values right away
         const propValue = nextAnchors[propName];

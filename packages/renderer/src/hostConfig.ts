@@ -195,8 +195,6 @@ const hostConfig: QmlHostConfig = {
     const updatePayload = diffProps(instance, oldProps, newProps);
     if (updatePayload != null) {
       // update props
-      console.log('updatePayload');
-      console.log(inspect(updatePayload, { depth: 3 }));
       updateProps(instance, updatePayload);
     }
   },

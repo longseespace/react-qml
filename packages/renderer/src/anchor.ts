@@ -1,9 +1,8 @@
 import { QmlElement } from './qml';
-import { EventEmitter } from 'events';
 
 const TYPE_ANCHOR = Symbol('rq.anchor');
 
-export type AnchorLineKey =
+export type AnchorLineProp =
   | 'left'
   | 'top'
   | 'right'
@@ -11,6 +10,10 @@ export type AnchorLineKey =
   | 'horizontalCenter'
   | 'verticalCenter'
   | 'baseline';
+
+export type AnchorItemProp = 'fill' | 'centerIn';
+
+export type AnchorRefProp = AnchorLineProp | AnchorItemProp;
 
 const ANCHOR_LINES = [
   'left',
@@ -22,8 +25,18 @@ const ANCHOR_LINES = [
   'baseline',
 ];
 
-export function isAnchorKey(key: string): boolean {
+const ANCHOR_ITEM_REF = ['fill', 'centerIn'];
+
+export function isAnchorLineProp(key: string): boolean {
   return ANCHOR_LINES.indexOf(key) > -1;
+}
+
+export function isAnchorItemProp(key: string): boolean {
+  return ANCHOR_ITEM_REF.indexOf(key) > -1;
+}
+
+export function isAnchorProp(key: string): boolean {
+  return isAnchorLineProp(key) || isAnchorItemProp(key);
 }
 
 export type AnchorPrimitiveKey =
@@ -37,44 +50,92 @@ export type AnchorPrimitiveKey =
   | 'baselineOffset'
   | 'alignWhenCentered';
 
+type AnchorSubscription = {
+  element: QmlElement;
+  propName: AnchorRefProp;
+};
+
 export interface AnchorRef {
   value(): any;
   isReady(): boolean;
-  subscribe(callback: () => void): void;
+  addSubscription(element: QmlElement, propName: AnchorRefProp): void;
+  removeSubscription(element: QmlElement, propName: AnchorRefProp): void;
 }
 
-export class AnchorLineRef extends EventEmitter implements AnchorRef {
-  private anchor: Anchor;
-  private line: AnchorLineKey;
+abstract class AbstractAnchorRef implements AnchorRef {
+  protected qmlElement: QmlElement | null;
+  protected subscriptions: Array<AnchorSubscription> = [];
 
-  constructor(anchor: Anchor, line: AnchorLineKey) {
-    super();
+  constructor(qmlElement: QmlElement | null = null) {
+    this.qmlElement = qmlElement;
+  }
 
-    this.anchor = anchor;
+  abstract value(): any;
+
+  protected processSubscriptions() {
+    if (!this.isReady()) {
+      throw new Error('Anchor not ready');
+    }
+
+    this.subscriptions.forEach(({ element, propName }) => {
+      element.anchors[propName] = this.value();
+    });
+  }
+
+  setQmlElement(qmlElement: QmlElement): void {
+    if (this.qmlElement != null) {
+      throw new Error('Anchor ref cannot be used twice');
+    }
+    this.qmlElement = qmlElement;
+    this.processSubscriptions();
+  }
+
+  isReady() {
+    return this.qmlElement != null;
+  }
+
+  addSubscription(element: QmlElement, propName: AnchorRefProp): void {
+    this.subscriptions.push({ element, propName });
+    if (this.qmlElement) {
+      element.anchors[propName] = this.value();
+    }
+  }
+
+  removeSubscription(element: QmlElement, propName: AnchorRefProp): void {
+    for (let index = 0; index < this.subscriptions.length; index++) {
+      const subscription = this.subscriptions[index];
+      if (
+        subscription.element === element &&
+        subscription.propName === propName
+      ) {
+        // found
+        this.subscriptions.splice(index, 1);
+        console.log('Subscription removed', element, propName);
+        // early return
+        return;
+      }
+    }
+  }
+}
+
+export class AnchorLineRef extends AbstractAnchorRef {
+  private line: AnchorLineProp;
+
+  constructor(line: AnchorLineProp, qmlElement: QmlElement | null = null) {
+    super(qmlElement);
     this.line = line;
   }
 
   value() {
-    const qmlElement = this.anchor.qmlElement();
-    if (qmlElement) {
-      return qmlElement[this.line];
+    if (this.qmlElement) {
+      return this.qmlElement[this.line];
     }
     return undefined;
   }
-
-  isReady() {
-    return this.anchor.isReady();
-  }
-
-  subscribe(callback: () => void): void {
-    this.once('ready', callback);
-  }
 }
 
-export class Anchor extends EventEmitter implements AnchorRef {
-  private _id: Symbol;
-  private ready: boolean = false;
-  private _qmlElement: QmlElement | null;
+export class Anchor extends AbstractAnchorRef {
+  readonly id: Symbol;
 
   readonly left: AnchorLineRef;
   readonly horizontalCenter: AnchorLineRef;
@@ -86,58 +147,35 @@ export class Anchor extends EventEmitter implements AnchorRef {
 
   constructor() {
     super();
-
-    this._id = Symbol();
-    this._qmlElement = null;
+    this.id = Symbol();
 
     // anchor lines
-    this.left = new AnchorLineRef(this, 'left');
-    this.horizontalCenter = new AnchorLineRef(this, 'horizontalCenter');
-    this.right = new AnchorLineRef(this, 'right');
-    this.top = new AnchorLineRef(this, 'top');
-    this.verticalCenter = new AnchorLineRef(this, 'verticalCenter');
-    this.baseline = new AnchorLineRef(this, 'baseline');
-    this.bottom = new AnchorLineRef(this, 'bottom');
+    this.left = new AnchorLineRef('left');
+    this.horizontalCenter = new AnchorLineRef('horizontalCenter');
+    this.right = new AnchorLineRef('right');
+    this.top = new AnchorLineRef('top');
+    this.verticalCenter = new AnchorLineRef('verticalCenter');
+    this.baseline = new AnchorLineRef('baseline');
+    this.bottom = new AnchorLineRef('bottom');
   }
 
   setQmlElement(qmlElement: QmlElement): void {
-    if (this._qmlElement != null) {
-      throw new Error('Anchor ref cannot be used twice');
-    }
-    this._qmlElement = qmlElement;
-    this.ready = true;
+    super.setQmlElement(qmlElement);
 
-    this.emit('ready');
-    this.left.emit('ready');
-    this.horizontalCenter.emit('ready');
-    this.right.emit('ready');
-    this.top.emit('ready');
-    this.verticalCenter.emit('ready');
-    this.baseline.emit('ready');
-    this.bottom.emit('ready');
-  }
-
-  qmlElement() {
-    return this._qmlElement;
-  }
-
-  id() {
-    return this.id;
+    this.left.setQmlElement(qmlElement);
+    this.horizontalCenter.setQmlElement(qmlElement);
+    this.right.setQmlElement(qmlElement);
+    this.top.setQmlElement(qmlElement);
+    this.verticalCenter.setQmlElement(qmlElement);
+    this.baseline.setQmlElement(qmlElement);
+    this.bottom.setQmlElement(qmlElement);
   }
 
   value() {
-    if (this._qmlElement) {
-      return this._qmlElement;
+    if (this.qmlElement) {
+      return this.qmlElement;
     }
     return undefined;
-  }
-
-  isReady() {
-    return this.ready;
-  }
-
-  subscribe(callback: () => void): void {
-    this.once('ready', callback);
   }
 
   static type(): Symbol {
