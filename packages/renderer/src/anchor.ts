@@ -1,7 +1,5 @@
 import { QmlElement } from './qml';
 
-const TYPE_ANCHOR = Symbol('rq.anchor');
-
 export type AnchorLineProp =
   | 'left'
   | 'top'
@@ -58,6 +56,7 @@ type AnchorSubscription = {
 export interface AnchorRef {
   value(): any;
   isReady(): boolean;
+  type(): string;
   addSubscription(element: QmlElement, propName: AnchorRefProp): void;
   removeSubscription(element: QmlElement, propName: AnchorRefProp): void;
 }
@@ -71,6 +70,7 @@ abstract class AbstractAnchorRef implements AnchorRef {
   }
 
   abstract value(): any;
+  abstract type(): string;
 
   protected processSubscriptions() {
     if (!this.isReady()) {
@@ -132,6 +132,10 @@ export class AnchorLineRef extends AbstractAnchorRef {
     }
     return undefined;
   }
+
+  type() {
+    return 'anchor_line';
+  }
 }
 
 export class Anchor extends AbstractAnchorRef {
@@ -178,20 +182,12 @@ export class Anchor extends AbstractAnchorRef {
     return undefined;
   }
 
-  static type(): Symbol {
-    return TYPE_ANCHOR;
+  type(): string {
+    return 'anchor';
   }
 
   static createRef() {
     return new Anchor();
-  }
-
-  static isAnchor(obj: any) {
-    const isObj = typeof obj === 'object';
-    const hasType = typeof obj.type === 'function';
-    const hasCorrectType = obj.type() === TYPE_ANCHOR;
-
-    return isObj && hasType && hasCorrectType;
   }
 }
 
