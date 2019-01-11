@@ -2,6 +2,11 @@ import { inspect } from 'util';
 import registry from './registry';
 import Anchor, { AnchorRef, isAnchorProp, AnchorRefProp } from './anchor';
 
+// Interface to Qt global object
+export interface QmlQt {
+  createComponent: (source: string) => QmlComponent;
+}
+
 // Interface to native QmlObject
 // ie: object created by Qt.createQmlObject() or component.createObject()
 export interface QmlObject {
@@ -9,10 +14,21 @@ export interface QmlObject {
   destroy: () => void;
 }
 
+type SignalHandler = () => any;
+
+// Interface to Qml Signal
+export interface QmlSignal {
+  connect: (handler: SignalHandler) => void;
+  disconnect: (handler: SignalHandler) => void;
+}
+
 // Interface to native QmlComponent
 // ie: object created by Qt.createComponent()
 export interface QmlComponent {
   createObject(rootContainerInstance: QmlObject, props: object): QmlObject;
+  status: any;
+  statusChanged: QmlSignal;
+  errorString: () => string;
 }
 
 // Basic (key => value) object
