@@ -3,15 +3,17 @@
   "version": "0.0.3",
   "private": true,
   "scripts": {
-    "start": "react-qml start --dev --platform=macos",
-    "build": "NODE_ENV=production react-qml bundle --platform=macos"
+    "start": "rq start --dev --platform=macos",
+    "bundle": "NODE_ENV=production rq bundle --platform=macos",
+    "build_cpp": "node ./qt/build.js",
+    "run_macos": "node ./qt/run.js",
+    "build": "NODE_ENV=production yarn bundle && NODE_ENV=production yarn build_cpp"
   },
   "dependencies": {
-    "react": "16.0.0",
-    "react-qml-renderer": "^0.2.3"
+    "react": "^16.0.0",
+    "@react-qml/renderer": "*"
   },
   "devDependencies": {
-    "babel-preset-react-native": "^4.0.0",
-    "react-qml-cli": "^0.2.13"
+    "@react-qml/cli": "*"
   }
 }

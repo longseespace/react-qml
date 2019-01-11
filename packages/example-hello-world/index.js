@@ -1,8 +1,8 @@
-import 'react-qml-cli/hot';
+import '@react-qml/cli/hot';
 
-import './main.qml';
+import './index.qml';
 
-import { render } from 'react-qml-renderer';
+import { render } from '@react-qml/renderer';
 import * as React from 'react';
 
 import App from './App';
