@@ -43,6 +43,8 @@ const DEFAULT_BABELRC = {
         loose: true,
       },
     ],
+    'transform-function-bind',
+    'transform-runtime',
   ],
 };
 
