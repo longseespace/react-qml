@@ -25,10 +25,14 @@ if (!global.self) {
   global.self = global; /* eslint-disable-line */
 }
 
-global.Map = Map;
-global.Set = Set;
-global.Symbol = Symbol;
-global.WeakMap = WeakMap;
+try {
+  global.Map = Map;
+  global.Set = Set;
+  global.Symbol = Symbol;
+  global.WeakMap = WeakMap;
+} catch (e) {
+  console.warn('Unable to polyfill Map/Set/Symbol/WeakMap');
+}
 
 require('../../vendor/polyfills/console.js')(global);
 require('../../vendor/polyfills/timer.js')(global);
