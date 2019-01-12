@@ -1,13 +1,13 @@
-import ColumnLayout from 'qt-react/QtQuick/Layouts/1.3/ColumnLayout';
-import Text from 'qt-react/QtQuick/2.10/Text';
-import Button from 'qt-react/QtQuick/Controls/2.2/Button';
+import { connect } from 'react-redux';
 import * as React from 'react';
 
-import { connect } from 'react-redux';
+import Button from './components/Button';
+import ColumnLayout from './components/ColumnLayout';
+import Text from './components/Text';
 
 const connectToRedux = connect(
   state => ({
-    value: state.counter
+    value: state.counter,
   }),
   {
     onIncrement: () => ({ type: 'INCREMENT' }),
@@ -24,17 +24,17 @@ class Counter extends React.Component {
 
   incrementIfOdd() {
     if (this.props.value % 2 !== 0) {
-      this.props.onIncrement()
+      this.props.onIncrement();
     }
   }
 
   incrementAsync() {
     console.log('incrementAsync');
-    setTimeout(this.props.onIncrement, 1000)
+    setTimeout(this.props.onIncrement, 1000);
   }
 
   render() {
-    const { value, onIncrement, onDecrement } = this.props
+    const { value, onIncrement, onDecrement } = this.props;
     return (
       <ColumnLayout Layout={{ row: 1, column: 1 }}>
         <Text
@@ -48,7 +48,7 @@ class Counter extends React.Component {
         <Button text="Increment if odd" onClicked={this.incrementIfOdd} />
         <Button text="Increment async" onClicked={this.incrementAsync} />
       </ColumnLayout>
-    )
+    );
   }
 }
 

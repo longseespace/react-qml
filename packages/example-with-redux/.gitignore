@@ -37,4 +37,5 @@ Makefile*
 # QtCtreator CMake
 CMakeLists.txt.user*
 
-*/dist/*
+/qt/dist/*
+/qt/target/*
