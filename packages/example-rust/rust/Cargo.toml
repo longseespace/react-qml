@@ -1,9 +1,0 @@
-[package]
-name = "react-qml-example-rust"
-version = "0.0.1"
-authors = ["Long Nguyen <long@podzim.co>"]
-build = "build.rs"
-
-[dependencies]
-qmetaobject = "0.0.4"
-qml = "0.0.9"
