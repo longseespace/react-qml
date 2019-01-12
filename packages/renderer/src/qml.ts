@@ -5,7 +5,16 @@ import Anchor, { AnchorRef, isAnchorProp, AnchorRefProp } from './anchor';
 // Interface to Qt global object
 export interface QmlQt {
   createComponent: (source: string) => QmlComponent;
+  createQmlObject: (
+    qml: string,
+    parent: QmlElement | null,
+    filepath?: string
+  ) => QmlElement;
+  application: any;
 }
+
+// global Qt object
+export declare const Qt: QmlQt;
 
 // Interface to native QmlObject
 // ie: object created by Qt.createQmlObject() or component.createObject()
@@ -78,7 +87,12 @@ function handleAnchors(
     if (lastAnchors.hasOwnProperty(propName)) {
       if (isAnchorProp(propName)) {
         const anchorRef: AnchorRef = lastAnchors[propName];
-        anchorRef.removeSubscription(qmlElement, <AnchorRefProp>propName);
+        if (anchorRef) {
+          anchorRef.removeSubscription(qmlElement, <AnchorRefProp>propName);
+        } else {
+          // unset anchor
+          qmlElement.anchors[propName] = undefined;
+        }
       }
     }
   }
@@ -88,7 +102,12 @@ function handleAnchors(
       if (isAnchorProp(propName)) {
         // anchor, set value when anchor ready
         const anchorRef: AnchorRef = nextAnchors[propName];
-        anchorRef.addSubscription(qmlElement, <AnchorRefProp>propName);
+        if (anchorRef) {
+          anchorRef.addSubscription(qmlElement, <AnchorRefProp>propName);
+        } else {
+          // unset anchor
+          qmlElement.anchors[propName] = undefined;
+        }
       } else {
         // primitive, set values right away
         const propValue = nextAnchors[propName];
@@ -281,20 +300,79 @@ export function updateProps(qmlElement: QmlElement, updatePayload: Array<any>) {
   }
 }
 
+// we need a TempRoot when rendering React tree
+// the old method (create element as direct child of rootContainerInstance)
+// is not working when error happended
+export function createHostContext() {
+  const qml = `import QtQuick 2.7; Item { visible: false; }`;
+  return Qt.createQmlObject(qml, Qt.application, 'HostContext');
+}
+
 // Create new QmlElement
 export function createElement(
   type: string,
   props: Props,
-  rootContainerInstance: QmlElement
+  rootContainerInstance: QmlElement,
+  hostContext: QmlElement
 ) {
   const componentDefinition = registry.getComponent(type);
   if (componentDefinition) {
-    console.log('Create new element');
     const { component } = componentDefinition;
-    const element = component.createObject(rootContainerInstance, {});
+    const element = component.createObject(hostContext, {});
     setInitialProps(element, props);
+    console.log('\n\n\nCreate new element');
+    console.log(element, '\n\n\n');
+    return element;
+  }
+
+  // fall back to raw components
+  const rawComponentDefinition = registry.getRawComponent(type);
+  if (rawComponentDefinition) {
+    const { rawContent } = rawComponentDefinition;
+    const element = Qt.createQmlObject(rawContent, hostContext, type);
+    setInitialProps(element, props);
+    console.log('\n\n\nCreate new element');
+    console.log(element, '\n\n\n');
     return element;
   }
 
   throw new Error(`Unknown type ${type}`);
+}
+
+// TODO: revise this later
+function isQuickItem(obj: any) {
+  const isObject = typeof obj === 'object';
+  const hasChildAtMethod = typeof obj.childAt === 'function';
+  return isObject && hasChildAtMethod;
+}
+
+function isWindow(obj: any) {
+  const isObject = typeof obj === 'object';
+  const hasWindowMethods =
+    typeof obj.showMinimized === 'function' &&
+    typeof obj.showMaximized === 'function' &&
+    typeof obj.showFullScreen === 'function';
+  return isObject && hasWindowMethods;
+}
+
+// turned out, appending child in qml is not as simple as setting prop `.parent`
+// - if both parent and child are Item, simply setting parent would do
+// - otherwise, we can append child to parent's default prop (eg: parent.data)
+//   in special cases we don't need to do anything (eg: child is an instance of Window)
+export function appendChild(parent: QmlElement, child: QmlElement) {
+  if (isQuickItem(parent) && isQuickItem(child)) {
+    child.parent = parent;
+  } else {
+    if (!isWindow(child)) {
+      if (parent.data) {
+        parent.data.push(child);
+      }
+    }
+  }
+}
+
+// removing child is also pretty tricky as well
+export function removeChild(parent: QmlElement, child: QmlElement) {
+  child.parent = null;
+  child.destroy();
 }

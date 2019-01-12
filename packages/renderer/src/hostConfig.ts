@@ -8,11 +8,13 @@ import {
   diffProps,
   updateProps,
   createElement,
+  appendChild,
+  removeChild,
+  createHostContext,
 } from './qml';
-import { inspect } from 'util';
 
 type Type = string;
-interface HostContext {}
+type HostContext = QmlElement;
 type Instance = QmlElement;
 type TextInstance = Instance;
 type Container = QmlElement;
@@ -38,8 +40,8 @@ type QmlHostConfig = HostConfig<
   NoTimeout
 >;
 
-const rootContext: HostContext = {};
-const childContext: HostContext = {};
+const rootContext: HostContext = createHostContext();
+const childContext: HostContext = rootContext;
 
 const hostConfig: QmlHostConfig = {
   now: Date.now,
@@ -74,7 +76,22 @@ const hostConfig: QmlHostConfig = {
     return instance;
   },
   getRootHostContext(rootContainerInstance: Container): HostContext {
-    console.log('getRootHostContext', rootContainerInstance);
+    console.log(
+      'getRootHostContext',
+      rootContext,
+      'children no = ',
+      rootContext.data.length
+    );
+    if (rootContext.data.length > 0) {
+      // destroy all children
+      for (let index = rootContext.data.length; index > 0; index--) {
+        const element = rootContext.data[index - 1];
+        removeChild(rootContext, element);
+      }
+
+      console.log('children no = ', rootContext.data.length);
+    }
+
     return rootContext;
   },
   getChildHostContext(
@@ -125,11 +142,11 @@ const hostConfig: QmlHostConfig = {
       hostContext,
       internalInstanceHandle
     );
-    return createElement(type, props, rootContainerInstance);
+    return createElement(type, props, rootContainerInstance, hostContext);
   },
   appendInitialChild(parent: Instance, child: Instance | TextInstance): void {
     console.log('appendInitialChild', parent, child);
-    child.parent = parent;
+    appendChild(parent, child);
   },
   finalizeInitialChildren(
     parentInstance: Instance,
@@ -160,14 +177,14 @@ const hostConfig: QmlHostConfig = {
   supportsMutation: true,
   appendChild(parent: Instance, child: Instance | TextInstance) {
     console.log('appendChild', parent, child);
-    child.parent = parent;
+    appendChild(parent, child);
   },
   appendChildToContainer(
     container: Container,
     child: Instance | TextInstance
   ): void {
     console.log('appendChildToContainer', container, child);
-    child.parent = container;
+    appendChild(container, child);
   },
   commitMount(instance, type, newProps, fiberNode) {
     console.log('commitMount', instance, type, newProps, fiberNode);
@@ -200,16 +217,14 @@ const hostConfig: QmlHostConfig = {
   },
   removeChild(parent: Instance, child: Instance | TextInstance): void {
     console.log('removeChild', parent, child);
-    child.parent = null;
-    child.destroy();
+    removeChild(parent, child);
   },
   removeChildFromContainer(
     container: Container,
     child: Instance | TextInstance
   ): void {
     console.log('removeChildFromContainer', container, child);
-    child.parent = null;
-    child.destroy();
+    removeChild(container, child);
   },
 };
 

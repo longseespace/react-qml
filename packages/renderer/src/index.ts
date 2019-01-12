@@ -5,6 +5,7 @@ import { QmlObject } from './qml';
 import registry from './registry';
 import Anchor from './anchor';
 import createQmlComponent from './createQmlComponent';
+import createRawQmlComponent from './createRawQmlComponent';
 
 const ReactReconcilerInst = ReactReconciler(hostConfig);
 let rootContainer: ReactReconciler.OpaqueRoot;
@@ -46,6 +47,12 @@ const render = (
   ); // Start reconcilation and render the result
 };
 
-export { registry, render, Anchor, createQmlComponent };
+export { registry, render, Anchor, createQmlComponent, createRawQmlComponent };
 
-export default { registry, render, Anchor, createQmlComponent };
+export default {
+  registry,
+  render,
+  Anchor,
+  createQmlComponent,
+  createRawQmlComponent,
+};

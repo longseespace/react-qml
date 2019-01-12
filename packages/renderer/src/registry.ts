@@ -9,12 +9,22 @@ export interface RegistryComponent {
   metadata: ComponentMetadata;
 }
 
-export interface InternalRegistry {
+export interface ComponentRegistry {
   [name: string]: RegistryComponent;
 }
 
+export interface RawComponent {
+  rawContent: string;
+  metadata: ComponentMetadata;
+}
+
+export interface RawRegistry {
+  [name: string]: RawComponent;
+}
+
 export class Registry {
-  private internalRegistry: InternalRegistry = {};
+  private componentRegistry: ComponentRegistry = {};
+  private rawRegistry: RawRegistry = {};
 
   registerComponent(
     name: string,
@@ -22,15 +32,32 @@ export class Registry {
     metadata: ComponentMetadata = { defaultProp: 'data' }
   ): void {
     // allow overwriting registered component
-    this.internalRegistry[name] = { component, metadata };
+    this.componentRegistry[name] = { component, metadata };
   }
 
   getComponent(name: string): RegistryComponent | undefined {
-    if (!this.internalRegistry[name]) {
+    if (!this.componentRegistry[name]) {
       return undefined;
     }
 
-    return this.internalRegistry[name];
+    return this.componentRegistry[name];
+  }
+
+  registerRawComponent(
+    name: string,
+    rawContent: string,
+    metadata: ComponentMetadata = { defaultProp: 'data' }
+  ) {
+    // allow overwriting registered component
+    this.rawRegistry[name] = { rawContent, metadata };
+  }
+
+  getRawComponent(name: string): RawComponent | undefined {
+    if (!this.rawRegistry[name]) {
+      return undefined;
+    }
+
+    return this.rawRegistry[name];
   }
 }
 
