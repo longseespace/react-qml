@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 
-const util = require('util');
+// TODO: move script to @react-qml/cli
 const { spawn } = require('child_process');
+const path = require('path');
 
 const target = 'HelloWorld';
 
 function runMacOS() {
+  const targetDir = path.resolve(__dirname, 'target');
   const child = spawn(`${target}.app/Contents/MacOS/${target}`, {
-    cwd: __dirname,
+    cwd: targetDir,
   });
 
   child.stdout.pipe(process.stdout);
@@ -18,4 +20,5 @@ function runMacOS() {
   });
 }
 
+// TODO: detect platform
 runMacOS();

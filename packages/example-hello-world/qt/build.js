@@ -1,15 +1,24 @@
 #!/usr/bin/env node
 
-const util = require('util');
+// TODO: move script to @react-qml/cli
 const { execSync } = require('child_process');
+const path = require('path');
+const fs = require('fs');
 
-const { NODE_ENV = 'development' } = process.env;
-
-const qmakeArgs = NODE_ENV === 'production' ? '' : 'CONFIG+=debug';
+const args = process.argv.slice(2);
 
 function build() {
-  execSync(`qmake ${qmakeArgs} main.pro`, { cwd: __dirname });
-  execSync('make', { cwd: __dirname });
+  const targetDir = path.resolve(__dirname, 'target');
+  try {
+    fs.mkdirSync(targetDir);
+  } catch (error) {
+    // ignore
+  }
+
+  const qmakeArgs = args.length > 0 ? args.join(' ') : '';
+
+  execSync(`qmake ${qmakeArgs} ../main.pro`, { cwd: targetDir });
+  execSync('make', { cwd: targetDir });
 }
 
 build();
