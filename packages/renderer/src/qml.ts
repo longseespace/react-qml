@@ -363,16 +363,19 @@ export function appendChild(parent: QmlElement, child: QmlElement) {
   if (isQuickItem(parent) && isQuickItem(child)) {
     child.parent = parent;
   } else {
-    if (!isWindow(child)) {
-      if (parent.data) {
-        parent.data.push(child);
-      }
+    if (parent.data) {
+      parent.data.push(child);
     }
   }
 }
 
-// removing child is also pretty tricky as well
 export function removeChild(parent: QmlElement, child: QmlElement) {
-  child.parent = null;
+  if (isQuickItem(parent) && isQuickItem(child)) {
+    child.parent = parent;
+  } else {
+    if (parent.data) {
+      parent.data.push(child);
+    }
+  }
   child.destroy();
 }
