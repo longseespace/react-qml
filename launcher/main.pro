@@ -11,6 +11,9 @@ CONFIG(debug, debug|release) {
   message("release mode")
 }
 
+QMAKE_TARGET_COMPANY = Podzim
+QMAKE_TARGET_PRODUCT = ReactQML Launcher
+QMAKE_TARGET_COPYRIGHT = Copyright 2019 Podzim, Inc. All rights reserved.
 TARGET = Launcher
 
 HEADERS += \
