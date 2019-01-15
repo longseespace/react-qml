@@ -2,7 +2,7 @@ import QtQuick 2.10
 import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.0
 import QtQuick.Window 2.2
-import QtQuick.Dialogs 1.3
+import QtQuick.Dialogs 1.1
 import QtQuick.LocalStorage 2.0
 import QtQuick.Particles 2.0
 import QtWebSockets 1.0
@@ -47,10 +47,10 @@ ApplicationWindow {
   MessageDialog {
     id: errorDialog
     title: "Error"
-    icon: StandardIcon.Critical
+    icon: StandardIcon.Warning
     text: "Failed to load entry url."
-    informativeText: "Failed to load: " + __settings__.entry
-    standardButtons: StandardButton.Retry | StandardButton.Abort
+    informativeText: "Failed to load " + __settings__.entry
+    standardButtons: StandardButton.Abort | StandardButton.Retry
     onRejected: {
       Qt.quit()
     }

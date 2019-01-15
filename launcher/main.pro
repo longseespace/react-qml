@@ -1,4 +1,5 @@
 QT += qml quick quickcontrols2 websockets
+!no_desktop: QT += widgets
 
 SOURCES += main.cpp \
     rq.cpp
@@ -17,4 +18,5 @@ QMAKE_TARGET_COPYRIGHT = Copyright 2019 Podzim, Inc. All rights reserved.
 TARGET = Launcher
 
 HEADERS += \
-    rq.h
+    rq.h \
+    qtquickcontrolsapplication.h
