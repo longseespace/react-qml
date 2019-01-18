@@ -1,6 +1,11 @@
 import { inspect } from 'util';
 import registry from './registry';
-import Anchor, { AnchorRef, isAnchorProp, AnchorRefProp } from './anchor';
+import Anchor, {
+  AnchorRef,
+  isAnchorProp,
+  AnchorRefProp,
+  ParentAnchor,
+} from './anchor';
 
 // Interface to Qt global object
 export interface QmlQt {
@@ -19,8 +24,7 @@ export declare const Qt: QmlQt;
 // Interface to native QmlObject
 // ie: object created by Qt.createQmlObject() or component.createObject()
 export interface QmlObject {
-  parent: QmlObject | null;
-  destroy: () => void;
+  destroy: (delay?: number) => void;
 }
 
 type SignalHandler = () => any;
@@ -43,8 +47,20 @@ export interface QmlComponent {
 // Basic (key => value) object
 export type Props = { [key: string]: any };
 
-// QmlElement is basically QmlObject, plus dynamic props
-export type QmlElement = QmlObject & Props;
+type QmlQuickItem = {
+  parent: QmlElement | null;
+  left?: any;
+  top?: any;
+  right?: any;
+  bottom?: any;
+  horizontalCenter?: any;
+  verticalCenter?: any;
+  baseline?: any;
+};
+
+// QmlElement is basically QmlQuickItem, plus dynamic props
+export type QmlElement = QmlObject & QmlQuickItem & Props;
+// anchor lines
 
 // QML signal handler convention
 const qmlSignalRegex = /^on([A-Z][a-zA-Z]+)$/;
@@ -71,8 +87,6 @@ function listenTo(
 
   if (nextHandler) {
     qmlElement[eventName].connect(nextHandler);
-  } else {
-    qmlElement[eventName].disconnect(nextHandler);
   }
 }
 
@@ -86,13 +100,17 @@ function handleAnchors(
   for (const propName in lastAnchors) {
     if (lastAnchors.hasOwnProperty(propName)) {
       if (isAnchorProp(propName)) {
-        const anchorRef: AnchorRef = lastAnchors[propName];
+        const anchorRef: AnchorRef | string = lastAnchors[propName];
+        if (typeof anchorRef === 'string') {
+          ParentAnchor.removeSubscription(qmlElement, <AnchorRefProp>propName);
+          qmlElement.anchors[propName] = undefined;
+          continue;
+        }
         if (anchorRef) {
           anchorRef.removeSubscription(qmlElement, <AnchorRefProp>propName);
-        } else {
-          // unset anchor
-          qmlElement.anchors[propName] = undefined;
         }
+        // unset anchor
+        qmlElement.anchors[propName] = undefined;
       }
     }
   }
@@ -100,9 +118,17 @@ function handleAnchors(
   for (const propName in nextAnchors) {
     if (nextAnchors.hasOwnProperty(propName)) {
       if (isAnchorProp(propName)) {
-        // anchor, set value when anchor ready
-        const anchorRef: AnchorRef = nextAnchors[propName];
+        const anchorRef: AnchorRef | string = nextAnchors[propName];
+        if (typeof anchorRef === 'string') {
+          ParentAnchor.addSubscription(
+            qmlElement,
+            <AnchorRefProp>propName,
+            anchorRef
+          );
+          continue;
+        }
         if (anchorRef) {
+          // anchor, set value when anchor ready
           anchorRef.addSubscription(qmlElement, <AnchorRefProp>propName);
         } else {
           // unset anchor
@@ -135,7 +161,7 @@ function setInitialProps(qmlElement: QmlElement, props: Props) {
 
     if (propKey === 'children' || propValue == null) {
       // ignore
-      return;
+      continue;
     }
 
     // event handling

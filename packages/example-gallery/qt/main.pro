@@ -1,5 +1,3 @@
-include(../node_modules/react-qml/qt/react-qml.pri)
-
 QT += qml quick quickcontrols2 websockets
 
 CONFIG += c++14
@@ -12,8 +10,7 @@ CONFIG(debug, debug|release) {
   DEFINES += DEBUG
 } else {
   message("release mode")
-
   RESOURCES += dist/bundle.qrc
 }
 
-TARGET = Gallery
+TARGET = WithRedux

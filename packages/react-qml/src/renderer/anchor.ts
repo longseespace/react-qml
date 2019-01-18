@@ -49,16 +49,19 @@ export type AnchorPrimitiveKey =
   | 'alignWhenCentered';
 
 type AnchorSubscription = {
-  element: QmlElement;
-  propName: AnchorRefProp;
+  source: QmlElement;
+  sourceProp: AnchorRefProp;
+  target?: QmlElement;
+  targetProp?: AnchorRefProp;
+  onTargetChanged?: () => void;
 };
 
 export interface AnchorRef {
   value(): any;
   isReady(): boolean;
   type(): string;
-  addSubscription(element: QmlElement, propName: AnchorRefProp): void;
-  removeSubscription(element: QmlElement, propName: AnchorRefProp): void;
+  addSubscription(source: QmlElement, sourceProp: AnchorRefProp): void;
+  removeSubscription(source: QmlElement, sourceProp: AnchorRefProp): void;
 }
 
 abstract class AbstractAnchorRef implements AnchorRef {
@@ -77,8 +80,8 @@ abstract class AbstractAnchorRef implements AnchorRef {
       throw new Error('Anchor not ready');
     }
 
-    this.subscriptions.forEach(({ element, propName }) => {
-      element.anchors[propName] = this.value();
+    this.subscriptions.forEach(({ source, sourceProp }) => {
+      source.anchors[sourceProp] = this.value();
     });
   }
 
@@ -94,23 +97,23 @@ abstract class AbstractAnchorRef implements AnchorRef {
     return this.qmlElement != null;
   }
 
-  addSubscription(element: QmlElement, propName: AnchorRefProp): void {
-    this.subscriptions.push({ element, propName });
+  addSubscription(source: QmlElement, sourceProp: AnchorRefProp): void {
+    this.subscriptions.push({ source, sourceProp });
     if (this.qmlElement) {
-      element.anchors[propName] = this.value();
+      source.anchors[sourceProp] = this.value();
     }
   }
 
-  removeSubscription(element: QmlElement, propName: AnchorRefProp): void {
+  removeSubscription(source: QmlElement, sourceProp: AnchorRefProp): void {
     for (let index = 0; index < this.subscriptions.length; index++) {
       const subscription = this.subscriptions[index];
       if (
-        subscription.element === element &&
-        subscription.propName === propName
+        subscription.source === source &&
+        subscription.sourceProp === sourceProp
       ) {
         // found
         this.subscriptions.splice(index, 1);
-        console.log('Subscription removed', element, propName);
+        console.log('Subscription removed', source, sourceProp);
         // early return
         return;
       }
@@ -188,6 +191,94 @@ export class Anchor extends AbstractAnchorRef {
 
   static createRef() {
     return new Anchor();
+  }
+}
+
+export class ParentAnchor {
+  private static parentAnchorSubscriptions: Array<AnchorSubscription> = [];
+
+  private static updateAnchors = (
+    childElement: QmlElement,
+    childPropName: AnchorRefProp,
+    parentPropName?: AnchorRefProp
+  ) => {
+    if (!childElement.parent) {
+      console.warn('ChildElement has no parent');
+      return;
+    }
+    if (childPropName === 'fill' || childPropName === 'centerIn') {
+      childElement.anchors[childPropName] = childElement.parent;
+    } else {
+      if (!parentPropName) {
+        console.warn('Undefined anchor reference');
+        return;
+      }
+      childElement.anchors[childPropName] = childElement.parent[parentPropName];
+    }
+  };
+
+  static addSubscription(
+    childElement: QmlElement,
+    childPropName: AnchorRefProp,
+    parentAnchorRef?: string
+  ): void {
+    let parentPropName: AnchorRefProp | undefined = undefined;
+    // parse parentAnchorRef first
+    if (
+      parentAnchorRef &&
+      parentAnchorRef.length > 0 &&
+      parentAnchorRef !== 'parent'
+    ) {
+      const parts = parentAnchorRef.split('.');
+      if (parts.length === 2 && parts[0] === 'parent') {
+        if (!isAnchorProp(parts[1])) {
+          console.warn(`Invalid anchor reference: ${parts[1]}`);
+          return;
+        }
+        parentPropName = <AnchorRefProp>parts[1];
+      }
+    }
+    const onTargetChanged = () => {
+      ParentAnchor.updateAnchors(childElement, childPropName, parentPropName);
+    };
+    ParentAnchor.parentAnchorSubscriptions.push({
+      source: childElement,
+      sourceProp: childPropName,
+      targetProp: parentPropName,
+      onTargetChanged,
+    });
+
+    if (childElement.parent) {
+      ParentAnchor.updateAnchors(childElement, childPropName, parentPropName);
+    }
+
+    childElement.parentChanged.connect(onTargetChanged);
+  }
+
+  static removeSubscription(
+    childElement: QmlElement,
+    childPropName: AnchorRefProp
+  ): void {
+    for (
+      let index = 0;
+      index < ParentAnchor.parentAnchorSubscriptions.length;
+      index++
+    ) {
+      const subscription = ParentAnchor.parentAnchorSubscriptions[index];
+      if (
+        subscription.source === childElement &&
+        subscription.sourceProp === childPropName
+      ) {
+        // found
+        if (subscription.onTargetChanged) {
+          childElement.parentChanged.disconnect(subscription.onTargetChanged);
+        }
+        ParentAnchor.parentAnchorSubscriptions.splice(index, 1);
+        console.log('Subscription removed', childElement, childPropName);
+        // early return
+        return;
+      }
+    }
   }
 }
 

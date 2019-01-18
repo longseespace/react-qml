@@ -1,7 +1,0 @@
-
-<RCC>
-    <qresource prefix="/ReactQML">
-        <file>qmldir</file>
-        <file>loader.qml</file>
-    </qresource>
-</RCC>

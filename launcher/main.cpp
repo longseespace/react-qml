@@ -6,6 +6,7 @@
 int main(int argc, char *argv[]) {
   QtQuickControlsApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QApplication app(argc, argv);
+  app.setQuitOnLastWindowClosed(false);
 
   // setup app basic metadata
   app.setOrganizationName("Podzim");

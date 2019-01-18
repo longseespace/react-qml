@@ -1,19 +1,56 @@
 {
   "name": "Gallery",
-  "version": "0.0.3",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "react-qml start --dev --platform=macos",
-    "build": "NODE_ENV=production react-qml bundle --platform=macos"
+    "start": "DEV_SERVER_HOST=localhost rq start --dev --platform=macos",
+    "bundle": "NODE_ENV=production rq bundle --platform=macos"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "connected-react-router": "^4.3.0",
+    "history": "^4.7.2",
+    "lodash": "^4.17.11",
     "react": "^16.5.0",
     "react-qml": "*",
-    "react-qml-renderer": "^0.2.3"
+    "react-redux": "5.0.6",
+    "react-router": "^4.3.1",
+    "redux": "^3.7.2",
+    "redux-api-call": "^1.0.5",
+    "redux-observable": "^0.17.0",
+    "redux-thunk": "^2.3.0",
+    "remote-redux-devtools": "^0.5.15"
   },
   "devDependencies": {
-    "babel-preset-react-native": "^4.0.0",
-    "react-qml-cli": "^0.2.13",
-    "webpack-bundle-analyzer": "^2.13.1"
+    "babel-eslint": "^8.0.3",
+    "babel-plugin-check-es2015-constants": "^6.22.0",
+    "babel-plugin-lodash": "^3.3.2",
+    "babel-plugin-syntax-async-functions": "^6.13.0",
+    "babel-plugin-syntax-class-properties": "^6.13.0",
+    "babel-plugin-syntax-trailing-function-commas": "^6.22.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-es2015-arrow-functions": "^6.22.0",
+    "babel-plugin-transform-es2015-block-scoping": "^6.26.0",
+    "babel-plugin-transform-es2015-classes": "^6.24.1",
+    "babel-plugin-transform-es2015-computed-properties": "^6.24.1",
+    "babel-plugin-transform-es2015-destructuring": "^6.23.0",
+    "babel-plugin-transform-es2015-for-of": "^6.23.0",
+    "babel-plugin-transform-es2015-function-name": "^6.24.1",
+    "babel-plugin-transform-es2015-literals": "^6.22.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-plugin-transform-es2015-parameters": "^6.24.1",
+    "babel-plugin-transform-es2015-shorthand-properties": "^6.24.1",
+    "babel-plugin-transform-es2015-spread": "^6.22.0",
+    "babel-plugin-transform-es2015-template-literals": "^6.22.0",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-plugin-transform-function-bind": "^6.8.0",
+    "babel-plugin-transform-object-assign": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-display-name": "^6.25.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-plugin-transform-react-jsx-source": "^6.22.0",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "eslint": "^4.13.1",
+    "eslint-plugin-react": "^7.5.1"
   }
 }

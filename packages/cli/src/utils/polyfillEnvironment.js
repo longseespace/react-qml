@@ -51,6 +51,12 @@ require('../../vendor/polyfills/babelHelpers.js');
 
 // require('react-native/Libraries/Core/InitializeCore');
 
+if (!global.window) {
+  global.window = global;
+}
+
+require('./setupDevTools')(global);
+
 require('../hot/client/importScriptsPolyfill');
 
 if (process.env.NODE_ENV !== 'production') {

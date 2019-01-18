@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "react": "^16.0.0",
-    "@react-qml/renderer": "*"
+    "react-qml": "*"
   },
   "devDependencies": {
     "@react-qml/cli": "*"

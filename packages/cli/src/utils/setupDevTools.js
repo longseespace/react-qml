@@ -1,0 +1,25 @@
+/* eslint-disable */
+
+function setup(global) {
+  'use strict';
+
+  if (process.env.NODE_ENV === 'production') {
+    return;
+  }
+
+  const reactDevTools = require('react-devtools-core');
+  try {
+    reactDevTools.connectToDevTools({
+      host: process.env.__REACT_DEVTOOLS_HOST__ || 'localhost',
+      port: process.env.__REACT_DEVTOOLS_PORT__ || 8097,
+    });
+  } catch (e) {
+    console.error('Cannot connect to React DevTools');
+  }
+}
+
+if (typeof module !== 'undefined') {
+  module.exports = setup;
+} else {
+  setup(global);
+}

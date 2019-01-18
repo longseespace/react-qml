@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "react": "16.4.2",
-    "@react-qml/renderer": "*",
+    "react-qml": "*",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",

@@ -10,34 +10,40 @@ import Qt.labs.settings 1.0
 import Qt.labs.calendar 1.0
 
 ApplicationWindow {
-  id: __window__
+  id: __devWindow
 
-  visible: true
+  visible: false
   width: 400
   height: 500
 
   flags: Qt.Window
 
   Settings {
-    id: __settings__
+    id: __devSettings
 
-    property alias windowX: __window__.x
-    property alias windowY: __window__.y
-    property alias windowWidth: __window__.width
-    property alias windowHeight: __window__.height
+    property alias windowX: __devWindow.x
+    property alias windowY: __devWindow.y
+    property alias windowWidth: __devWindow.width
+    property alias windowHeight: __devWindow.height
     property string entry: 'http://localhost:8081/index.qml'
     property bool supportHMR: true
     property string hmrUrl: 'ws://localhost:8081/hot'
+
+    Component.onCompleted: {
+      // load main component
+      __appLoader.active = true;
+    }
   }
 
   Loader {
-    id: __app_loader__
+    id: __appLoader
     asynchronous: true
+    active: false
 
-    source: __settings__.entry
+    source: __devSettings.entry
 
     onStatusChanged: {
-      if (__app_loader__.status === Loader.Error) {
+      if (__appLoader.status === Loader.Error) {
         console.error("Failed to load entry url");
         errorDialog.open();
       }
@@ -49,22 +55,17 @@ ApplicationWindow {
     title: "Error"
     icon: StandardIcon.Warning
     text: "Failed to load entry url."
-    informativeText: "Failed to load " + __settings__.entry
-    standardButtons: StandardButton.Abort | StandardButton.Retry
-    onRejected: {
-      Qt.quit()
-    }
+    informativeText: "Failed to load " + __devSettings.entry
     onAccepted: {
-      __app_loader__.active = false;
-      __app_loader__.active = true;
+      Qt.quit();
     }
   }
 
   // websocket for HMR
   WebSocket {
-    id: __hot_ws__
-    url: __settings__.hmrUrl
-    active: __settings__.supportHMR
+    id: __hotWs
+    url: __devSettings.hmrUrl
+    active: __devSettings.supportHMR
 
     onStatusChanged: {
       if (status === WebSocket.Error) {
