@@ -203,7 +203,7 @@ export class ParentAnchor {
     parentPropName?: AnchorRefProp
   ) => {
     if (!childElement.parent) {
-      console.warn('ChildElement has no parent');
+      console.warn('ChildElement has no parent', childElement);
       return;
     }
     if (childPropName === 'fill' || childPropName === 'centerIn') {

@@ -19,41 +19,9 @@ const createQmlComponent = (
   const component = Qt.createComponent(source);
   registry.registerComponent(name, component, metadata);
 
-  class RQComponent extends React.Component<Props, State> {
-    state = { status: component.status };
-
-    updateStatus = () => {
-      this.setState({ status: component.status });
-    };
-
-    componentDidMount() {
-      component.statusChanged.connect(this.updateStatus);
-    }
-
-    componentWillUnmount() {
-      component.statusChanged.disconnect(this.updateStatus);
-    }
-
-    render() {
-      const { status } = this.state;
-      if (status === Component.Ready) {
-        const { forwardedRef, ...rest } = this.props as Props;
-        return React.createElement(name, {
-          ref: forwardedRef,
-          ...rest,
-        });
-      }
-      if (status === Component.Error) {
-        throw new Error(component.errorString());
-      }
-      return null;
-    }
-  }
-
-  const RefForwardingFactory = (props: Props, ref: any) =>
-    React.createElement(RQComponent, { ...props, forwardedRef: ref });
-
-  return React.forwardRef(RefForwardingFactory);
+  // return component name anyway
+  // however, note that the component might not be ready yet
+  return name;
 };
 
 export default createQmlComponent;

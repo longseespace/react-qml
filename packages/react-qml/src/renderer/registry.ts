@@ -1,26 +1,26 @@
 import { QmlComponent } from './qml';
 
-export interface ComponentMetadata {
-  defaultProp: string;
-}
+export type QmlComponentMetadata = { defaultProp: string } & {
+  [key: string]: any;
+};
 
-export interface RegistryComponent {
+export type RegistryComponent = {
   component: QmlComponent;
-  metadata: ComponentMetadata;
-}
+  metadata: QmlComponentMetadata;
+};
 
-export interface ComponentRegistry {
+export type ComponentRegistry = {
   [name: string]: RegistryComponent;
-}
+};
 
-export interface RawComponent {
+export type RawComponent = {
   rawContent: string;
-  metadata: ComponentMetadata;
-}
+  metadata: QmlComponentMetadata;
+};
 
-export interface RawRegistry {
+export type RawRegistry = {
   [name: string]: RawComponent;
-}
+};
 
 export class Registry {
   private componentRegistry: ComponentRegistry = {};
@@ -29,7 +29,7 @@ export class Registry {
   registerComponent(
     name: string,
     component: QmlComponent,
-    metadata: ComponentMetadata = { defaultProp: 'data' }
+    metadata: QmlComponentMetadata = { defaultProp: 'data' }
   ): void {
     // allow overwriting registered component
     this.componentRegistry[name] = { component, metadata };
@@ -46,7 +46,7 @@ export class Registry {
   registerRawComponent(
     name: string,
     rawContent: string,
-    metadata: ComponentMetadata = { defaultProp: 'data' }
+    metadata: QmlComponentMetadata = { defaultProp: 'data' }
   ) {
     // allow overwriting registered component
     this.rawRegistry[name] = { rawContent, metadata };

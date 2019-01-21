@@ -12,7 +12,7 @@ type Props = {
 };
 
 const RedBox = ({ error, errorInfo, enableStacktrace = false }: Props) => (
-  <Rectangle color="#BD2619" Layout={{ fillWidth: true, fillHeight: true }}>
+  <Rectangle color="#BD2619" anchors={{ fill: 'parent' }}>
     <ScrollView>
       <Column spacing={10} padding={32}>
         <Text

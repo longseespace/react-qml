@@ -4,22 +4,28 @@ import invariant from 'invariant';
 
 import {
   QmlElement,
+  QmlElementContainer,
   Props,
   diffProps,
   updateProps,
-  createElement,
   appendChild,
   removeChild,
-  createHostContext,
+  removeAllChildren,
+  createElementContainer,
+  appendChildToContainer,
+  removeChildFromContainer,
+  hostElement,
+  insertBefore,
+  insertInContainerBefore,
 } from './qml';
 
 type Type = string;
-type HostContext = QmlElement;
-type Instance = QmlElement;
+type HostContext = QmlElementContainer;
+type Instance = QmlElementContainer;
 type TextInstance = Instance;
 type Container = QmlElement;
 type HydratableInstance = Instance;
-type PublicInstance = Instance;
+type PublicInstance = QmlElement;
 interface UpdatePayload {}
 interface ChildSet {}
 type TimeoutHandle = NodeJS.Timeout;
@@ -40,7 +46,10 @@ type QmlHostConfig = HostConfig<
   NoTimeout
 >;
 
-const rootContext: HostContext = createHostContext();
+const rootContext: HostContext = {
+  element: hostElement,
+  metadata: { defaultProp: 'data' },
+};
 const childContext: HostContext = rootContext;
 
 const hostConfig: QmlHostConfig = {
@@ -73,25 +82,13 @@ const hostConfig: QmlHostConfig = {
   },
   // general
   getPublicInstance(instance: Instance | TextInstance): PublicInstance {
-    return instance;
+    // return qml element
+    return instance.element;
   },
   getRootHostContext(rootContainerInstance: Container): HostContext {
-    console.log(
-      'getRootHostContext',
-      rootContext,
-      'children no = ',
-      rootContext.data.length
-    );
-    if (rootContext.data.length > 0) {
-      // destroy all children
-      for (let index = rootContext.data.length; index > 0; index--) {
-        const element = rootContext.data[index - 1];
-        removeChild(rootContext, element);
-      }
-
-      console.log('children no = ', rootContext.data.length);
-    }
-
+    const rootElement = rootContext.element;
+    console.log('getRootHostContext', rootContext.element);
+    removeAllChildren(rootElement, rootContext.metadata.defaultProp);
     return rootContext;
   },
   getChildHostContext(
@@ -101,7 +98,7 @@ const hostConfig: QmlHostConfig = {
   ): HostContext {
     console.log(
       'getChildHostContext',
-      parentHostContext,
+      parentHostContext.element,
       type,
       rootContainerInstance
     );
@@ -121,11 +118,12 @@ const hostConfig: QmlHostConfig = {
       'createTextInstance',
       text,
       rootContainerInstance,
-      hostContext,
+      hostContext.element,
       internalInstanceHandle
     );
     invariant(false, 'Creating text instance not supported');
-    return { parent: null, destroy: () => {} };
+    const nullElement = { parent: null, destroy: () => {} };
+    return { element: nullElement, metadata: { defaultProp: 'data' } };
   },
   createInstance(
     type: Type,
@@ -139,13 +137,18 @@ const hostConfig: QmlHostConfig = {
       type,
       props,
       rootContainerInstance,
-      hostContext,
+      hostContext.element,
       internalInstanceHandle
     );
-    return createElement(type, props, rootContainerInstance, hostContext);
+    return createElementContainer(
+      type,
+      props,
+      rootContainerInstance,
+      hostContext
+    );
   },
   appendInitialChild(parent: Instance, child: Instance | TextInstance): void {
-    console.log('appendInitialChild', parent, child);
+    console.log('appendInitialChild', parent.element, child.element);
     appendChild(parent, child);
   },
   finalizeInitialChildren(
@@ -157,11 +160,11 @@ const hostConfig: QmlHostConfig = {
   ): boolean {
     console.log(
       'finalizeInitialChildren',
-      parentInstance,
+      parentInstance.element,
       type,
       props,
       rootContainerInstance,
-      hostContext
+      hostContext.element
     );
     return false;
   },
@@ -176,15 +179,25 @@ const hostConfig: QmlHostConfig = {
   // -------------------
   supportsMutation: true,
   appendChild(parent: Instance, child: Instance | TextInstance) {
-    console.log('appendChild', parent, child);
+    console.log('appendChild', parent.element, child.element);
     appendChild(parent, child);
   },
   appendChildToContainer(
     container: Container,
     child: Instance | TextInstance
   ): void {
-    console.log('appendChildToContainer', container, child);
-    appendChild(container, child);
+    console.log('appendChildToContainer', container, child.element);
+    appendChildToContainer(container, child);
+  },
+  commitTextUpdate(
+    textInstance: TextInstance,
+    oldText: string,
+    newText: string
+  ): void {
+    invariant(false, 'Text instance not supported');
+  },
+  resetTextContent(instance: Instance): void {
+    invariant(false, 'Text instance not supported');
   },
   commitMount(instance, type, newProps, fiberNode) {
     console.log('commitMount', instance, type, newProps, fiberNode);
@@ -209,22 +222,36 @@ const hostConfig: QmlHostConfig = {
     internalInstanceHandle
   ) {
     console.log('commitUpdate');
-    const updatePayload = diffProps(instance, oldProps, newProps);
+    const updatePayload = diffProps(instance.element, oldProps, newProps);
     if (updatePayload != null) {
       // update props
-      updateProps(instance, updatePayload);
+      updateProps(instance.element, updatePayload);
     }
   },
   removeChild(parent: Instance, child: Instance | TextInstance): void {
-    console.log('removeChild', parent, child);
+    console.log('removeChild', parent.element, child.element);
     removeChild(parent, child);
   },
   removeChildFromContainer(
     container: Container,
     child: Instance | TextInstance
   ): void {
-    console.log('removeChildFromContainer', container, child);
-    removeChild(container, child);
+    console.log('removeChildFromContainer', container, child.element);
+    removeChildFromContainer(container, child);
+  },
+  insertBefore(
+    parentInstance: Instance,
+    child: Instance | TextInstance,
+    beforeChild: Instance | TextInstance
+  ): void {
+    insertBefore(parentInstance, child, beforeChild);
+  },
+  insertInContainerBefore(
+    container: Container,
+    child: Instance | TextInstance,
+    beforeChild: Instance | TextInstance
+  ): void {
+    insertInContainerBefore(container, child, beforeChild);
   },
 };
 
