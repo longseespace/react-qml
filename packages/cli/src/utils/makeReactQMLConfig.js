@@ -245,8 +245,8 @@ const getDefaultConfig = ({
       dev
         ? [
             new webpack.HotModuleReplacementPlugin(),
-            // new webpack.EvalSourceMapDevToolPlugin({
-            //   module: true,
+            // new webpack.SourceMapDevToolPlugin({
+            //   test: /\.(js|(js)?bundle)($|\?)/i,
             // }),
             new webpack.BannerPlugin({
               banner: 'if (this && !this.self) { this.self = this; };',

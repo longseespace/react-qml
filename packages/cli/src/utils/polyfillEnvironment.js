@@ -25,13 +25,15 @@ if (!global.self) {
   global.self = global; /* eslint-disable-line */
 }
 
-try {
-  global.Map = Map;
-  global.Set = Set;
-  global.Symbol = Symbol;
-  global.WeakMap = WeakMap;
-} catch (e) {
-  console.warn('Unable to polyfill Map/Set/Symbol/WeakMap');
+if (!global.Map) {
+  try {
+    global.Map = Map;
+    global.Set = Set;
+    global.Symbol = Symbol;
+    global.WeakMap = WeakMap;
+  } catch (e) {
+    console.warn('Unable to polyfill Map/Set/Symbol/WeakMap');
+  }
 }
 
 require('../../vendor/polyfills/console.js')(global);
@@ -50,6 +52,11 @@ require('../../vendor/polyfills/Object.es7.js');
 require('../../vendor/polyfills/babelHelpers.js');
 
 // require('react-native/Libraries/Core/InitializeCore');
+
+// WARNING: DO NOT REMOVE LINE BELOW
+// without the harmless seemingly useless
+// console.log below, the app crashes
+console.log('1'); // w t f ?
 
 if (!global.window) {
   global.window = global;
