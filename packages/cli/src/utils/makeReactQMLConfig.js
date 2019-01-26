@@ -151,7 +151,7 @@ const getDefaultConfig = ({
           test: /\.qml$/,
           use: [
             {
-              loader: require.resolve('file-loader'),
+              loader: require.resolve('./qmlLoader'),
               options: {
                 publicPath: '/',
                 name: () => {
@@ -159,6 +159,23 @@ const getDefaultConfig = ({
                     return '[path][name].[ext]?[hash]';
                   }
                   return '[path][name].[ext]';
+                },
+              },
+            },
+          ],
+        },
+        {
+          test: /\/qmldir$/,
+          use: [
+            {
+              loader: require.resolve('file-loader'),
+              options: {
+                publicPath: '/',
+                name: () => {
+                  if (dev) {
+                    return '[path][name]?[hash]';
+                  }
+                  return '[path][name]';
                 },
               },
             },
