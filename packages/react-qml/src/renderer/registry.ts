@@ -31,7 +31,9 @@ export class Registry {
     component: QmlComponent,
     metadata: QmlComponentMetadata = { defaultProp: 'data' }
   ): void {
-    // allow overwriting registered component
+    if (this.componentRegistry[name]) {
+      throw new Error(`Component is registered: ${name}`);
+    }
     this.componentRegistry[name] = { component, metadata };
   }
 
@@ -48,7 +50,9 @@ export class Registry {
     rawContent: string,
     metadata: QmlComponentMetadata = { defaultProp: 'data' }
   ) {
-    // allow overwriting registered component
+    if (this.rawRegistry[name]) {
+      throw new Error(`Component is registered: ${name}`);
+    }
     this.rawRegistry[name] = { rawContent, metadata };
   }
 
