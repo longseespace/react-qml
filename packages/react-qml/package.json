@@ -11,7 +11,7 @@
     "test": "jest",
     "build": "yarn build:types && yarn build:js",
     "build:types": "tsc --emitDeclarationOnly",
-    "build:js": "babel src --out-dir dist --extensions \".ts,.tsx\""
+    "build:js": "babel src --copy-files --out-dir dist --extensions \".ts,.tsx\""
   },
   "repository": {
     "type": "git",

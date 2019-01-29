@@ -1,7 +1,10 @@
 import React from 'react';
 
-import { Rectangle, Column, Text } from '../QtQuick';
-import { ScrollView } from '../QtQuick/Controls';
+import QtQuick from '../QtQuick';
+const { Rectangle, Column, Text } = QtQuick;
+
+import QtQuickControls2 from '../QtQuickControls2';
+const { ScrollView } = QtQuickControls2;
 
 declare const qsTr: (text: string) => string;
 
