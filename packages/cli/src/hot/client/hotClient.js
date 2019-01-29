@@ -100,10 +100,7 @@ module.exports = function connect(options: Object) {
   const ws = new WebSocket(`${opts.path}?platform=macos`);
 
   ws.onopen = () => {
-    logger.log(
-      '[Haul HMR] Client connected, however until you `Enable Hot Reloading`, ' +
-        'you will not get any updates'
-    );
+    logger.log('[Haul HMR] Client connected');
   };
 
   ws.onerror = error => {

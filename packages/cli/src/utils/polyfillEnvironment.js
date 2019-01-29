@@ -9,7 +9,6 @@
 // import { NativeModules } from 'react-native';
 
 /* eslint-disable import/no-extraneous-dependencies */
-require('core-js');
 
 // HACK:
 //   This is horrible.  I know.  But this hack seems to be needed due to the way
@@ -52,11 +51,6 @@ require('../../vendor/polyfills/Object.es7.js');
 require('../../vendor/polyfills/babelHelpers.js');
 
 // require('react-native/Libraries/Core/InitializeCore');
-
-// WARNING: DO NOT REMOVE LINE BELOW
-// without the harmless seemingly useless
-// console.log below, the app crashes
-console.log('1'); // w t f ?
 
 if (!global.window) {
   global.window = global;
