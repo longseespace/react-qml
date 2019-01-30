@@ -1,12 +1,12 @@
-import { QmlComponent } from './qml';
+import { QmlComponent } from './qmlTypes';
 
-export type QmlComponentMetadata = { defaultProp: string } & {
+export type RegistryComponentMetadata = { defaultProp: string } & {
   [key: string]: any;
 };
 
 export type RegistryComponent = {
   component: QmlComponent;
-  metadata: QmlComponentMetadata;
+  metadata: RegistryComponentMetadata;
 };
 
 export type ComponentRegistry = {
@@ -15,7 +15,7 @@ export type ComponentRegistry = {
 
 export type RawComponent = {
   rawContent: string;
-  metadata: QmlComponentMetadata;
+  metadata: RegistryComponentMetadata;
 };
 
 export type RawRegistry = {
@@ -29,7 +29,7 @@ export class Registry {
   registerComponent(
     name: string,
     component: QmlComponent,
-    metadata: QmlComponentMetadata = { defaultProp: 'data' }
+    metadata: RegistryComponentMetadata = { defaultProp: 'data' }
   ): void {
     if (this.componentRegistry[name]) {
       throw new Error(`Component is registered: ${name}`);
@@ -48,7 +48,7 @@ export class Registry {
   registerRawComponent(
     name: string,
     rawContent: string,
-    metadata: QmlComponentMetadata = { defaultProp: 'data' }
+    metadata: RegistryComponentMetadata = { defaultProp: 'data' }
   ) {
     if (this.rawRegistry[name]) {
       throw new Error(`Component is registered: ${name}`);

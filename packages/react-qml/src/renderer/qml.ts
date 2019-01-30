@@ -1,71 +1,24 @@
 import { inspect } from 'util';
-import registry, { QmlComponentMetadata } from './registry';
+import registry, { RegistryComponentMetadata } from './registry';
 import Anchor, {
   AnchorRef,
   isAnchorProp,
   AnchorRefProp,
   ParentAnchor,
 } from './anchor';
-
-// Interface to Qt global object
-export interface QmlQt {
-  isQtObject(obj: any): boolean;
-  createComponent: (source: string) => QmlComponent;
-  createQmlObject: (
-    qml: string,
-    parent: QmlElement | null,
-    filepath?: string
-  ) => QmlElement;
-  application: any;
-}
+import {
+  QmlQt,
+  QmlElement,
+  BasicProps,
+  QmlElementContainer,
+  QmlElementMeasureCallback,
+} from './qmlTypes';
+import { Props } from 'react';
+import QmlElementContainerImpl from './QmlElementContainer';
 
 // global Qt object
 export declare const Qt: QmlQt;
 
-// Interface to native QmlObject
-// ie: object created by Qt.createQmlObject() or component.createObject()
-export interface QmlObject {
-  destroy: (delay?: number) => void;
-}
-
-type SignalHandler = () => any;
-
-// Interface to Qml Signal
-export interface QmlSignal {
-  connect: (handler: SignalHandler) => void;
-  disconnect: (handler: SignalHandler) => void;
-}
-
-// Interface to native QmlComponent
-// ie: object created by Qt.createComponent()
-export interface QmlComponent {
-  createObject(rootContainerInstance: QmlObject, props: object): QmlObject;
-  status: any;
-  statusChanged: QmlSignal;
-  errorString: () => string;
-}
-
-// Basic (key => value) object
-export type Props = { [key: string]: any };
-
-export type QmlQuickItem = {
-  parent: QmlElement | null;
-  left?: any;
-  top?: any;
-  right?: any;
-  bottom?: any;
-  horizontalCenter?: any;
-  verticalCenter?: any;
-  baseline?: any;
-};
-
-export type QmlElementContainer = {
-  element: QmlElement;
-  metadata: QmlComponentMetadata;
-};
-
-// QmlElement is basically QmlQuickItem, plus dynamic props
-export type QmlElement = QmlObject & Props;
 // anchor lines
 
 // QML signal handler convention
@@ -99,8 +52,8 @@ function listenTo(
 // handle connections
 function handleAnchors(
   qmlElement: QmlElement,
-  lastAnchors: Props | null,
-  nextAnchors: Props | null
+  lastAnchors: BasicProps | null,
+  nextAnchors: BasicProps | null
 ) {
   // last anchors
   for (const propName in lastAnchors) {
@@ -161,7 +114,7 @@ function handleAnchorRef(
   }
 }
 
-function setInitialProps(qmlElement: QmlElement, props: Props) {
+function setInitialProps(qmlElement: QmlElement, props: BasicProps) {
   for (const propKey in props) {
     const propValue = props[propKey];
 
@@ -220,8 +173,8 @@ function setInitialProps(qmlElement: QmlElement, props: Props) {
 // Calculate the diff between the two objects.
 export function diffProps(
   qmlElement: QmlElement,
-  lastProps: Props,
-  nextProps: Props
+  lastProps: BasicProps,
+  nextProps: BasicProps
 ): Array<any> | null {
   let updatePayload: Array<any> = [];
 
@@ -345,7 +298,7 @@ export const hostElement = createHostContext();
 // Create new QmlElementContainer
 export function createElementContainer(
   type: string,
-  props: Props,
+  props: BasicProps,
   rootContainerInstance: QmlElement,
   hostContext: QmlElementContainer
 ) {
@@ -357,10 +310,7 @@ export function createElementContainer(
     setInitialProps(element, props);
     console.log('\n\n\nCreate new element');
     console.log(element, '\n\n\n');
-    return {
-      element,
-      metadata,
-    };
+    return new QmlElementContainerImpl(element, metadata);
   }
 
   // fall back to raw components
@@ -371,7 +321,8 @@ export function createElementContainer(
     setInitialProps(element, props);
     console.log('\n\n\nCreate new element');
     console.log(element, '\n\n\n');
-    return { element, metadata };
+
+    return new QmlElementContainerImpl(element, metadata);
   }
 
   throw new Error(`Unknown type ${type}`);

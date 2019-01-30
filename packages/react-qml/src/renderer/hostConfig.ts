@@ -3,9 +3,6 @@ import { HostConfig, OpaqueHandle, Deadline } from 'react-reconciler';
 import invariant from 'invariant';
 
 import {
-  QmlElement,
-  QmlElementContainer,
-  Props,
   diffProps,
   updateProps,
   appendChild,
@@ -18,6 +15,7 @@ import {
   insertBefore,
   insertInContainerBefore,
 } from './qml';
+import { QmlElementContainer, QmlElement, BasicProps } from './qmlTypes';
 
 type Type = string;
 type HostContext = QmlElementContainer;
@@ -26,6 +24,7 @@ type TextInstance = Instance;
 type Container = QmlElement;
 type HydratableInstance = Instance;
 type PublicInstance = QmlElement;
+type Props = BasicProps;
 interface UpdatePayload {}
 interface ChildSet {}
 type TimeoutHandle = NodeJS.Timeout;
