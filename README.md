@@ -14,10 +14,6 @@ Build native, high-performance, cross-platform universal applications (desktop *
 - Supports Hot Module Reloading
 - Supports react-devtools & redux-devtools (Time Travel Debugging possible)
 
-# Motivation
-
-TODO
-
 # Quickstart
 
 TODO
