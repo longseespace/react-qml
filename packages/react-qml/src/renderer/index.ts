@@ -1,30 +1,34 @@
 import ReactReconciler from 'react-reconciler';
 import hostConfig from './hostConfig';
-import { QmlObject } from './qml';
 
 import registry from './registry';
 import Anchor from './anchor';
 import createQmlComponent from './createQmlComponent';
 import createRawQmlComponent from './createRawQmlComponent';
+import { QmlObject, QmlQt } from './qmlTypes';
 
 const ReactReconcilerInst = ReactReconciler(hostConfig);
 let rootContainer: ReactReconciler.OpaqueRoot;
 
+export declare const Qt: QmlQt;
+
 const render = (
   element: React.Component,
-  renderDom: QmlObject,
+  renderDom: QmlObject | null | undefined,
   callback: () => void | null | undefined
 ) => {
   // element: This is the react element for App component
   // renderDom: This is the host root element to which the rendered app will be attached.
   // callback: if specified will be called after render is done.
 
+  const rootElement = renderDom || Qt.application;
+
   const isConcurrent = false; // disables concurrent rendering
   const hydrate = false; // not supported
   if (!rootContainer) {
     // Creates root fiber node.
     rootContainer = ReactReconcilerInst.createContainer(
-      renderDom,
+      rootElement,
       isConcurrent,
       hydrate
     );

@@ -24,6 +24,26 @@ if (!global.self) {
   global.self = global; /* eslint-disable-line */
 }
 
+if (!global.window) {
+  global.window = global;
+}
+
+let inQmlContext = false;
+try {
+  inQmlContext =
+    Qt && Qt.createComponent && typeof Qt.createComponent === 'function';
+} catch (e) {
+  // ignore
+}
+
+if (!inQmlContext) {
+  const noop = () => {};
+  global.Qt = {
+    createComponent: noop,
+    createQmlObject: noop,
+  };
+}
+
 if (!global.Map) {
   try {
     global.Map = Map;
@@ -51,10 +71,6 @@ require('../../vendor/polyfills/Object.es7.js');
 require('../../vendor/polyfills/babelHelpers.js');
 
 // require('react-native/Libraries/Core/InitializeCore');
-
-if (!global.window) {
-  global.window = global;
-}
 
 require('./setupDevTools')(global);
 

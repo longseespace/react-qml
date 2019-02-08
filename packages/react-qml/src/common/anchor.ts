@@ -1,4 +1,4 @@
-import { QmlElement } from './qml';
+import { QmlElement } from './qmlTypes';
 
 export type AnchorLineProp =
   | 'left'

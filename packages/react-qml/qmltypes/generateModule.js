@@ -1,3 +1,5 @@
+const VERSION = '0.1';
+
 const fs = require('fs');
 const path = require('path');
 
@@ -147,10 +149,13 @@ const componentNames = Array.from(new Set(components.map(c => c.name)));
 const namedExport = `export const {
 ${componentNames.map(name => '  ' + name).join(',\n')}
 } = Module;`;
-const tsFileContent = `import { createRawQmlComponent } from '../../renderer';
+const tsFileContent = `// generatorVersion: ${VERSION}
+import { createRawQmlComponent } from '../../renderer';
 import types from './qmltypes.json';
 
-const generateQml = (type: string) => \`import ${moduleInfo.name} ${moduleInfo.version}; \${type} {}\`;
+const generateQml = (type: string) => \`import ${moduleInfo.name} ${
+  moduleInfo.version
+}; \${type} {}\`;
 
 const Module: { [key: string]: any } = {};
 

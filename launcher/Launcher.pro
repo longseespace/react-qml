@@ -1,9 +1,6 @@
-QT += qml quick quickcontrols2 websockets
+QT += quickcontrols2 websockets
+android|ios|qnx|winrt|isEmpty(QT.widgets.name): CONFIG += no_desktop
 !no_desktop: QT += widgets
-
-SOURCES += main.cpp \
-    rq.cpp
-RESOURCES += main.qrc
 
 CONFIG(debug, debug|release) {
   message("debug mode")
@@ -18,5 +15,11 @@ QMAKE_TARGET_COPYRIGHT = Copyright 2019 Podzim, Inc. All rights reserved.
 TARGET = Launcher
 
 HEADERS += \
-    rq.h \
-    qtquickcontrolsapplication.h
+  qtquickcontrolsapplication.h \
+  ReactQML/rq.h
+
+
+SOURCES += main.cpp \
+  ReactQML/rq.cpp
+
+RESOURCES += main.qrc

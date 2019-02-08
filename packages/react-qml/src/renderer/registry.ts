@@ -31,9 +31,7 @@ export class Registry {
     component: QmlComponent,
     metadata: RegistryComponentMetadata = { defaultProp: 'data' }
   ): void {
-    if (this.componentRegistry[name]) {
-      throw new Error(`Component is registered: ${name}`);
-    }
+    // allow re-register component for hot-reloading
     this.componentRegistry[name] = { component, metadata };
   }
 

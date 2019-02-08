@@ -3,11 +3,8 @@ import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.0
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.1
-import QtQuick.LocalStorage 2.0
-import QtQuick.Particles 2.0
 import QtWebSockets 1.0
 import Qt.labs.settings 1.0
-import Qt.labs.calendar 1.0
 
 ApplicationWindow {
   id: __devWindow

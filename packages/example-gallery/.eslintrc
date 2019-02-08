@@ -19,6 +19,7 @@
   "globals": {
     "Qt": true,
     "Component": true,
+    "StandardKey": true,
     "RQ": true,
     "qsTr": true,
     "__window__": true,

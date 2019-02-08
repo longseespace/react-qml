@@ -114,6 +114,45 @@ function handleAnchorRef(
   }
 }
 
+function handleStyle(
+  qmlElement: QmlElement,
+  lastStyle: BasicProps | null,
+  nextStyle: BasicProps | null
+) {
+  // last style
+  if (lastStyle) {
+    for (let styleName in lastStyle) {
+      if (qmlElement.hasOwnProperty(styleName)) {
+        if (nextStyle && nextStyle[styleName]) {
+          // do nothing, will be set in next style anyway
+          continue;
+        }
+
+        // otherwise, unset
+        try {
+          qmlElement[styleName] = undefined;
+        } catch (error) {
+          console.log(
+            'cannot unset style',
+            styleName,
+            lastStyle[styleName],
+            typeof qmlElement[styleName]
+          );
+        }
+      }
+    }
+  }
+
+  // next style
+  if (nextStyle) {
+    for (let styleName in nextStyle) {
+      if (qmlElement.hasOwnProperty(styleName)) {
+        qmlElement[styleName] = nextStyle[styleName];
+      }
+    }
+  }
+}
+
 function setInitialProps(qmlElement: QmlElement, props: BasicProps) {
   for (const propKey in props) {
     const propValue = props[propKey];
@@ -140,6 +179,12 @@ function setInitialProps(qmlElement: QmlElement, props: BasicProps) {
     // anchors handling
     if (propKey === 'anchors') {
       handleAnchors(qmlElement, null, propValue);
+      continue;
+    }
+
+    // style handling
+    if (propKey === 'style') {
+      handleStyle(qmlElement, null, propValue);
       continue;
     }
 
@@ -206,13 +251,12 @@ export function diffProps(
 
     // event handling
     const matches = propKey.match(qmlSignalRegex);
-    if (matches && lastProp !== nextProp) {
-      updatePayload.push(propKey, [lastProp, nextProp]);
-      continue;
-    }
+    const isEventProp = matches && lastProp !== nextProp;
+    const isAnchorsProp = propKey === 'anchors';
+    const isAnchorRefProp = propKey === 'anchorRef';
+    const isStyleProp = propKey === 'style';
 
-    // anchors handling
-    if (propKey === 'anchors' || propKey === 'anchorRef') {
+    if (isEventProp || isAnchorsProp || isAnchorRefProp || isStyleProp) {
       updatePayload.push(propKey, [lastProp, nextProp]);
       continue;
     }
@@ -254,6 +298,13 @@ export function updateProps(qmlElement: QmlElement, updatePayload: Array<any>) {
     if (propKey === 'anchors') {
       const [lastAnchors, nextAnchors] = propValue;
       handleAnchors(qmlElement, lastAnchors, nextAnchors);
+      continue;
+    }
+
+    // style handling
+    if (propKey === 'style') {
+      const [lastStyle, nextStyle] = propValue;
+      handleStyle(qmlElement, lastStyle, nextStyle);
       continue;
     }
 
@@ -372,6 +423,22 @@ function removeElementFromHostContext(element: QmlElement) {
   }
 }
 
+function isAnimation(obj: any) {
+  const isQtObject = Qt.isQtObject(obj);
+  const objType = getObjectType(obj);
+  const isAnimationType =
+    objType === 'QQuickColorAnimation' ||
+    objType === 'QQuickNumberAnimation' ||
+    objType === 'QQuickPropertyAnimation' ||
+    objType === 'Vector3dAnimation' ||
+    objType === 'RotationAnimation' ||
+    objType === 'AnchorAnimation' ||
+    objType === 'ParentAnimation ' ||
+    objType === 'QQuickSmoothedAnimation' ||
+    objType === 'QQuickSpringAnimation';
+  return isQtObject && isAnimationType;
+}
+
 // turned out, appending child in qml is not as simple as setting prop `.parent`
 // - if both parent and child are Item, simply setting parent would do
 // - otherwise, we can append child to parent's default prop (eg: parent.data)
@@ -382,12 +449,6 @@ function appendChildElement(
   parentDefaultProp: string = 'data'
 ) {
   removeElementFromHostContext(child);
-
-  if (isQuickItem(parent) && isQuickItem(child)) {
-    console.log('child.parent=');
-    child.parent = parent;
-    return;
-  }
 
   const parentType = getObjectType(parent);
   const childType = getObjectType(child);
@@ -411,6 +472,17 @@ function appendChildElement(
     // this is a hack to "sync" menu
     child.visible = false;
     child.visible = true;
+    return;
+  }
+
+  // - set animation's target to parent, if not specified
+  if (isAnimation(child) && !isAnimation(parent)) {
+    child.target = parent;
+  }
+
+  if (isQuickItem(parent) && isQuickItem(child)) {
+    console.log('child.parent=');
+    child.parent = parent;
     return;
   }
 
