@@ -1,8 +1,6 @@
 const path = require('path');
 
 module.exports = ({ root, platform }) => ({
-  entry: {
-    main: './src/index.js',
-    qml: './src/index.qml',
-  },
+  context: path.resolve(root, 'src'),
+  entry: ['./index.qml', './index.js'],
 });
