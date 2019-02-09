@@ -9,3 +9,5 @@ __tests__
 /docs
 /flow-typed
 /jest
+/qmltypes
+/src

@@ -7,15 +7,13 @@ const Module: { [key: string]: any } = {};
 
 for (let index = 0; index < types.length; index++) {
   const definition = types[index];
-  const { name, module, defaultProperty = 'data' } = definition;
+  const { name, module } = definition;
   const tagName = `${module}.${name}`;
   Module[name] = createRawQmlComponent(generateQml(name), tagName, {
-    defaultProp: defaultProperty,
+    defaultProp: 'data',
   });
 }
 
-export const {
-  Settings
-} = Module;
+export const { Settings } = Module;
 
 export default Module;

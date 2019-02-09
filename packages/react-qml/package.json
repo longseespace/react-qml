@@ -1,6 +1,6 @@
 {
   "name": "react-qml",
-  "version": "0.0.1",
+  "version": "0.3.0",
   "description": "React QML",
   "main": "dist/index.js",
   "files": [
@@ -11,7 +11,8 @@
     "test": "jest",
     "build": "yarn build:types && yarn build:js",
     "build:types": "tsc --emitDeclarationOnly",
-    "build:js": "babel src --copy-files --out-dir dist --extensions \".ts,.tsx\""
+    "build:js": "babel src --copy-files --out-dir dist --extensions \".ts,.tsx\"",
+    "prerelease": "yarn build"
   },
   "repository": {
     "type": "git",
