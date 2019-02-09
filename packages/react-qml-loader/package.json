@@ -1,10 +1,8 @@
 {
-  "name": "react-qml-loader",
-  "version": "0.1.2",
-  "description": "React QML loader: create React Component from qml files",
+  "name": "@react-qml/qml-loader",
+  "version": "0.0.1",
+  "description": "QML loader: create React Component from qml files",
   "main": "index.js",
-  "scripts": {
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/longseespace/react-qml.git"
@@ -20,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/longseespace/react-qml/issues"
   },
-  "homepage": "https://github.com/longseespace/react-qml#readme"
+  "homepage": "https://github.com/longseespace/react-qml#readme",
+  "devDependencies": {
+    "loader-utils": "^1.2.3"
+  }
 }

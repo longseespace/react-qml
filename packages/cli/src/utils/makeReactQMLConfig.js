@@ -151,7 +151,7 @@ const getDefaultConfig = ({
           test: /\.qml$/,
           use: [
             {
-              loader: require.resolve('./qmlLoader'),
+              loader: require.resolve('@react-qml/qml-loader'),
               options: {
                 publicPath: '/',
                 name: () => {

@@ -22,6 +22,7 @@
     "react": "*"
   },
   "dependencies": {
+    "@react-qml/qml-loader": "^0.0.1",
     "@zamotany/react-proxy": "3.0.0-alpha.4",
     "babel-core": "^6.24.0",
     "babel-loader": "^7.1.4",
