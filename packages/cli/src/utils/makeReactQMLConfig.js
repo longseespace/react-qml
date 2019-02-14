@@ -131,7 +131,7 @@ const getDefaultConfig = ({
       rules: [
         { parser: { requireEnsure: false } },
         {
-          test: /\.js$/,
+          test: /\.jsx?$/,
           exclude: jsExcludePattern,
           use: [
             {
@@ -146,6 +146,24 @@ const getDefaultConfig = ({
               }),
             },
           ],
+        },
+        {
+          test: /\.tsx?$/,
+          use: [
+            require.resolve('ts-loader'),
+            {
+              loader: require.resolve('babel-loader'),
+              options: Object.assign({}, getBabelConfig(root), {
+                /**
+                 * to improve the rebuild speeds
+                 * This enables caching results in ./node_modules/.cache/babel-loader/
+                 * This is a feature of `babel-loader` and not babel
+                 */
+                cacheDirectory: dev,
+              }),
+            },
+          ],
+          exclude: jsExcludePattern,
         },
         {
           test: /\.qml$/,
@@ -311,7 +329,16 @@ const getDefaultConfig = ({
        * First entry takes precendece
        */
       mainFields: ['react-native', 'browser', 'main'],
-      extensions: [`.${platform}.js`, '.native.js', '.js'],
+      extensions: [
+        `.${platform}.js`,
+        `.${platform}.ts`,
+        '.native.js',
+        '.native.ts',
+        '.js',
+        '.ts',
+        '.jsx',
+        '.tsx',
+      ],
     },
     optimization: {
       minimize: !!minify,

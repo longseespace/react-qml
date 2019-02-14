@@ -7,6 +7,10 @@ import createQmlComponent from './createQmlComponent';
 import createRawQmlComponent from './createRawQmlComponent';
 import { QmlObject, QmlQt } from './qmlTypes';
 
+// export types
+export * from './qmlTypes';
+export * from './anchor';
+
 const ReactReconcilerInst = ReactReconciler(hostConfig);
 let rootContainer: ReactReconciler.OpaqueRoot;
 
