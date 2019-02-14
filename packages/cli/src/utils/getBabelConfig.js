@@ -45,6 +45,9 @@ const DEFAULT_BABELRC = {
     ],
     'transform-function-bind',
     'transform-runtime',
+    'transform-regenerator',
+    'transform-async-to-generator',
+    'lodash',
   ],
 };
 

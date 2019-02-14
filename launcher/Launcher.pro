@@ -1,4 +1,4 @@
-QT += quickcontrols2 websockets
+QT += quickcontrols2 websockets svg
 android|ios|qnx|winrt|isEmpty(QT.widgets.name): CONFIG += no_desktop
 !no_desktop: QT += widgets
 

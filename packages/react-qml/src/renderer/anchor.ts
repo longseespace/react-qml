@@ -270,7 +270,7 @@ export class ParentAnchor {
         subscription.sourceProp === childPropName
       ) {
         // found
-        if (subscription.onTargetChanged) {
+        if (subscription.onTargetChanged && childElement.parentChanged) {
           childElement.parentChanged.disconnect(subscription.onTargetChanged);
         }
         ParentAnchor.parentAnchorSubscriptions.splice(index, 1);

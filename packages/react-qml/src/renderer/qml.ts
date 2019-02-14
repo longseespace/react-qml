@@ -357,7 +357,10 @@ export function createElementContainer(
   const componentDefinition = registry.getComponent(type);
   if (componentDefinition) {
     const { component, metadata } = componentDefinition;
-    const element = <QmlElement>component.createObject(hostElement, {});
+    const element = <QmlElement>component.createObject(hostElement, props);
+    if (!element) {
+      throw new Error(`Unable to create element: ${type}`);
+    }
     setInitialProps(element, props);
     console.log('\n\n\nCreate new element');
     console.log(element, '\n\n\n');
@@ -519,6 +522,7 @@ function removeChildElement(
     child.parent = null;
     console.log('removeChildElement', parent, child);
   } else {
+    console.log('herereree');
     const parentData = parent[parentDefaultProp];
     if (parentData && parentData.indexOf) {
       const childIndex = parentData.indexOf(child);
@@ -569,6 +573,44 @@ export function removeAllChildren(
   }
 }
 
+function findChildIndex(parentData: any, child: QmlElement) {
+  for (let index = 0; index < parentData.length; index++) {
+    const element = parentData[index];
+    if (element === child) {
+      return index;
+    }
+  }
+
+  return -1;
+}
+
+function moveChild(parentData: any, fromIndex: number, toIndex: number) {
+  if (fromIndex < 0 || fromIndex >= parentData.length) {
+    throw new Error('Out of range: fromIndex');
+  }
+  if (toIndex < 0 || toIndex >= parentData.length) {
+    throw new Error('Out of range: toIndex');
+  }
+
+  const child = parentData[fromIndex];
+  if (fromIndex < toIndex) {
+    let index = fromIndex;
+    while (index < toIndex) {
+      parentData[index] = parentData[index + 1];
+      index++;
+    }
+    parentData[toIndex] = child;
+  } else {
+    let index = fromIndex;
+    while (index > toIndex) {
+      parentData[index] = parentData[index - 1];
+      index--;
+    }
+    parentData[toIndex] = child;
+  }
+  parentData[toIndex].z = 10;
+}
+
 function insertBeforeElement(
   parent: QmlElement,
   child: QmlElement,
@@ -576,15 +618,22 @@ function insertBeforeElement(
   parentDefaultProp: string = 'data'
 ) {
   const parentData = parent[parentDefaultProp];
-  if (parentData && parentData.indexOf) {
-    const childIndex = parentData.indexOf(child);
+  if (parentData) {
+    // there is no indexOf, sad
+    // @see https://stackoverflow.com/questions/43030433/qtquick-item-children-indexof-doesnt-exist
+    const childIndex = findChildIndex(parentData, child);
+    const beforeChildIndex = findChildIndex(parentData, beforeChild);
 
     // Move existing child or add new child?
     if (childIndex >= 0) {
-      parentData.splice(childIndex, 1);
+      // move from childIndex to beforeChildIndex
+      moveChild(parentData, childIndex, beforeChildIndex);
+    } else {
+      // insert child into beforeChildIndex first
+      appendChildElement(parent, child, parentDefaultProp);
+      // then move
+      // moveChild(parentData, parentData.length - 1, beforeChildIndex);
     }
-    const beforeChildIndex = parentData.indexOf(beforeChild);
-    parentData.splice(beforeChildIndex, 0, child);
   }
 }
 
