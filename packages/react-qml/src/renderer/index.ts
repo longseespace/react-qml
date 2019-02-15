@@ -6,6 +6,7 @@ import Anchor from './anchor';
 import createQmlComponent from './createQmlComponent';
 import createRawQmlComponent from './createRawQmlComponent';
 import { QmlObject, QmlQt } from './qmlTypes';
+import { ReactElement } from 'react';
 
 // export types
 export * from './qmlTypes';
@@ -16,10 +17,14 @@ let rootContainer: ReactReconciler.OpaqueRoot;
 
 export declare const Qt: QmlQt;
 
+const noop = () => {};
+
+export type RenderCallback = () => void | null | undefined;
+
 const render = (
-  element: React.Component,
-  renderDom: QmlObject | null | undefined,
-  callback: () => void | null | undefined
+  element: ReactElement<any>,
+  renderDom?: QmlObject,
+  callback?: RenderCallback
 ) => {
   // element: This is the react element for App component
   // renderDom: This is the host root element to which the rendered app will be attached.
@@ -51,7 +56,7 @@ const render = (
     element,
     rootContainer,
     parentComponent,
-    callback
+    callback || noop
   ); // Start reconcilation and render the result
 };
 

@@ -5,6 +5,7 @@ import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.1
 import QtWebSockets 1.0
 import Qt.labs.settings 1.0
+import ReactQML 1.0
 
 ApplicationWindow {
   id: __devWindow
@@ -45,6 +46,20 @@ ApplicationWindow {
         errorDialog.open();
       }
     }
+
+    // leaks, use with cautions!
+    function reload() {
+      var qmlSource = __appLoader.source;
+      __appLoader.source = '';
+      RQ.clearCache();
+      __appLoader.source = qmlSource;
+    }
+  }
+
+  Shortcut {
+    sequence: "Ctrl+Shift+R"
+    onActivated: __appLoader.reload()
+    context: Qt.ApplicationShortcut
   }
 
   MessageDialog {
