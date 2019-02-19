@@ -33,27 +33,17 @@ function setup(global) {
       if (!key) {
         return;
       }
-      return Promise.resolve(localData[key]);
+      return localData[key];
     },
 
     setItem(key, value) {
       localData[key] = value;
-      try {
-        settings.data = JSON.stringify(localData);
-        return Promise.resolve();
-      } catch (e) {
-        return Promise.reject(e);
-      }
+      settings.data = JSON.stringify(localData);
     },
 
     removeItem(key) {
       delete localData[key];
-      try {
-        settings.data = JSON.stringify(localData);
-        return Promise.resolve();
-      } catch (e) {
-        return Promise.reject(e);
-      }
+      settings.data = JSON.stringify(localData);;
     },
   };
 
