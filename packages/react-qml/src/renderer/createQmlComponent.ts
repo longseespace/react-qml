@@ -1,6 +1,5 @@
-import registry from './registry';
 import React from 'react';
-import { QmlQt } from './qmlTypes';
+import AppRegistry from '../common/AppRegistry';
 
 type Props = { forwardedRef: React.RefObject<any> };
 
@@ -9,7 +8,7 @@ type State = {
 };
 
 export declare const Component: any;
-export declare const Qt: QmlQt;
+export declare const Qt: Qml.QmlQt;
 
 const createQmlComponent = (
   source: string,
@@ -17,7 +16,7 @@ const createQmlComponent = (
   metadata = { defaultProp: 'data' }
 ) => {
   const component = Qt.createComponent(source);
-  registry.registerComponent(name, component, metadata);
+  AppRegistry.registerComponent(name, component, metadata);
 
   class RQComponent extends React.Component<Props, State> {
     state = { status: component.status };

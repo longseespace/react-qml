@@ -1,21 +1,14 @@
 import ReactReconciler from 'react-reconciler';
 import hostConfig from './hostConfig';
 
-import registry from './registry';
-import Anchor from './anchor';
 import createQmlComponent from './createQmlComponent';
 import createRawQmlComponent from './createRawQmlComponent';
-import { QmlObject, QmlQt } from './qmlTypes';
 import { ReactElement } from 'react';
-
-// export types
-export * from './qmlTypes';
-export * from './anchor';
 
 const ReactReconcilerInst = ReactReconciler(hostConfig);
 let rootContainer: ReactReconciler.OpaqueRoot;
 
-export declare const Qt: QmlQt;
+export declare const Qt: Qml.QmlQt;
 
 const noop = () => {};
 
@@ -23,7 +16,7 @@ export type RenderCallback = () => void | null | undefined;
 
 const render = (
   element: ReactElement<any>,
-  renderDom?: QmlObject,
+  renderDom?: Qml.QmlObject,
   callback?: RenderCallback
 ) => {
   // element: This is the react element for App component
@@ -60,12 +53,10 @@ const render = (
   ); // Start reconcilation and render the result
 };
 
-export { registry, render, Anchor, createQmlComponent, createRawQmlComponent };
+export { render, createQmlComponent, createRawQmlComponent };
 
 export default {
-  registry,
   render,
-  Anchor,
   createQmlComponent,
   createRawQmlComponent,
 };

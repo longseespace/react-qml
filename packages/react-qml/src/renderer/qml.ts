@@ -1,33 +1,26 @@
 import { inspect } from 'util';
-import registry, { RegistryComponentMetadata } from './registry';
 import Anchor, {
   AnchorRef,
   isAnchorProp,
   AnchorRefProp,
   ParentAnchor,
-} from './anchor';
-import {
-  QmlQt,
-  QmlElement,
-  BasicProps,
+} from '../common/Anchor';
+import QmlElementContainerImpl, {
   QmlElementContainer,
-  QmlElementMeasureCallback,
-} from './qmlTypes';
-import { Props } from 'react';
-import QmlElementContainerImpl from './QmlElementContainer';
+} from './QmlElementContainer';
+import AppRegistry from '../common/AppRegistry';
 
 // global Qt object
-export declare const Qt: QmlQt;
-
-// anchor lines
+export declare const Qt: Qml.QmlQt;
 
 // QML signal handler convention
 const qmlSignalRegex = /^on([A-Z][a-zA-Z]+)$/;
 
 type EventHandler = () => void;
+type BasicProps = { [key: string]: any };
 
 function listenTo(
-  qmlElement: QmlElement,
+  qmlElement: Qml.QmlElement,
   eventName: string,
   nextHandler: EventHandler | null,
   lastHandler: EventHandler | null
@@ -51,7 +44,7 @@ function listenTo(
 
 // handle connections
 function handleAnchors(
-  qmlElement: QmlElement,
+  qmlElement: Qml.QmlElement,
   lastAnchors: BasicProps | null,
   nextAnchors: BasicProps | null
 ) {
@@ -102,9 +95,16 @@ function handleAnchors(
   }
 }
 
+const FONT_PROPS_MAP: BasicProps = {
+  fontSize: 'pointSize',
+  fontPixelSize: 'pixelSize',
+  fontWeight: 'weight',
+  fontFamily: 'family',
+};
+
 // handle anchor ref
 function handleAnchorRef(
-  qmlElement: QmlElement,
+  qmlElement: Qml.QmlElement,
   lastRef: Anchor | null,
   nextRef: Anchor | null
 ) {
@@ -115,7 +115,7 @@ function handleAnchorRef(
 }
 
 function handleStyle(
-  qmlElement: QmlElement,
+  qmlElement: Qml.QmlElement,
   lastStyle: BasicProps | null,
   nextStyle: BasicProps | null
 ) {
@@ -146,14 +146,19 @@ function handleStyle(
   // next style
   if (nextStyle) {
     for (let styleName in nextStyle) {
-      if (qmlElement.hasOwnProperty(styleName)) {
-        qmlElement[styleName] = nextStyle[styleName];
+      if (styleName.indexOf('font') === 0) {
+        const fontProp = FONT_PROPS_MAP[styleName];
+        qmlElement.font[fontProp] = nextStyle[styleName];
+      } else {
+        if (qmlElement.hasOwnProperty(styleName)) {
+          qmlElement[styleName] = nextStyle[styleName];
+        }
       }
     }
   }
 }
 
-function setInitialProps(qmlElement: QmlElement, props: BasicProps) {
+function setInitialProps(qmlElement: Qml.QmlElement, props: BasicProps) {
   for (const propKey in props) {
     const propValue = props[propKey];
 
@@ -217,7 +222,7 @@ function setInitialProps(qmlElement: QmlElement, props: BasicProps) {
 
 // Calculate the diff between the two objects.
 export function diffProps(
-  qmlElement: QmlElement,
+  qmlElement: Qml.QmlElement,
   lastProps: BasicProps,
   nextProps: BasicProps
 ): Array<any> | null {
@@ -268,7 +273,10 @@ export function diffProps(
 }
 
 // Apply the diff.
-export function updateProps(qmlElement: QmlElement, updatePayload: Array<any>) {
+export function updateProps(
+  qmlElement: Qml.QmlElement,
+  updatePayload: Array<any>
+) {
   for (let i = 0; i < updatePayload.length; i += 2) {
     const propKey = updatePayload[i];
     const propValue = updatePayload[i + 1];
@@ -350,14 +358,14 @@ export const hostElement = createHostContext();
 export function createElementContainer(
   type: string,
   props: BasicProps,
-  rootContainerInstance: QmlElement,
+  rootContainerInstance: Qml.QmlElement,
   hostContext: QmlElementContainer
 ) {
   const hostElement = hostContext.element;
-  const componentDefinition = registry.getComponent(type);
+  const componentDefinition = AppRegistry.getComponent(type);
   if (componentDefinition) {
     const { component, metadata } = componentDefinition;
-    const element = <QmlElement>component.createObject(hostElement, props);
+    const element = <Qml.QmlElement>component.createObject(hostElement, props);
     if (!element) {
       throw new Error(`Unable to create element: ${type}`);
     }
@@ -368,7 +376,7 @@ export function createElementContainer(
   }
 
   // fall back to raw components
-  const rawComponentDefinition = registry.getRawComponent(type);
+  const rawComponentDefinition = AppRegistry.getRawComponent(type);
   if (rawComponentDefinition) {
     const { rawContent, metadata } = rawComponentDefinition;
     const element = Qt.createQmlObject(rawContent, hostElement, type);
@@ -416,7 +424,7 @@ function canSetParent(obj: any) {
   return isQtObject && hasParentProp;
 }
 
-function removeElementFromHostContext(element: QmlElement) {
+function removeElementFromHostContext(element: Qml.QmlElement) {
   const hostData = hostElement.data;
   if (hostData && hostData.indexOf) {
     const childIndex = hostData.indexOf(element);
@@ -447,8 +455,8 @@ function isAnimation(obj: any) {
 // - otherwise, we can append child to parent's default prop (eg: parent.data)
 //   in special cases we don't need to do anything (eg: child is an instance of Window)
 function appendChildElement(
-  parent: QmlElement,
-  child: QmlElement,
+  parent: Qml.QmlElement,
+  child: Qml.QmlElement,
   parentDefaultProp: string = 'data'
 ) {
   removeElementFromHostContext(child);
@@ -506,7 +514,7 @@ export function appendChild(
 }
 
 export function appendChildToContainer(
-  container: QmlElement,
+  container: Qml.QmlElement,
   childContainer: QmlElementContainer
 ) {
   const child = childContainer.element;
@@ -514,29 +522,41 @@ export function appendChildToContainer(
 }
 
 function removeChildElement(
-  parent: QmlElement,
-  child: QmlElement,
+  parent: Qml.QmlElement,
+  child: Qml.QmlElement,
   parentDefaultProp: string = 'data'
 ) {
+  const parentType = getObjectType(parent);
+  const childType = getObjectType(child);
+
+  console.log('parentType', parentType);
+  console.log('childType', childType);
+
   if (isQuickItem(parent) && isQuickItem(child)) {
     child.parent = null;
     console.log('removeChildElement', parent, child);
   } else {
     console.log('herereree');
     const parentData = parent[parentDefaultProp];
-    if (parentData && parentData.indexOf) {
-      const childIndex = parentData.indexOf(child);
+    if (parentData) {
+      const childIndex = findChildIndex(parentData, child);
       if (childIndex > -1) {
-        parent[parentDefaultProp].splice(childIndex, 1);
-        console.log(
-          'removeChildElement',
-          parent,
-          'children length = ',
-          parentData.length
-        );
+        if (parent.remove) {
+          parent.remove(childIndex);
+          console.log(
+            'removeChildElement',
+            parent,
+            'children length = ',
+            parentData.length
+          );
+        } else {
+          console.log('bo tay');
+          // parent[parentDefaultProp].splice(childIndex, 1);
+        }
       }
     }
   }
+
   child.destroy();
 }
 
@@ -550,14 +570,14 @@ export function removeChild(
 }
 
 export function removeChildFromContainer(
-  container: QmlElement,
+  container: Qml.QmlElement,
   childContainer: QmlElementContainer
 ) {
   removeChildElement(container, childContainer.element);
 }
 
 export function removeAllChildren(
-  parent: QmlElement,
+  parent: Qml.QmlElement,
   defaultProp: string = 'data'
 ) {
   const data = parent[defaultProp];
@@ -573,7 +593,7 @@ export function removeAllChildren(
   }
 }
 
-function findChildIndex(parentData: any, child: QmlElement) {
+function findChildIndex(parentData: any, child: Qml.QmlElement) {
   for (let index = 0; index < parentData.length; index++) {
     const element = parentData[index];
     if (element === child) {
@@ -612,9 +632,9 @@ function moveChild(parentData: any, fromIndex: number, toIndex: number) {
 }
 
 function insertBeforeElement(
-  parent: QmlElement,
-  child: QmlElement,
-  beforeChild: QmlElement,
+  parent: Qml.QmlElement,
+  child: Qml.QmlElement,
+  beforeChild: Qml.QmlElement,
   parentDefaultProp: string = 'data'
 ) {
   const parentData = parent[parentDefaultProp];
@@ -627,7 +647,7 @@ function insertBeforeElement(
     // Move existing child or add new child?
     if (childIndex >= 0) {
       // move from childIndex to beforeChildIndex
-      moveChild(parentData, childIndex, beforeChildIndex);
+      // moveChild(parentData, childIndex, beforeChildIndex);
     } else {
       // insert child into beforeChildIndex first
       appendChildElement(parent, child, parentDefaultProp);
@@ -654,7 +674,7 @@ export function insertBefore(
 }
 
 export function insertInContainerBefore(
-  container: QmlElement,
+  container: Qml.QmlElement,
   childContainer: QmlElementContainer,
   beforeChildContainer: QmlElementContainer
 ) {

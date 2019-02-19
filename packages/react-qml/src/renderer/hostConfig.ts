@@ -15,16 +15,16 @@ import {
   insertBefore,
   insertInContainerBefore,
 } from './qml';
-import { QmlElementContainer, QmlElement, BasicProps } from './qmlTypes';
+import { QmlElementContainer } from './QmlElementContainer';
 
 type Type = string;
 type HostContext = QmlElementContainer;
 type Instance = QmlElementContainer;
 type TextInstance = Instance;
-type Container = QmlElement;
+type Container = Qml.QmlElement;
 type HydratableInstance = Instance;
-type PublicInstance = QmlElement;
-type Props = BasicProps;
+type PublicInstance = Qml.QmlElement;
+type Props = Qml.QmlProps;
 interface UpdatePayload {}
 interface ChildSet {}
 type TimeoutHandle = NodeJS.Timeout;

@@ -1,5 +1,3 @@
-import { QmlElement } from './qmlTypes';
-
 export type AnchorLineProp =
   | 'left'
   | 'top'
@@ -49,9 +47,9 @@ export type AnchorPrimitiveKey =
   | 'alignWhenCentered';
 
 type AnchorSubscription = {
-  source: QmlElement;
+  source: Qml.QmlElement;
   sourceProp: AnchorRefProp;
-  target?: QmlElement;
+  target?: Qml.QmlElement;
   targetProp?: AnchorRefProp;
   onTargetChanged?: () => void;
 };
@@ -60,15 +58,15 @@ export interface AnchorRef {
   value(): any;
   isReady(): boolean;
   type(): string;
-  addSubscription(source: QmlElement, sourceProp: AnchorRefProp): void;
-  removeSubscription(source: QmlElement, sourceProp: AnchorRefProp): void;
+  addSubscription(source: Qml.QmlElement, sourceProp: AnchorRefProp): void;
+  removeSubscription(source: Qml.QmlElement, sourceProp: AnchorRefProp): void;
 }
 
 abstract class AbstractAnchorRef implements AnchorRef {
-  protected qmlElement: QmlElement | null;
+  protected qmlElement: Qml.QmlElement | null;
   protected subscriptions: Array<AnchorSubscription> = [];
 
-  constructor(qmlElement: QmlElement | null = null) {
+  constructor(qmlElement: Qml.QmlElement | null = null) {
     this.qmlElement = qmlElement;
   }
 
@@ -85,7 +83,7 @@ abstract class AbstractAnchorRef implements AnchorRef {
     });
   }
 
-  setQmlElement(qmlElement: QmlElement): void {
+  setQmlElement(qmlElement: Qml.QmlElement): void {
     if (this.qmlElement != null) {
       throw new Error('Anchor ref cannot be used twice');
     }
@@ -97,14 +95,14 @@ abstract class AbstractAnchorRef implements AnchorRef {
     return this.qmlElement != null;
   }
 
-  addSubscription(source: QmlElement, sourceProp: AnchorRefProp): void {
+  addSubscription(source: Qml.QmlElement, sourceProp: AnchorRefProp): void {
     this.subscriptions.push({ source, sourceProp });
     if (this.qmlElement) {
       source.anchors[sourceProp] = this.value();
     }
   }
 
-  removeSubscription(source: QmlElement, sourceProp: AnchorRefProp): void {
+  removeSubscription(source: Qml.QmlElement, sourceProp: AnchorRefProp): void {
     for (let index = 0; index < this.subscriptions.length; index++) {
       const subscription = this.subscriptions[index];
       if (
@@ -124,7 +122,7 @@ abstract class AbstractAnchorRef implements AnchorRef {
 export class AnchorLineRef extends AbstractAnchorRef {
   private line: AnchorLineProp;
 
-  constructor(line: AnchorLineProp, qmlElement: QmlElement | null = null) {
+  constructor(line: AnchorLineProp, qmlElement: Qml.QmlElement | null = null) {
     super(qmlElement);
     this.line = line;
   }
@@ -166,7 +164,7 @@ export class Anchor extends AbstractAnchorRef {
     this.bottom = new AnchorLineRef('bottom');
   }
 
-  setQmlElement(qmlElement: QmlElement): void {
+  setQmlElement(qmlElement: Qml.QmlElement): void {
     super.setQmlElement(qmlElement);
 
     this.left.setQmlElement(qmlElement);
@@ -198,7 +196,7 @@ export class ParentAnchor {
   private static parentAnchorSubscriptions: Array<AnchorSubscription> = [];
 
   private static updateAnchors = (
-    childElement: QmlElement,
+    childElement: Qml.QmlElement,
     childPropName: AnchorRefProp,
     parentPropName?: AnchorRefProp
   ) => {
@@ -218,7 +216,7 @@ export class ParentAnchor {
   };
 
   static addSubscription(
-    childElement: QmlElement,
+    childElement: Qml.QmlElement,
     childPropName: AnchorRefProp,
     parentAnchorRef?: string
   ): void {
@@ -256,7 +254,7 @@ export class ParentAnchor {
   }
 
   static removeSubscription(
-    childElement: QmlElement,
+    childElement: Qml.QmlElement,
     childPropName: AnchorRefProp
   ): void {
     for (

@@ -1,11 +1,11 @@
-import registry from './registry';
+import AppRegistry from '../common/AppRegistry';
 
 const createRawQmlComponent = (
   rawContent: string,
   name: string,
   metadata = { defaultProp: 'data' }
 ) => {
-  registry.registerRawComponent(name, rawContent, metadata);
+  AppRegistry.registerRawComponent(name, rawContent, metadata);
   return name;
 };
 

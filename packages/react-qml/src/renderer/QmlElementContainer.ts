@@ -1,10 +1,4 @@
-import {
-  QmlElementContainer,
-  QmlElement,
-  QmlElementMeasureCallback,
-} from './qmlTypes';
-import { RegistryComponentMetadata } from './registry';
-import { inspect } from 'util';
+import { RegistryComponentMetadata } from '../common/AppRegistry';
 
 function isNumber(x: any) {
   return typeof x === 'number';
@@ -12,7 +6,7 @@ function isNumber(x: any) {
 
 type Style = { [key: string]: any };
 
-function updateElementStyle(element: QmlElement, style: Style) {
+function updateElementStyle(element: Qml.QmlElement, style: Style) {
   for (let styleName in style) {
     const styleValue = style[styleName];
 
@@ -22,11 +16,28 @@ function updateElementStyle(element: QmlElement, style: Style) {
   }
 }
 
+export type QmlElementMeasureCallback = (
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  pageX: number,
+  pageY: number
+) => void;
+
+// a QmlElementContainer
+export interface QmlElementContainer {
+  element: Qml.QmlElement;
+  metadata: RegistryComponentMetadata;
+  measure?: (callback: QmlElementMeasureCallback) => void;
+  setNativeProps?: (arg: any) => void;
+}
+
 class QmlElementContainerImpl implements QmlElementContainer {
-  element: QmlElement;
+  element: Qml.QmlElement;
   metadata: RegistryComponentMetadata;
 
-  constructor(element: QmlElement, metadata: RegistryComponentMetadata) {
+  constructor(element: Qml.QmlElement, metadata: RegistryComponentMetadata) {
     this.element = element;
     this.metadata = metadata;
   }
