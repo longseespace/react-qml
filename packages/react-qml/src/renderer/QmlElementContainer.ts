@@ -1,19 +1,8 @@
 import { RegistryComponentMetadata } from '../common/AppRegistry';
+import StyleSheet from '../common/StyleSheet';
 
 function isNumber(x: any) {
   return typeof x === 'number';
-}
-
-type Style = { [key: string]: any };
-
-function updateElementStyle(element: Qml.QmlElement, style: Style) {
-  for (let styleName in style) {
-    const styleValue = style[styleName];
-
-    if (element.hasOwnProperty(styleName)) {
-      element[styleName] = styleValue;
-    }
-  }
 }
 
 export type QmlElementMeasureCallback = (
@@ -50,7 +39,7 @@ class QmlElementContainerImpl implements QmlElementContainer {
     for (let propKey in props) {
       const propValue = props[propKey];
       if (propKey === 'style') {
-        updateElementStyle(element, propValue);
+        StyleSheet.setStyle(element, propValue);
         continue;
       }
       if (element.hasOwnProperty(propKey)) {

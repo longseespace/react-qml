@@ -9,6 +9,7 @@ import QmlElementContainerImpl, {
   QmlElementContainer,
 } from './QmlElementContainer';
 import AppRegistry from '../common/AppRegistry';
+import StyleSheet from '../common/StyleSheet';
 
 // global Qt object
 export declare const Qt: Qml.QmlQt;
@@ -95,13 +96,6 @@ function handleAnchors(
   }
 }
 
-const FONT_PROPS_MAP: BasicProps = {
-  fontSize: 'pointSize',
-  fontPixelSize: 'pixelSize',
-  fontWeight: 'weight',
-  fontFamily: 'family',
-};
-
 // handle anchor ref
 function handleAnchorRef(
   qmlElement: Qml.QmlElement,
@@ -116,46 +110,23 @@ function handleAnchorRef(
 
 function handleStyle(
   qmlElement: Qml.QmlElement,
-  lastStyle: BasicProps | null,
-  nextStyle: BasicProps | null
+  lastStyle: BasicProps | BasicProps[] | null,
+  nextStyle: BasicProps | BasicProps[] | null
 ) {
   // last style
+  const nextFlatStyle = StyleSheet.flattenStyle(nextStyle);
+  let finalStyle = nextFlatStyle;
   if (lastStyle) {
-    for (let styleName in lastStyle) {
-      if (qmlElement.hasOwnProperty(styleName)) {
-        if (nextStyle && nextStyle[styleName]) {
-          // do nothing, will be set in next style anyway
-          continue;
-        }
-
-        // otherwise, unset
-        try {
-          qmlElement[styleName] = undefined;
-        } catch (error) {
-          console.log(
-            'cannot unset style',
-            styleName,
-            lastStyle[styleName],
-            typeof qmlElement[styleName]
-          );
-        }
+    const lastFlatStyle = StyleSheet.flattenStyle(lastStyle);
+    for (let styleName in lastFlatStyle) {
+      if (!nextFlatStyle.hasOwnProperty(styleName)) {
+        // unset
+        finalStyle[styleName] = undefined;
       }
     }
   }
 
-  // next style
-  if (nextStyle) {
-    for (let styleName in nextStyle) {
-      if (styleName.indexOf('font') === 0) {
-        const fontProp = FONT_PROPS_MAP[styleName];
-        qmlElement.font[fontProp] = nextStyle[styleName];
-      } else {
-        if (qmlElement.hasOwnProperty(styleName)) {
-          qmlElement[styleName] = nextStyle[styleName];
-        }
-      }
-    }
-  }
+  StyleSheet.setStyle(qmlElement, finalStyle);
 }
 
 function setInitialProps(qmlElement: Qml.QmlElement, props: BasicProps) {

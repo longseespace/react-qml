@@ -67,6 +67,24 @@ declare namespace Qml {
   // Basic (key => value) object
   export type QmlProps = { [key: string]: any };
 
+  export type QmlFontProps = {
+    pointSize?: number;
+    pixelSize?: number;
+    family?: string;
+    weight?: any;
+    bold?: boolean;
+    italic?: boolean;
+    underline?: boolean;
+    overline?: boolean;
+    strikeout?: boolean;
+    capitalization?: any;
+    letterSpacing?: number;
+    wordSpacing?: number;
+    kerning?: boolean;
+    preferShaping?: boolean;
+    hintingPreference?: any;
+  };
+
   // QQuickItem
   export type QmlQuickItem = {
     parent: QmlElement | null;
@@ -81,16 +99,6 @@ declare namespace Qml {
 
   // QmlElement is basically QmlQuickItem, plus dynamic props
   export type QmlElement = QmlObject & QmlProps;
-
-  // measure callback as in ReactNative
-  export type QmlElementMeasureCallback = (
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-    pageX: number,
-    pageY: number
-  ) => void;
 
   // end --
 }
