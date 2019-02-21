@@ -1,6 +1,6 @@
 {
   "name": "Gallery",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "start": "DEV_SERVER_HOST=localhost rq start --dev --platform=macos",
@@ -12,7 +12,7 @@
     "history": "^4.7.2",
     "lodash": "^4.17.11",
     "react": "^16.5.0",
-    "react-qml": "*",
+    "react-qml": "^0.4.0",
     "react-redux": "5.0.6",
     "react-router": "^4.3.1",
     "redux": "^3.7.2",

@@ -1,6 +1,6 @@
 {
   "name": "WithRedux",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "scripts": {
     "start": "rq start --dev=true --platform=macos",
@@ -12,14 +12,14 @@
   },
   "dependencies": {
     "react": "16.4.2",
-    "react-qml": "*",
+    "react-qml": "^0.4.0",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "remote-redux-devtools": "^0.5.12"
   },
   "devDependencies": {
-    "@react-qml/cli": "*",
+    "@react-qml/cli": "^0.1.0",
     "remotedev-server": "^0.2.4"
   }
 }
