@@ -6,7 +6,6 @@
     "rq": "./bin/cli.js"
   },
   "scripts": {
-    "precommit": "lint-staged",
     "flow": "flow --include-warnings",
     "lint": "eslint .",
     "test": "jest",
