@@ -311,6 +311,7 @@ const getDefaultConfig = ({
         process.env.NODE_ENV === 'production'
           ? {}
           : {
+              react: path.resolve('./node_modules/react'),
               /**
                * Latest `react-proxy` version does not contain try/catches from
                * commit 981815dca250373619138c9f5aadf12295cf1b3f.

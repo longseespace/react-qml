@@ -54,20 +54,10 @@
     "@types/node": "^10.12.18",
     "@types/react-reconciler": "^0.16.0",
     "babel-jest": "^23.6.0",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "jest": "^24.1.0",
     "ts-jest": "^24.0.0",
     "typescript": "^3.2.2"
-  },
-  "babel": {
-    "presets": [
-      "@babel/env",
-      "@babel/typescript",
-      "@babel/react"
-    ],
-    "plugins": [
-      "@babel/proposal-class-properties",
-      "@babel/proposal-object-rest-spread"
-    ]
   },
   "jest": {
     "moduleDirectories": [
