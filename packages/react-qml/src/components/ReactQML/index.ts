@@ -1,4 +1,5 @@
 import RedBox from './RedBox';
+import Window from './Window/Window';
 
-export { RedBox };
-export default { RedBox };
+export { RedBox, Window };
+export default { RedBox, Window };
