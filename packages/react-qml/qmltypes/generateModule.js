@@ -1,4 +1,4 @@
-const VERSION = '0.1';
+const VERSION = '0.2';
 
 const fs = require('fs');
 const path = require('path');
@@ -63,8 +63,10 @@ function getComponentField(str, field) {
 
     if (field === 'exports') {
       const exportParts = raw.replace(/\[|\]|\n|\r/g, '').split(',');
-      const firstPart = exportParts[0].trim();
-      const value = firstPart.split(' ')[0].replace(/"/g, '');
+
+      // prefer last part over first part
+      const lastPart = exportParts.reverse()[0].trim();
+      const value = lastPart.split(' ')[0].replace(/"/g, '');
       return value;
     }
 
@@ -119,7 +121,7 @@ const visualComponent = component =>
   component.module.indexOf('Templates') === -1;
 
 // let's do it
-const componentParts = fileContent.split(/\s*Component\s*/g);
+const componentParts = fileContent.split(/\s+Component\s+/g);
 componentParts.shift();
 
 const moduleInfo = getModuleInfo(fileContent);
