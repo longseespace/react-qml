@@ -9,7 +9,6 @@ import QtQuickLayouts from './QtQuickLayouts';
 import QtQuickWindow from './QtQuickWindow';
 
 // for named exports
-export * from './QtQuick';
 export * from './QtQuickLayouts';
 export * from './ReactQML';
 

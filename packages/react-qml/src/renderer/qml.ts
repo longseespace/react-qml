@@ -458,7 +458,7 @@ function appendChildElement(
   }
 
   // - set animation's target to parent, if not specified
-  if (isAnimation(child) && !isAnimation(parent)) {
+  if (isAnimation(child) && !isAnimation(parent) && isQuickItem(parent)) {
     child.target = parent;
   }
 
