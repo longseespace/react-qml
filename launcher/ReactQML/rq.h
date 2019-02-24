@@ -1,6 +1,8 @@
 #ifndef RQ_H
 #define RQ_H
 
+#include "rqnetworkaccessmanagerfactory.h"
+
 #include <QObject>
 #include <QQmlComponent>
 #include <QQmlContext>
@@ -33,6 +35,8 @@ private:
 
   QQmlContext *m_ws_context;
   QQmlComponent *m_ws_component;
+
+  RQNetworkAccessManagerFactory *m_nam;
 };
 
 #endif // RQ_H

@@ -10,7 +10,8 @@ QObject *RQ::qmlInstance(QQmlEngine *engine, QJSEngine *scriptEngine) {
   return rq;
 }
 
-RQ::RQ(QQmlEngine *engine) : m_engine(engine) {
+RQ::RQ(QQmlEngine *engine)
+    : m_engine(engine), m_nam(new RQNetworkAccessManagerFactory()) {
   // timer context
   m_timer_context = new QQmlContext(m_engine->rootContext());
   m_timer_component = new QQmlComponent(m_engine);
@@ -23,6 +24,9 @@ RQ::RQ(QQmlEngine *engine) : m_engine(engine) {
 
   // error handling
   connect(m_engine, &QQmlEngine::warnings, this, &RQ::onQmlWarnings);
+
+  // disk cache
+  engine->setNetworkAccessManagerFactory(m_nam);
 }
 
 RQ::~RQ() {
