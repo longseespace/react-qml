@@ -33,6 +33,18 @@ export function isPlatformObject(obj: object) {
   return isQtObject && isPlatformType;
 }
 
+export function isWindow(obj: object) {
+  const isQtObject = Qt.isQtObject(obj);
+  const objType = getObjectType(obj);
+  console.log('objType', objType);
+
+  const isWindowType =
+    objType === 'QQuickWindow' ||
+    objType === 'QQuickApplicationWindow' ||
+    objType === 'QQuickWindowQmlImpl';
+  return isQtObject && isWindowType;
+}
+
 // TODO: revise this later
 export function isQuickItem(obj: any) {
   const isQtObject = Qt.isQtObject(obj);

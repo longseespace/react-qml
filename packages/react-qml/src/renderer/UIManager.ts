@@ -5,6 +5,7 @@ import {
   isQuickItem,
   getObjectType,
   findChildIndex,
+  isWindow,
 } from './utils';
 
 const contextRoots = new Map<RQElementContainer, RQElementContainer>();
@@ -99,6 +100,11 @@ function appendChild(
     child.visible = false;
     child.visible = true;
     return;
+  }
+
+  // - QQuickPlatformMenuBar requires manually setting window
+  if (childType === 'QQuickPlatformMenuBar' && isWindow(parent)) {
+    child.window = parent;
   }
 
   // - set animation's target to parent, if not specified

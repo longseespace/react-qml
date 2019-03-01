@@ -11,9 +11,10 @@ export type CloseEvent = {
 export type WindowProps = {
   visible?: boolean;
   onClosing?: (ev: CloseEvent) => void;
+  forwardedRef?: any;
 };
 
-class Window extends React.Component<WindowProps> {
+class WindowWrapper extends React.Component<WindowProps> {
   onClosing = (ev: CloseEvent) => {
     ev.accepted = false;
     if (this.props.onClosing) {
@@ -22,9 +23,15 @@ class Window extends React.Component<WindowProps> {
   };
 
   render() {
-    const { onClosing, visible = true, ...otherProps } = this.props;
+    const {
+      onClosing,
+      visible = true,
+      forwardedRef,
+      ...otherProps
+    } = this.props;
     return (
       <NativeWindow
+        ref={forwardedRef}
         onClosing={this.onClosing}
         visible={visible}
         visibility={visible ? 'AutomaticVisibility' : 'Hidden'}
@@ -33,5 +40,9 @@ class Window extends React.Component<WindowProps> {
     );
   }
 }
+
+const Window = React.forwardRef((props, ref) => (
+  <WindowWrapper forwardedRef={ref} {...props} />
+));
 
 export default Window;
