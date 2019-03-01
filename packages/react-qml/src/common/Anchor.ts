@@ -236,9 +236,12 @@ export class ParentAnchor {
         parentPropName = <AnchorRefProp>parts[1];
       }
     }
+
     const onTargetChanged = () => {
+      console.log('onTargetChanged', childElement);
       ParentAnchor.updateAnchors(childElement, childPropName, parentPropName);
     };
+
     ParentAnchor.parentAnchorSubscriptions.push({
       source: childElement,
       sourceProp: childPropName,

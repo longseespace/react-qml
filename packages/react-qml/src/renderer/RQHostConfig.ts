@@ -2,35 +2,24 @@ import { HostConfig, OpaqueHandle, Deadline } from 'react-reconciler';
 
 import invariant from 'invariant';
 
-import {
-  diffProps,
-  updateProps,
-  appendChild,
-  removeChild,
-  removeAllChildren,
-  createElementContainer,
-  appendChildToContainer,
-  removeChildFromContainer,
-  hostElement,
-  insertBefore,
-  insertInContainerBefore,
-} from './qml';
-import { QmlElementContainer } from './QmlElementContainer';
+import RQElementContainer from './RQElementContainer';
+import UIManager from './UIManager';
+import { diffProps, updateProps } from './RQAttributePayload';
 
 type Type = string;
-type HostContext = QmlElementContainer;
-type Instance = QmlElementContainer;
+type HostContext = RQElementContainer;
+type Instance = RQElementContainer;
 type TextInstance = Instance;
-type Container = Qml.QmlElement;
+type Container = RQElementContainer;
 type HydratableInstance = Instance;
 type PublicInstance = Qml.QmlElement;
-type Props = Qml.QmlProps;
+type Props = object;
 interface UpdatePayload {}
 interface ChildSet {}
 type TimeoutHandle = NodeJS.Timeout;
 type NoTimeout = number;
 
-type QmlHostConfig = HostConfig<
+type RQHostConfig = HostConfig<
   Type,
   Props,
   Container,
@@ -45,13 +34,12 @@ type QmlHostConfig = HostConfig<
   NoTimeout
 >;
 
-const rootContext: HostContext = {
-  element: hostElement,
-  metadata: { defaultProp: 'data' },
-};
-const childContext: HostContext = rootContext;
+const nullElement = { parent: null, destroy: () => {} };
+const nullElementContainer = new RQElementContainer(nullElement, {
+  defaultProp: 'data',
+});
 
-const hostConfig: QmlHostConfig = {
+const hostConfig: RQHostConfig = {
   now: Date.now,
   isPrimaryRenderer: true,
   noTimeout: -1,
@@ -85,9 +73,9 @@ const hostConfig: QmlHostConfig = {
     return instance.element;
   },
   getRootHostContext(rootContainerInstance: Container): HostContext {
-    const rootElement = rootContext.element;
+    const rootContext = UIManager.getHostContext(rootContainerInstance);
     console.log('getRootHostContext', rootContext.element);
-    removeAllChildren(rootElement, rootContext.metadata.defaultProp);
+    UIManager.removeAllChildren(rootContext);
     return rootContext;
   },
   getChildHostContext(
@@ -101,7 +89,7 @@ const hostConfig: QmlHostConfig = {
       type,
       rootContainerInstance
     );
-    return childContext;
+    return parentHostContext;
   },
   shouldSetTextContent(type: Type, props: Props): boolean {
     console.log('shouldSetTextContent', type, props);
@@ -121,8 +109,7 @@ const hostConfig: QmlHostConfig = {
       internalInstanceHandle
     );
     invariant(false, 'Creating text instance not supported');
-    const nullElement = { parent: null, destroy: () => {} };
-    return { element: nullElement, metadata: { defaultProp: 'data' } };
+    return nullElementContainer;
   },
   createInstance(
     type: Type,
@@ -139,7 +126,7 @@ const hostConfig: QmlHostConfig = {
       hostContext.element,
       internalInstanceHandle
     );
-    return createElementContainer(
+    return UIManager.createElementContainer(
       type,
       props,
       rootContainerInstance,
@@ -148,7 +135,7 @@ const hostConfig: QmlHostConfig = {
   },
   appendInitialChild(parent: Instance, child: Instance | TextInstance): void {
     console.log('appendInitialChild', parent.element, child.element);
-    appendChild(parent, child);
+    UIManager.appendChild(parent, child);
   },
   finalizeInitialChildren(
     parentInstance: Instance,
@@ -179,14 +166,14 @@ const hostConfig: QmlHostConfig = {
   supportsMutation: true,
   appendChild(parent: Instance, child: Instance | TextInstance) {
     console.log('appendChild', parent.element, child.element);
-    appendChild(parent, child);
+    UIManager.appendChild(parent, child);
   },
   appendChildToContainer(
     container: Container,
     child: Instance | TextInstance
   ): void {
     console.log('appendChildToContainer', container, child.element);
-    appendChildToContainer(container, child);
+    UIManager.appendChild(container, child);
   },
   commitTextUpdate(
     textInstance: TextInstance,
@@ -221,36 +208,36 @@ const hostConfig: QmlHostConfig = {
     internalInstanceHandle
   ) {
     console.log('commitUpdate');
-    const updatePayload = diffProps(instance.element, oldProps, newProps);
+    const updatePayload = diffProps(oldProps, newProps);
     if (updatePayload != null) {
       // update props
-      updateProps(instance.element, updatePayload);
+      updateProps(instance, updatePayload);
     }
   },
   removeChild(parent: Instance, child: Instance | TextInstance): void {
     console.log('removeChild', parent.element, child.element);
-    removeChild(parent, child);
+    UIManager.removeChild(parent, child);
   },
   removeChildFromContainer(
     container: Container,
     child: Instance | TextInstance
   ): void {
     console.log('removeChildFromContainer', container, child.element);
-    removeChildFromContainer(container, child);
+    UIManager.removeChild(container, child);
   },
   insertBefore(
     parentInstance: Instance,
     child: Instance | TextInstance,
     beforeChild: Instance | TextInstance
   ): void {
-    insertBefore(parentInstance, child, beforeChild);
+    UIManager.insertBefore(parentInstance, child, beforeChild);
   },
   insertInContainerBefore(
     container: Container,
     child: Instance | TextInstance,
     beforeChild: Instance | TextInstance
   ): void {
-    insertInContainerBefore(container, child, beforeChild);
+    UIManager.insertBefore(container, child, beforeChild);
   },
 };
 
