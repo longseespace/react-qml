@@ -14,6 +14,7 @@ export type PositionerProps = {
   move: any;
 };
 
+// TODO: forwardedRef
 class Column extends React.Component<PositionerProps> {
   controlRef = React.createRef();
   populateRef = React.createRef();

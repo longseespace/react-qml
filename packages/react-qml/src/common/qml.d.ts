@@ -100,5 +100,27 @@ declare namespace Qml {
   // QmlElement is basically QmlQuickItem, plus dynamic props
   export type QmlElement = QmlObject & QmlProps;
 
+  // QmlLocalStorage
+  export type QmlLocalStorageTransaction = {
+    executeSql(statement: string, values?: Array<string>): any;
+  };
+  export type QmlLocalStorageOpenCallback = (db: QmlLocalStorage) => void;
+  export type QmlLocalStorageTransactionCallback = (
+    tx: QmlLocalStorageTransaction
+  ) => void;
+
+  export type QmlLocalStorage = {
+    openDatabaseSync(
+      identifier: string,
+      version: string,
+      description: string,
+      estimated_size?: number,
+      callback?: QmlLocalStorageOpenCallback
+    ): QmlLocalStorage;
+
+    transaction(callback: QmlLocalStorageTransactionCallback): void;
+    readTransaction(callback: QmlLocalStorageTransactionCallback): void;
+  };
+
   // end --
 }
