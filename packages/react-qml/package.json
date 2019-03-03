@@ -12,7 +12,7 @@
     "build": "yarn build:types && yarn build:js",
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "babel src --copy-files --out-dir dist --extensions \".ts,.tsx\"",
-    "prerelease": "yarn build"
+    "prerelease": "NODE_ENV=production yarn build"
   },
   "repository": {
     "type": "git",
