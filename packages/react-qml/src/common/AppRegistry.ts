@@ -79,6 +79,6 @@ class RegistryImpl implements Registry {
   }
 }
 
-const AppRegistry = new RegistryImpl();
+export const AppRegistry = new RegistryImpl();
 
 export default AppRegistry;

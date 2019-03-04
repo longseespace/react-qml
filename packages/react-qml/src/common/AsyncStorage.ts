@@ -36,7 +36,7 @@ export type ErrorCallback = (error?: Error) => void;
 export type MultiErrorCallback = (error?: Array<Error>) => void;
 export type RowResult = { key: string; value?: string };
 
-class AsyncStorage {
+export class AsyncStorage {
   static getItem(
     key: string,
     callback?: ResultCallback<string>
