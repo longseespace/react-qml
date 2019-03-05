@@ -9,8 +9,8 @@ export { Column, Row, Grid, Flow };
 export const {
   VisualDataModel,
   VisualDataGroup,
-  ListElement,
-  ListModel,
+  // ListElement, // use components in QtQmlModels instead
+  // ListModel,
   VisualItemModel,
   AnchorAnimation,
   AnchorChanges,
