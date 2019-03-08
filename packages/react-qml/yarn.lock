@@ -1851,6 +1851,11 @@ find-up@^3.0.0:
   dependencies:
     locate-path "^3.0.0"
 
+flex-js@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/flex-js/-/flex-js-1.0.5.tgz#1b9a3fda1d080e83aed217a9caca01a4d33286c0"
+  integrity sha512-Z5uoLzOGtTB/nzaTVVBbwmxOHBzHovAGJHLXE1TUKsQuN1RRWMOWeA08J9RRKtAl9TH9tkaH6fpjA4sLf0DzQw==
+
 for-in@^1.0.1, for-in@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"

@@ -4,7 +4,8 @@
   "description": "React QML",
   "main": "dist/index.js",
   "files": [
-    "dist"
+    "dist",
+    "QtQuickControls2.js"
   ],
   "scripts": {
     "type-check": "tsc --noEmit",
@@ -42,6 +43,7 @@
     "react": "^16"
   },
   "devDependencies": {
+    "flex-js": "^1.0.5",
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.2.0",
     "@babel/plugin-proposal-class-properties": "^7.2.1",
