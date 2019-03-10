@@ -113,9 +113,8 @@ function appendChild(
   }
 
   if (isQuickItem(parent) && isQuickItem(child)) {
-    console.log('child.parent=');
+    console.log('child.parent=parent', parentType);
     child.parent = parent;
-    return;
   }
 
   // append child to parent's default prop

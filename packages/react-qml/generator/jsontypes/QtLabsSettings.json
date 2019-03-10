@@ -1,0 +1,1 @@
+{"Module":{"dependencies":[],"components":[{"name":"QQmlSettings","prototype":"QObject","exports":["Qt.labs.settings/Settings 1.0"],"exportMetaObjectRevisions":["0"],"properties":[{"name":"category","type":"string"}]}]},"metadata":{"name":"Qt.labs.settings","version":"1.0"},"parserVersion":"0.3"}

@@ -11,10 +11,14 @@ declare const qsTr: (text: string) => string;
 type Props = {
   error: Error;
   errorInfo: React.ErrorInfo;
-  enableStacktrace: boolean;
+  enableStacktrace?: boolean;
 };
 
-const RedBox = ({ error, errorInfo, enableStacktrace = false }: Props) => (
+const RedBox: React.FC<Props> = ({
+  error,
+  errorInfo,
+  enableStacktrace = false,
+}) => (
   <Rectangle color="#BD2619" anchors={{ fill: 'parent' }}>
     <ScrollView>
       <Column spacing={10} padding={32}>

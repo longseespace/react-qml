@@ -9,7 +9,7 @@ type ModuleDenifition = {
   defaultProperty?: string;
 }
 
-const generateQml = (type: string) => `import QtQml.Models 2.3; ${type} {}`;
+const generateQml = (type: string) => `import QtAudioEngine 1.1; ${type} {}`;
 
 const Module: { [key: string]: any } = {};
 
@@ -23,12 +23,15 @@ for (let index = 0; index < types.length; index++) {
 }
 
 export const {
-  ItemSelectionModel,
-  DelegateModel,
-  DelegateModelGroup,
-  ListElement,
-  ListModel,
-  ObjectModel
+  AttenuationModelInverse,
+  AttenuationModelLinear,
+  AudioCategory,
+  AudioEngine,
+  AudioListener,
+  AudioSample,
+  PlayVariation,
+  Sound,
+  SoundInstance
 } = Module;
 
 export default Module;

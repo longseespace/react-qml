@@ -27,4 +27,4 @@ try {
 
 const result = parse(fileContent);
 
-console.log(JSON.stringify(result, null, '  '));
+console.log(JSON.stringify(result));

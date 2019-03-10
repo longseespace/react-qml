@@ -1,21 +1,18 @@
 import React from 'react';
 
-import QtQuickWindow from '../../QtQuickWindow';
+import QtQuickWindow, { QQuickWindow } from '../../QtQuickWindow';
+import { QQuickCloseEvent } from '../../QtQuick';
 
 const NativeWindow = QtQuickWindow.Window;
 
-export type CloseEvent = {
-  accepted: boolean;
-};
-
 export type WindowProps = {
-  visible?: boolean;
-  onClosing?: (ev: CloseEvent) => void;
   forwardedRef?: any;
+  visible?: boolean;
+  onClosing?: (ev: QQuickCloseEvent) => void;
 };
 
 class WindowWrapper extends React.Component<WindowProps> {
-  onClosing = (ev: CloseEvent) => {
+  onClosing = (ev: QQuickCloseEvent) => {
     ev.accepted = false;
     if (this.props.onClosing) {
       this.props.onClosing(ev);
@@ -41,7 +38,7 @@ class WindowWrapper extends React.Component<WindowProps> {
   }
 }
 
-const Window = React.forwardRef((props, ref) => (
+const Window = React.forwardRef<QQuickWindow>((props, ref) => (
   <WindowWrapper forwardedRef={ref} {...props} />
 ));
 

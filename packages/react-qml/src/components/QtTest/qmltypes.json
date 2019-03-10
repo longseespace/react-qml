@@ -1,0 +1,1 @@
+[{"name":"TestEvent","prototype":"QObject","exports":"QtTest/TestEvent","module":"QtTest"},{"name":"TestResult","prototype":"QObject","exports":"QtTest/TestResult","module":"QtTest"},{"name":"TestUtil","prototype":"QObject","exports":"QtTest/TestUtil","module":"QtTest"}]

@@ -2,6 +2,8 @@ declare namespace Qml {
   // QML global objects
   // @see https://doc.qt.io/qt-5/qtqml-javascript-qmlglobalobject.html
 
+  export type QmlEnum = string | number;
+
   // Interface to Qt global object
   export interface QmlQt {
     application: {

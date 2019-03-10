@@ -1,4 +1,4 @@
-const VERSION = '0.2';
+const VERSION = '0.3';
 
 const fs = require('fs');
 const path = require('path');
@@ -25,7 +25,7 @@ try {
   process.exit(1);
 }
 
-const outputDir = path.resolve(__dirname, moduleName);
+const outputDir = path.resolve(__dirname, 'output', moduleName);
 if (!fs.existsSync(outputDir)) {
   fs.mkdirSync(outputDir, 0744);
 }
@@ -151,9 +151,16 @@ const componentNames = Array.from(new Set(components.map(c => c.name)));
 const namedExport = `export const {
 ${componentNames.map(name => '  ' + name).join(',\n')}
 } = Module;`;
-const tsFileContent = `// generatorVersion: ${VERSION}
+const tsFileContent = `// script: generateModule, version: ${VERSION}
 import { createRawQmlComponent } from '../../renderer';
 import types from './qmltypes.json';
+export * from './types';
+
+type ModuleDenifition = {
+  name: string;
+  module: string;
+  defaultProperty?: string;
+}
 
 const generateQml = (type: string) => \`import ${moduleInfo.name} ${
   moduleInfo.version
@@ -162,7 +169,7 @@ const generateQml = (type: string) => \`import ${moduleInfo.name} ${
 const Module: { [key: string]: any } = {};
 
 for (let index = 0; index < types.length; index++) {
-  const definition = types[index];
+  const definition = types[index] as ModuleDenifition;
   const { name, module, defaultProperty = 'data' } = definition;
   const tagName = \`\${module}.\${name}\`;
   Module[name] = createRawQmlComponent(generateQml(name), tagName, {

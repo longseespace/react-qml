@@ -10,8 +10,6 @@ import RQElementContainer from './RQElementContainer';
 const ReactReconcilerInst = ReactReconciler(RQHostConfig);
 let root: ReactReconciler.OpaqueRoot;
 
-export declare const Qt: Qml.QmlQt;
-
 const noop = () => {};
 
 export type RenderCallback = () => void | null | undefined;

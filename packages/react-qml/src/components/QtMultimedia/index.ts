@@ -9,7 +9,7 @@ type ModuleDenifition = {
   defaultProperty?: string;
 }
 
-const generateQml = (type: string) => `import QtQml.Models 2.3; ${type} {}`;
+const generateQml = (type: string) => `import QtMultimedia 5.9; ${type} {}`;
 
 const Module: { [key: string]: any } = {};
 
@@ -23,12 +23,15 @@ for (let index = 0; index < types.length; index++) {
 }
 
 export const {
-  ItemSelectionModel,
-  DelegateModel,
-  DelegateModelGroup,
-  ListElement,
-  ListModel,
-  ObjectModel
+  MediaPlayer,
+  Camera,
+  Playlist,
+  PlaylistItem,
+  Radio,
+  RadioData,
+  Torch,
+  VideoOutput,
+  SoundEffect
 } = Module;
 
 export default Module;

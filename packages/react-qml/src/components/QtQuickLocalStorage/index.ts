@@ -9,7 +9,7 @@ type ModuleDenifition = {
   defaultProperty?: string;
 }
 
-const generateQml = (type: string) => `import QtQml.Models 2.3; ${type} {}`;
+const generateQml = (type: string) => `import QtQuick.LocalStorage 2.0; ${type} {}`;
 
 const Module: { [key: string]: any } = {};
 
@@ -23,12 +23,7 @@ for (let index = 0; index < types.length; index++) {
 }
 
 export const {
-  ItemSelectionModel,
-  DelegateModel,
-  DelegateModelGroup,
-  ListElement,
-  ListModel,
-  ObjectModel
+
 } = Module;
 
 export default Module;
