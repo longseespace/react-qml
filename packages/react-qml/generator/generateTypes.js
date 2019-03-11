@@ -131,17 +131,17 @@ type Signal<T> = {
     return false;
   }
 
-  function getPropType(com, type) {
+  function getPropType(com, type, isReadonly) {
     if (type === undefined) {
       return 'void';
     }
 
     if (TYPE_MAPS.hasOwnProperty(type)) {
-      return TYPE_MAPS[type];
+      return isReadonly ? TYPE_MAPS[type] : `${TYPE_MAPS[type]} | undefined`;
     }
 
     if (isClassType(type)) {
-      return type;
+      return isReadonly ? type : `${type} | null`;
     }
 
     const maybeEnumType = `${com.name}_${type}`;
@@ -151,7 +151,7 @@ type Signal<T> = {
 
     const externalType = getDependencyType(type);
     if (externalType) {
-      return externalType;
+      return isReadonly ? externalType : `${externalType} | null`;
     }
 
     return 'any';
@@ -159,7 +159,7 @@ type Signal<T> = {
 
   function buildPropType(com, prop) {
     const propName = prop.name;
-    const propType = getPropType(com, prop.type);
+    const propType = getPropType(com, prop.type, prop.isReadonly);
     const readonlyText = prop.isReadonly ? 'readonly ' : '';
 
     return `${readonlyText}${propName}: ${propType};`;

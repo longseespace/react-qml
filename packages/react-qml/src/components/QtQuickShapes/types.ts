@@ -21,19 +21,19 @@ export enum QQuickShape_Status {
 }
 
 export type QQuickShape = {
-  readonly rendererType: QQuickShape_RendererType;
-  asynchronous: boolean;
-  vendorExtensionsEnabled: boolean;
-  readonly status: QQuickShape_Status;
+  readonly rendererType: QQuickShape_RendererType | string;
+  asynchronous: boolean | undefined;
+  vendorExtensionsEnabled: boolean | undefined;
+  readonly status: QQuickShape_Status | string;
   readonly data: QtQml.QObject;
 
   rendererChanged: Signal<Function>;
 } & QtQuick.QQuickItem;
 
 export type QQuickShapeConicalGradient = {
-  centerX: number;
-  centerY: number;
-  angle: number;
+  centerX: number | undefined;
+  centerY: number | undefined;
+  angle: number | undefined;
 } & QQuickShapeGradient;
 
 export enum QQuickShapeGradient_SpreadMode {
@@ -43,14 +43,14 @@ export enum QQuickShapeGradient_SpreadMode {
 }
 
 export type QQuickShapeGradient = {
-  spread: QQuickShapeGradient_SpreadMode;
+  spread: QQuickShapeGradient_SpreadMode | string;
 } & QtQuick.QQuickGradient;
 
 export type QQuickShapeLinearGradient = {
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
+  x1: number | undefined;
+  y1: number | undefined;
+  x2: number | undefined;
+  y2: number | undefined;
 } & QQuickShapeGradient;
 
 export enum QQuickShapePath_FillRule {
@@ -74,27 +74,27 @@ export enum QQuickShapePath_StrokeStyle {
 
 export type QQuickShapePath = {
   strokeColor: any;
-  strokeWidth: number;
+  strokeWidth: number | undefined;
   fillColor: any;
-  fillRule: QQuickShapePath_FillRule;
-  joinStyle: QQuickShapePath_JoinStyle;
-  miterLimit: number;
-  capStyle: QQuickShapePath_CapStyle;
-  strokeStyle: QQuickShapePath_StrokeStyle;
-  dashOffset: number;
+  fillRule: QQuickShapePath_FillRule | string;
+  joinStyle: QQuickShapePath_JoinStyle | string;
+  miterLimit: number | undefined;
+  capStyle: QQuickShapePath_CapStyle | string;
+  strokeStyle: QQuickShapePath_StrokeStyle | string;
+  dashOffset: number | undefined;
   dashPattern: any;
-  fillGradient: QQuickShapeGradient;
+  fillGradient: QQuickShapeGradient | null;
 
   shapePathChanged: Signal<Function>;
 } & QtQuick.QQuickPath;
 
 export type QQuickShapeRadialGradient = {
-  centerX: number;
-  centerY: number;
-  centerRadius: number;
-  focalX: number;
-  focalY: number;
-  focalRadius: number;
+  centerX: number | undefined;
+  centerY: number | undefined;
+  centerRadius: number | undefined;
+  focalX: number | undefined;
+  focalY: number | undefined;
+  focalRadius: number | undefined;
 } & QQuickShapeGradient;
 
 // end

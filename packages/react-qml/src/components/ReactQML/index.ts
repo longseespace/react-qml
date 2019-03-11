@@ -3,5 +3,9 @@ import Window from './Window/Window';
 
 export * from './QtQuick';
 
-export { RedBox, Window };
-export default { RedBox, Window };
+// capture StandardKey and re-export
+declare const StandardKey: any;
+const $StandardKey = StandardKey;
+
+export { RedBox, Window, $StandardKey as StandardKey };
+export default { RedBox, Window, StandardKey };

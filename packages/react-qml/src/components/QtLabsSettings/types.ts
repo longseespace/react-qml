@@ -8,7 +8,7 @@ type Signal<T> = {
 };
 
 export type QQmlSettings = {
-  category: string;
+  category: string | undefined;
 } & QtQml.QObject;
 
 // end

@@ -9,26 +9,26 @@ type Signal<T> = {
 };
 
 export type QQuickAgeAffector = {
-  lifeLeft: number;
-  advancePosition: boolean;
+  lifeLeft: number | undefined;
+  advancePosition: boolean | undefined;
 
-  setLifeLeft(arg: number): void;
-  setAdvancePosition(arg: boolean): void;
+  setLifeLeft(arg: number | undefined): void;
+  setAdvancePosition(arg: boolean | undefined): void;
 
   lifeLeftChanged: Signal<Function>;
   advancePositionChanged: Signal<Function>;
 } & QQuickParticleAffector;
 
 export type QQuickAngleDirection = {
-  angle: number;
-  magnitude: number;
-  angleVariation: number;
-  magnitudeVariation: number;
+  angle: number | undefined;
+  magnitude: number | undefined;
+  angleVariation: number | undefined;
+  magnitudeVariation: number | undefined;
 
-  setAngle(arg: number): void;
-  setMagnitude(arg: number): void;
-  setAngleVariation(arg: number): void;
-  setMagnitudeVariation(arg: number): void;
+  setAngle(arg: number | undefined): void;
+  setMagnitude(arg: number | undefined): void;
+  setAngleVariation(arg: number | undefined): void;
+  setMagnitudeVariation(arg: number | undefined): void;
 
   angleChanged: Signal<Function>;
   magnitudeChanged: Signal<Function>;
@@ -50,17 +50,21 @@ export enum QQuickAttractorAffector_AffectableParameters {
 }
 
 export type QQuickAttractorAffector = {
-  strength: number;
-  pointX: number;
-  pointY: number;
-  affectedParameter: QQuickAttractorAffector_AffectableParameters;
-  proportionalToDistance: QQuickAttractorAffector_Proportion;
+  strength: number | undefined;
+  pointX: number | undefined;
+  pointY: number | undefined;
+  affectedParameter: QQuickAttractorAffector_AffectableParameters | string;
+  proportionalToDistance: QQuickAttractorAffector_Proportion | string;
 
-  setStrength(arg: number): void;
-  setPointX(arg: number): void;
-  setPointY(arg: number): void;
-  setAffectedParameter(arg: QQuickAttractorAffector_AffectableParameters): void;
-  setProportionalToDistance(arg: QQuickAttractorAffector_Proportion): void;
+  setStrength(arg: number | undefined): void;
+  setPointX(arg: number | undefined): void;
+  setPointY(arg: number | undefined): void;
+  setAffectedParameter(
+    arg: QQuickAttractorAffector_AffectableParameters | string
+  ): void;
+  setProportionalToDistance(
+    arg: QQuickAttractorAffector_Proportion | string
+  ): void;
 
   strengthChanged: Signal<Function>;
   pointXChanged: Signal<Function>;
@@ -74,15 +78,15 @@ export type QQuickCumulativeDirection = {
 } & QQuickDirection;
 
 export type QQuickCustomAffector = {
-  relative: boolean;
-  position: QQuickDirection;
-  velocity: QQuickDirection;
-  acceleration: QQuickDirection;
+  relative: boolean | undefined;
+  position: QQuickDirection | null;
+  velocity: QQuickDirection | null;
+  acceleration: QQuickDirection | null;
 
-  setPosition(arg: QQuickDirection): void;
-  setVelocity(arg: QQuickDirection): void;
-  setAcceleration(arg: QQuickDirection): void;
-  setRelative(arg: boolean): void;
+  setPosition(arg: QQuickDirection | null): void;
+  setVelocity(arg: QQuickDirection | null): void;
+  setAcceleration(arg: QQuickDirection | null): void;
+  setRelative(arg: boolean | undefined): void;
 
   affectParticles: Signal<Function>;
   positionChanged: Signal<Function>;
@@ -99,43 +103,43 @@ export type QQuickCustomParticle = {
 export type QQuickDirection = {} & QtQml.QObject;
 
 export type QQuickEllipseExtruder = {
-  fill: boolean;
+  fill: boolean | undefined;
 
-  setFill(arg: boolean): void;
+  setFill(arg: boolean | undefined): void;
 
   fillChanged: Signal<Function>;
 } & QQuickParticleExtruder;
 
 export type QQuickFrictionAffector = {
-  factor: number;
-  threshold: number;
+  factor: number | undefined;
+  threshold: number | undefined;
 
-  setFactor(arg: number): void;
-  setThreshold(arg: number): void;
+  setFactor(arg: number | undefined): void;
+  setThreshold(arg: number | undefined): void;
 
   factorChanged: Signal<Function>;
   thresholdChanged: Signal<Function>;
 } & QQuickParticleAffector;
 
 export type QQuickGravityAffector = {
-  magnitude: number;
-  acceleration: number;
-  angle: number;
+  magnitude: number | undefined;
+  acceleration: number | undefined;
+  angle: number | undefined;
 
-  setMagnitude(arg: number): void;
-  setAcceleration(arg: number): void;
-  setAngle(arg: number): void;
+  setMagnitude(arg: number | undefined): void;
+  setAcceleration(arg: number | undefined): void;
+  setAngle(arg: number | undefined): void;
 
   magnitudeChanged: Signal<Function>;
   angleChanged: Signal<Function>;
 } & QQuickParticleAffector;
 
 export type QQuickGroupGoalAffector = {
-  goalState: string;
-  jump: boolean;
+  goalState: string | undefined;
+  jump: boolean | undefined;
 
-  setGoalState(arg: string): void;
-  setJump(arg: boolean): void;
+  setGoalState(arg: string | undefined): void;
+  setJump(arg: boolean | undefined): void;
 
   goalStateChanged: Signal<Function>;
   jumpChanged: Signal<Function>;
@@ -154,45 +158,45 @@ export enum QQuickImageParticle_EntryEffect {
 }
 
 export type QQuickImageParticle = {
-  source: string;
+  source: string | undefined;
   readonly sprites: QtQuick.QQuickSprite;
-  readonly status: QQuickImageParticle_Status;
-  colorTable: string;
-  sizeTable: string;
-  opacityTable: string;
+  readonly status: QQuickImageParticle_Status | string;
+  colorTable: string | undefined;
+  sizeTable: string | undefined;
+  opacityTable: string | undefined;
   color: any;
-  colorVariation: number;
-  redVariation: number;
-  greenVariation: number;
-  blueVariation: number;
-  alpha: number;
-  alphaVariation: number;
-  rotation: number;
-  rotationVariation: number;
-  rotationVelocity: number;
-  rotationVelocityVariation: number;
-  autoRotation: boolean;
-  xVector: QQuickDirection;
-  yVector: QQuickDirection;
-  spritesInterpolate: boolean;
-  entryEffect: QQuickImageParticle_EntryEffect;
+  colorVariation: number | undefined;
+  redVariation: number | undefined;
+  greenVariation: number | undefined;
+  blueVariation: number | undefined;
+  alpha: number | undefined;
+  alphaVariation: number | undefined;
+  rotation: number | undefined;
+  rotationVariation: number | undefined;
+  rotationVelocity: number | undefined;
+  rotationVelocityVariation: number | undefined;
+  autoRotation: boolean | undefined;
+  xVector: QQuickDirection | null;
+  yVector: QQuickDirection | null;
+  spritesInterpolate: boolean | undefined;
+  entryEffect: QQuickImageParticle_EntryEffect | string;
 
   reloadColor(c: any, d: any): void;
-  setAlphaVariation(arg: number): void;
-  setAlpha(arg: number): void;
-  setRedVariation(arg: number): void;
-  setGreenVariation(arg: number): void;
-  setBlueVariation(arg: number): void;
-  setRotation(arg: number): void;
-  setRotationVariation(arg: number): void;
-  setRotationVelocity(arg: number): void;
-  setRotationVelocityVariation(arg: number): void;
-  setAutoRotation(arg: boolean): void;
-  setXVector(arg: QQuickDirection): void;
-  setYVector(arg: QQuickDirection): void;
-  setSpritesInterpolate(arg: boolean): void;
-  setBypassOptimizations(arg: boolean): void;
-  setEntryEffect(arg: QQuickImageParticle_EntryEffect): void;
+  setAlphaVariation(arg: number | undefined): void;
+  setAlpha(arg: number | undefined): void;
+  setRedVariation(arg: number | undefined): void;
+  setGreenVariation(arg: number | undefined): void;
+  setBlueVariation(arg: number | undefined): void;
+  setRotation(arg: number | undefined): void;
+  setRotationVariation(arg: number | undefined): void;
+  setRotationVelocity(arg: number | undefined): void;
+  setRotationVelocityVariation(arg: number | undefined): void;
+  setAutoRotation(arg: boolean | undefined): void;
+  setXVector(arg: QQuickDirection | null): void;
+  setYVector(arg: QQuickDirection | null): void;
+  setSpritesInterpolate(arg: boolean | undefined): void;
+  setBypassOptimizations(arg: boolean | undefined): void;
+  setEntryEffect(arg: QQuickImageParticle_EntryEffect | string): void;
 
   imageChanged: Signal<Function>;
   colortableChanged: Signal<Function>;
@@ -217,16 +221,16 @@ export type QQuickImageParticle = {
 } & QQuickParticlePainter;
 
 export type QQuickItemParticle = {
-  fade: boolean;
-  delegate: QtQml.QQmlComponent;
+  fade: boolean | undefined;
+  delegate: QtQml.QQmlComponent | null;
 
-  freeze(item: QtQuick.QQuickItem): void;
-  unfreeze(item: QtQuick.QQuickItem): void;
-  take(item: QtQuick.QQuickItem, prioritize: boolean): void;
-  take(item: QtQuick.QQuickItem): void;
-  give(item: QtQuick.QQuickItem): void;
-  setFade(arg: boolean): void;
-  setDelegate(arg: QtQml.QQmlComponent): void;
+  freeze(item: QtQuick.QQuickItem | null): void;
+  unfreeze(item: QtQuick.QQuickItem | null): void;
+  take(item: QtQuick.QQuickItem | null, prioritize: boolean | undefined): void;
+  take(item: QtQuick.QQuickItem | null): void;
+  give(item: QtQuick.QQuickItem | null): void;
+  setFade(arg: boolean | undefined): void;
+  setDelegate(arg: QtQml.QQmlComponent | null): void;
 
   delegateChanged: Signal<Function>;
 } & QQuickParticlePainter;
@@ -239,34 +243,34 @@ export type QQuickItemParticleAttached = {
 } & QtQml.QObject;
 
 export type QQuickLineExtruder = {
-  mirrored: boolean;
+  mirrored: boolean | undefined;
 
-  setMirrored(arg: boolean): void;
+  setMirrored(arg: boolean | undefined): void;
 
   mirroredChanged: Signal<Function>;
 } & QQuickParticleExtruder;
 
 export type QQuickMaskExtruder = {
-  source: string;
+  source: string | undefined;
 
-  setSource(arg: string): void;
+  setSource(arg: string | undefined): void;
 
   sourceChanged: Signal<Function>;
 } & QQuickParticleExtruder;
 
 export type QQuickParticleAffector = {
-  system: QQuickParticleSystem;
+  system: QQuickParticleSystem | null;
   groups: any;
   whenCollidingWith: any;
-  enabled: boolean;
-  once: boolean;
-  shape: QQuickParticleExtruder;
+  enabled: boolean | undefined;
+  once: boolean | undefined;
+  shape: QQuickParticleExtruder | null;
 
-  setSystem(arg: QQuickParticleSystem): void;
+  setSystem(arg: QQuickParticleSystem | null): void;
   setGroups(arg: any): void;
-  setEnabled(arg: boolean): void;
-  setOnceOff(arg: boolean): void;
-  setShape(arg: QQuickParticleExtruder): void;
+  setEnabled(arg: boolean | undefined): void;
+  setOnceOff(arg: boolean | undefined): void;
+  setShape(arg: QQuickParticleExtruder | null): void;
   setWhenCollidingWith(arg: any): void;
   updateOffsets(): void;
 
@@ -284,39 +288,43 @@ export enum QQuickParticleEmitter_Lifetime {
 }
 
 export type QQuickParticleEmitter = {
-  system: QQuickParticleSystem;
-  group: string;
-  shape: QQuickParticleExtruder;
-  enabled: boolean;
-  startTime: number;
-  emitRate: number;
-  lifeSpan: number;
-  lifeSpanVariation: number;
-  maximumEmitted: number;
-  size: number;
-  endSize: number;
-  sizeVariation: number;
-  velocity: QQuickDirection;
-  acceleration: QQuickDirection;
-  velocityFromMovement: number;
+  system: QQuickParticleSystem | null;
+  group: string | undefined;
+  shape: QQuickParticleExtruder | null;
+  enabled: boolean | undefined;
+  startTime: number | undefined;
+  emitRate: number | undefined;
+  lifeSpan: number | undefined;
+  lifeSpanVariation: number | undefined;
+  maximumEmitted: number | undefined;
+  size: number | undefined;
+  endSize: number | undefined;
+  sizeVariation: number | undefined;
+  velocity: QQuickDirection | null;
+  acceleration: QQuickDirection | null;
+  velocityFromMovement: number | undefined;
 
-  pulse(milliseconds: number): void;
-  burst(num: number): void;
-  burst(num: number, x: number, y: number): void;
-  setEnabled(arg: boolean): void;
-  setParticlesPerSecond(arg: number): void;
-  setParticleDuration(arg: number): void;
-  setSystem(arg: QQuickParticleSystem): void;
-  setGroup(arg: string): void;
-  setParticleDurationVariation(arg: number): void;
-  setExtruder(arg: QQuickParticleExtruder): void;
-  setParticleSize(arg: number): void;
-  setParticleEndSize(arg: number): void;
-  setParticleSizeVariation(arg: number): void;
-  setVelocity(arg: QQuickDirection): void;
-  setAcceleration(arg: QQuickDirection): void;
-  setMaxParticleCount(arg: number): void;
-  setStartTime(arg: number): void;
+  pulse(milliseconds: number | undefined): void;
+  burst(num: number | undefined): void;
+  burst(
+    num: number | undefined,
+    x: number | undefined,
+    y: number | undefined
+  ): void;
+  setEnabled(arg: boolean | undefined): void;
+  setParticlesPerSecond(arg: number | undefined): void;
+  setParticleDuration(arg: number | undefined): void;
+  setSystem(arg: QQuickParticleSystem | null): void;
+  setGroup(arg: string | undefined): void;
+  setParticleDurationVariation(arg: number | undefined): void;
+  setExtruder(arg: QQuickParticleExtruder | null): void;
+  setParticleSize(arg: number | undefined): void;
+  setParticleEndSize(arg: number | undefined): void;
+  setParticleSizeVariation(arg: number | undefined): void;
+  setVelocity(arg: QQuickDirection | null): void;
+  setAcceleration(arg: QQuickDirection | null): void;
+  setMaxParticleCount(arg: number | undefined): void;
+  setStartTime(arg: number | undefined): void;
   reset(): void;
 
   emitParticles: Signal<Function>;
@@ -340,24 +348,24 @@ export type QQuickParticleEmitter = {
 export type QQuickParticleExtruder = {} & QtQml.QObject;
 
 export type QQuickParticleGroup = {
-  system: QQuickParticleSystem;
+  system: QQuickParticleSystem | null;
   readonly particleChildren: QtQml.QObject;
 
-  setMaximumAlive(arg: number): void;
-  setSystem(arg: QQuickParticleSystem): void;
-  delayRedirect(obj: QtQml.QObject): void;
+  setMaximumAlive(arg: number | undefined): void;
+  setSystem(arg: QQuickParticleSystem | null): void;
+  delayRedirect(obj: QtQml.QObject | null): void;
 
   maximumAliveChanged: Signal<Function>;
   systemChanged: Signal<Function>;
 } & QtQuick.QQuickStochasticState;
 
 export type QQuickParticlePainter = {
-  system: QQuickParticleSystem;
+  system: QQuickParticleSystem | null;
   groups: any;
 
-  setSystem(arg: QQuickParticleSystem): void;
+  setSystem(arg: QQuickParticleSystem | null): void;
   setGroups(arg: any): void;
-  calcSystemOffset(resetPending: boolean): void;
+  calcSystemOffset(resetPending: boolean | undefined): void;
   calcSystemOffset(): void;
 
   countChanged: Signal<Function>;
@@ -366,8 +374,8 @@ export type QQuickParticlePainter = {
 } & QtQuick.QQuickItem;
 
 export type QQuickParticleSystem = {
-  running: boolean;
-  paused: boolean;
+  running: boolean | undefined;
+  paused: boolean | undefined;
   readonly empty: boolean;
 
   start(): void;
@@ -376,9 +384,9 @@ export type QQuickParticleSystem = {
   pause(): void;
   resume(): void;
   reset(): void;
-  setRunning(arg: boolean): void;
-  setPaused(arg: boolean): void;
-  duration(): number;
+  setRunning(arg: boolean | undefined): void;
+  setPaused(arg: boolean | undefined): void;
+  duration(): number | undefined;
 
   systemInitialized: Signal<Function>;
   runningChanged: Signal<Function>;
@@ -387,15 +395,15 @@ export type QQuickParticleSystem = {
 } & QtQuick.QQuickItem;
 
 export type QQuickPointDirection = {
-  x: number;
-  y: number;
-  xVariation: number;
-  yVariation: number;
+  x: number | undefined;
+  y: number | undefined;
+  xVariation: number | undefined;
+  yVariation: number | undefined;
 
-  setX(arg: number): void;
-  setY(arg: number): void;
-  setXVariation(arg: number): void;
-  setYVariation(arg: number): void;
+  setX(arg: number | undefined): void;
+  setY(arg: number | undefined): void;
+  setXVariation(arg: number | undefined): void;
+  setYVariation(arg: number | undefined): void;
 
   xChanged: Signal<Function>;
   yChanged: Signal<Function>;
@@ -404,21 +412,21 @@ export type QQuickPointDirection = {
 } & QQuickDirection;
 
 export type QQuickRectangleExtruder = {
-  fill: boolean;
+  fill: boolean | undefined;
 
-  setFill(arg: boolean): void;
+  setFill(arg: boolean | undefined): void;
 
   fillChanged: Signal<Function>;
 } & QQuickParticleExtruder;
 
 export type QQuickSpriteGoalAffector = {
-  goalState: string;
-  jump: boolean;
-  systemStates: boolean;
+  goalState: string | undefined;
+  jump: boolean | undefined;
+  systemStates: boolean | undefined;
 
-  setGoalState(arg: string): void;
-  setJump(arg: boolean): void;
-  setSystemStates(arg: boolean): void;
+  setGoalState(arg: string | undefined): void;
+  setJump(arg: boolean | undefined): void;
+  setSystemStates(arg: boolean | undefined): void;
 
   goalStateChanged: Signal<Function>;
   jumpChanged: Signal<Function>;
@@ -426,21 +434,21 @@ export type QQuickSpriteGoalAffector = {
 } & QQuickParticleAffector;
 
 export type QQuickTargetDirection = {
-  targetX: number;
-  targetY: number;
-  targetItem: QtQuick.QQuickItem;
-  targetVariation: number;
-  proportionalMagnitude: boolean;
-  magnitude: number;
-  magnitudeVariation: number;
+  targetX: number | undefined;
+  targetY: number | undefined;
+  targetItem: QtQuick.QQuickItem | null;
+  targetVariation: number | undefined;
+  proportionalMagnitude: boolean | undefined;
+  magnitude: number | undefined;
+  magnitudeVariation: number | undefined;
 
-  setTargetX(arg: number): void;
-  setTargetY(arg: number): void;
-  setTargetVariation(arg: number): void;
-  setMagnitude(arg: number): void;
-  setProportionalMagnitude(arg: boolean): void;
-  setMagnitudeVariation(arg: number): void;
-  setTargetItem(arg: QtQuick.QQuickItem): void;
+  setTargetX(arg: number | undefined): void;
+  setTargetY(arg: number | undefined): void;
+  setTargetVariation(arg: number | undefined): void;
+  setMagnitude(arg: number | undefined): void;
+  setProportionalMagnitude(arg: boolean | undefined): void;
+  setMagnitudeVariation(arg: number | undefined): void;
+  setTargetItem(arg: QtQuick.QQuickItem | null): void;
 
   targetXChanged: Signal<Function>;
   targetYChanged: Signal<Function>;
@@ -456,17 +464,17 @@ export enum QQuickTrailEmitter_EmitSize {
 }
 
 export type QQuickTrailEmitter = {
-  follow: string;
-  emitRatePerParticle: number;
-  emitShape: QQuickParticleExtruder;
-  emitHeight: number;
-  emitWidth: number;
+  follow: string | undefined;
+  emitRatePerParticle: number | undefined;
+  emitShape: QQuickParticleExtruder | null;
+  emitHeight: number | undefined;
+  emitWidth: number | undefined;
 
-  setParticlesPerParticlePerSecond(arg: number): void;
-  setEmitterXVariation(arg: number): void;
-  setEmitterYVariation(arg: number): void;
-  setFollow(arg: string): void;
-  setEmissionShape(arg: QQuickParticleExtruder): void;
+  setParticlesPerParticlePerSecond(arg: number | undefined): void;
+  setEmitterXVariation(arg: number | undefined): void;
+  setEmitterYVariation(arg: number | undefined): void;
+  setFollow(arg: string | undefined): void;
+  setEmissionShape(arg: QQuickParticleExtruder | null): void;
 
   emitFollowParticles: Signal<Function>;
   particlesPerParticlePerSecondChanged: Signal<Function>;
@@ -477,11 +485,11 @@ export type QQuickTrailEmitter = {
 } & QQuickParticleEmitter;
 
 export type QQuickTurbulenceAffector = {
-  strength: number;
-  noiseSource: string;
+  strength: number | undefined;
+  noiseSource: string | undefined;
 
-  setStrength(arg: number): void;
-  setNoiseSource(arg: string): void;
+  setStrength(arg: number | undefined): void;
+  setNoiseSource(arg: string | undefined): void;
 
   strengthChanged: Signal<Function>;
   noiseSourceChanged: Signal<Function>;
@@ -494,15 +502,17 @@ export enum QQuickWanderAffector_AffectableParameters {
 }
 
 export type QQuickWanderAffector = {
-  pace: number;
-  xVariance: number;
-  yVariance: number;
-  affectedParameter: QQuickWanderAffector_AffectableParameters;
+  pace: number | undefined;
+  xVariance: number | undefined;
+  yVariance: number | undefined;
+  affectedParameter: QQuickWanderAffector_AffectableParameters | string;
 
-  setXVariance(arg: number): void;
-  setYVariance(arg: number): void;
-  setPace(arg: number): void;
-  setAffectedParameter(arg: QQuickWanderAffector_AffectableParameters): void;
+  setXVariance(arg: number | undefined): void;
+  setYVariance(arg: number | undefined): void;
+  setPace(arg: number | undefined): void;
+  setAffectedParameter(
+    arg: QQuickWanderAffector_AffectableParameters | string
+  ): void;
 
   xVarianceChanged: Signal<Function>;
   yVarianceChanged: Signal<Function>;

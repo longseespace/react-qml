@@ -16,11 +16,11 @@ export enum QQuickGridLayout_Flow {
 }
 
 export type QQuickGridLayout = {
-  columnSpacing: number;
-  rowSpacing: number;
-  columns: number;
-  rows: number;
-  flow: QQuickGridLayout_Flow;
+  columnSpacing: number | undefined;
+  rowSpacing: number | undefined;
+  columns: number | undefined;
+  rows: number | undefined;
+  flow: QQuickGridLayout_Flow | string;
 } & QQuickGridLayoutBase;
 
 export type QQuickGridLayoutBase = {
@@ -32,37 +32,37 @@ export type QQuickGridLayoutBase = {
 export type QQuickLayout = {} & QtQuick.QQuickItem;
 
 export type QQuickLayoutAttached = {
-  minimumWidth: number;
-  minimumHeight: number;
-  preferredWidth: number;
-  preferredHeight: number;
-  maximumWidth: number;
-  maximumHeight: number;
-  fillHeight: boolean;
-  fillWidth: boolean;
-  row: number;
-  column: number;
-  rowSpan: number;
-  columnSpan: number;
+  minimumWidth: number | undefined;
+  minimumHeight: number | undefined;
+  preferredWidth: number | undefined;
+  preferredHeight: number | undefined;
+  maximumWidth: number | undefined;
+  maximumHeight: number | undefined;
+  fillHeight: boolean | undefined;
+  fillWidth: boolean | undefined;
+  row: number | undefined;
+  column: number | undefined;
+  rowSpan: number | undefined;
+  columnSpan: number | undefined;
   alignment: any;
-  margins: number;
-  leftMargin: number;
-  topMargin: number;
-  rightMargin: number;
-  bottomMargin: number;
+  margins: number | undefined;
+  leftMargin: number | undefined;
+  topMargin: number | undefined;
+  rightMargin: number | undefined;
+  bottomMargin: number | undefined;
 } & QtQml.QObject;
 
 export type QQuickLinearLayout = {
-  spacing: number;
+  spacing: number | undefined;
 } & QQuickGridLayoutBase;
 
 export type QQuickRowLayout = {} & QQuickLinearLayout;
 
 export type QQuickStackLayout = {
   readonly count: number;
-  currentIndex: number;
+  currentIndex: number | undefined;
 
-  itemAt(index: number): any;
+  itemAt(index: number | undefined): any;
 } & QQuickLayout;
 
 // end

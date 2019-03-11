@@ -9,23 +9,23 @@ type Signal<T> = {
 };
 
 export type QDeclarativeAttenuationModel = {
-  name: string;
+  name: string | undefined;
 } & QtQml.QObject;
 
 export type QDeclarativeAttenuationModelInverse = {
-  start: number;
-  end: number;
-  rolloff: number;
+  start: number | undefined;
+  end: number | undefined;
+  rolloff: number | undefined;
 } & QDeclarativeAttenuationModel;
 
 export type QDeclarativeAttenuationModelLinear = {
-  start: number;
-  end: number;
+  start: number | undefined;
+  end: number | undefined;
 } & QDeclarativeAttenuationModel;
 
 export type QDeclarativeAudioCategory = {
-  volume: number;
-  name: string;
+  volume: number | undefined;
+  name: string | undefined;
 
   stop(): void;
   pause(): void;
@@ -45,13 +45,13 @@ export type QDeclarativeAudioEngine = {
   readonly loading: boolean;
   readonly liveInstances: number;
   readonly listener: QDeclarativeAudioListener;
-  dopplerFactor: number;
-  speedOfSound: number;
+  dopplerFactor: number | undefined;
+  speedOfSound: number | undefined;
 
-  addAudioSample(param0: QDeclarativeAudioSample): void;
-  addSound(param0: QDeclarativeSound): void;
-  addAudioCategory(param0: QDeclarativeAudioCategory): void;
-  addAttenuationModel(param0: QDeclarativeAttenuationModel): void;
+  addAudioSample(param0: QDeclarativeAudioSample | null): void;
+  addSound(param0: QDeclarativeSound | null): void;
+  addAudioCategory(param0: QDeclarativeAudioCategory | null): void;
+  addAttenuationModel(param0: QDeclarativeAttenuationModel | null): void;
 
   ready: Signal<Function>;
   liveInstanceCountChanged: Signal<Function>;
@@ -60,31 +60,31 @@ export type QDeclarativeAudioEngine = {
 } & QtQml.QObject;
 
 export type QDeclarativeAudioListener = {
-  engine: QDeclarativeAudioEngine;
+  engine: QDeclarativeAudioEngine | null;
   position: any;
   direction: any;
   velocity: any;
   up: any;
-  gain: number;
+  gain: number | undefined;
 } & QtQml.QObject;
 
 export type QDeclarativeAudioSample = {
-  name: string;
-  source: string;
-  preloaded: boolean;
-  streaming: boolean;
+  name: string | undefined;
+  source: string | undefined;
+  preloaded: boolean | undefined;
+  streaming: boolean | undefined;
   readonly loaded: boolean;
 
   load(): void;
 } & QtQml.QObject;
 
 export type QDeclarativePlayVariation = {
-  sample: string;
-  looping: boolean;
-  maxGain: number;
-  minGain: number;
-  maxPitch: number;
-  minPitch: number;
+  sample: string | undefined;
+  looping: boolean | undefined;
+  maxGain: number | undefined;
+  minGain: number | undefined;
+  maxPitch: number | undefined;
+  minPitch: number | undefined;
 } & QtQml.QObject;
 
 export enum QDeclarativeSound_PlayType {
@@ -93,39 +93,53 @@ export enum QDeclarativeSound_PlayType {
 }
 
 export type QDeclarativeSound = {
-  name: string;
-  playType: QDeclarativeSound_PlayType;
-  category: string;
+  name: string | undefined;
+  playType: QDeclarativeSound_PlayType | string;
+  category: string | undefined;
   readonly cone: QDeclarativeSoundCone;
-  attenuationModel: string;
+  attenuationModel: string | undefined;
   readonly playVariationlist: QDeclarativePlayVariation;
 
   play(): void;
-  play(gain: number): void;
-  play(gain: number, pitch: number): void;
+  play(gain: number | undefined): void;
+  play(gain: number | undefined, pitch: number | undefined): void;
   play(position: any): void;
   play(position: any, velocity: any): void;
   play(position: any, velocity: any, direction: any): void;
-  play(position: any, gain: number): void;
-  play(position: any, velocity: any, gain: number): void;
-  play(position: any, velocity: any, direction: any, gain: number): void;
-  play(position: any, gain: number, pitch: number): void;
-  play(position: any, velocity: any, gain: number, pitch: number): void;
+  play(position: any, gain: number | undefined): void;
+  play(position: any, velocity: any, gain: number | undefined): void;
   play(
     position: any,
     velocity: any,
     direction: any,
-    gain: number,
-    pitch: number
+    gain: number | undefined
+  ): void;
+  play(
+    position: any,
+    gain: number | undefined,
+    pitch: number | undefined
+  ): void;
+  play(
+    position: any,
+    velocity: any,
+    gain: number | undefined,
+    pitch: number | undefined
+  ): void;
+  play(
+    position: any,
+    velocity: any,
+    direction: any,
+    gain: number | undefined,
+    pitch: number | undefined
   ): void;
   newInstance(): any;
-  addPlayVariation(param0: QDeclarativePlayVariation): void;
+  addPlayVariation(param0: QDeclarativePlayVariation | null): void;
 } & QtQml.QObject;
 
 export type QDeclarativeSoundCone = {
-  innerAngle: number;
-  outerAngle: number;
-  outerGain: number;
+  innerAngle: number | undefined;
+  outerAngle: number | undefined;
+  outerGain: number | undefined;
 } & QtQml.QObject;
 
 export enum QDeclarativeSoundInstance_State {
@@ -135,19 +149,19 @@ export enum QDeclarativeSoundInstance_State {
 }
 
 export type QDeclarativeSoundInstance = {
-  engine: QDeclarativeAudioEngine;
-  sound: string;
-  readonly state: QDeclarativeSoundInstance_State;
+  engine: QDeclarativeAudioEngine | null;
+  sound: string | undefined;
+  readonly state: QDeclarativeSoundInstance_State | string;
   position: any;
   direction: any;
   velocity: any;
-  gain: number;
-  pitch: number;
+  gain: number | undefined;
+  pitch: number | undefined;
 
   play(): void;
   stop(): void;
   pause(): void;
-  updatePosition(deltaTime: number): void;
+  updatePosition(deltaTime: number | undefined): void;
 } & QtQml.QObject;
 
 export type QQmlPropertyMap = {

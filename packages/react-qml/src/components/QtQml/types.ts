@@ -1,25 +1,27 @@
 // script: generateTypes, version: 0.3
+// dependencies
+
 type Signal<T> = {
   connect: (handler: T) => void;
   disconnect: (handler: T) => void;
 };
 
 export type QObject = {
-  objectName: string;
+  objectName: string | undefined;
 
   toString(): void;
   destroy(): void;
-  destroy(delay: number): void;
+  destroy(delay: number | undefined): void;
 
   objectNameChanged: Signal<Function>;
 };
 
 export type QQmlBind = {
-  target: QObject;
-  property: string;
+  target: QObject | null;
+  property: string | undefined;
   value: any;
-  when: boolean;
-  delayed: boolean;
+  when: boolean | undefined;
+  delayed: boolean | undefined;
 } & QObject;
 
 export enum QQmlComponent_CompilationMode {
@@ -35,13 +37,16 @@ export enum QQmlComponent_Status {
 
 export type QQmlComponent = {
   readonly progress: number;
-  readonly status: QQmlComponent_Status;
+  readonly status: QQmlComponent_Status | string;
   readonly url: string;
 
-  loadUrl(url: string): void;
-  loadUrl(url: string, mode: QQmlComponent_CompilationMode): void;
-  setData(param0: any, baseUrl: string): void;
-  errorString(): string;
+  loadUrl(url: string | undefined): void;
+  loadUrl(
+    url: string | undefined,
+    mode: QQmlComponent_CompilationMode | string
+  ): void;
+  setData(param0: any, baseUrl: string | undefined): void;
+  errorString(): string | undefined;
 
   statusChanged: Signal<Function>;
   progressChanged: Signal<Function>;
@@ -53,9 +58,9 @@ export type QQmlComponentAttached = {
 } & QObject;
 
 export type QQmlConnections = {
-  target: QObject;
-  enabled: boolean;
-  ignoreUnknownSignals: boolean;
+  target: QObject | null;
+  enabled: boolean | undefined;
+  ignoreUnknownSignals: boolean | undefined;
 
   enabledChanged: Signal<Function>;
 } & QObject;
@@ -70,14 +75,14 @@ export type QQmlInstanceModel = {
 } & QObject;
 
 export type QQmlInstantiator = {
-  active: boolean;
-  asynchronous: boolean;
+  active: boolean | undefined;
+  asynchronous: boolean | undefined;
   model: any;
   readonly count: number;
-  delegate: QQmlComponent;
+  delegate: QQmlComponent | null;
   readonly object: QObject;
 
-  objectAt(index: number): any;
+  objectAt(index: number | undefined): any;
 
   objectAdded: Signal<Function>;
   objectRemoved: Signal<Function>;
@@ -112,14 +117,14 @@ export enum QQmlLocale_DayOfWeek {
 export type QQmlLocale = {};
 
 export type QQmlLoggingCategory = {
-  name: string;
+  name: string | undefined;
 } & QObject;
 
 export type QQmlTimer = {
-  interval: number;
-  running: boolean;
-  repeat: boolean;
-  triggeredOnStart: boolean;
+  interval: number | undefined;
+  running: boolean | undefined;
+  repeat: boolean | undefined;
+  triggeredOnStart: boolean | undefined;
   readonly parent: QObject;
 
   start(): void;
@@ -138,7 +143,7 @@ export type QQuickMouseEvent = {
   readonly source: number;
   readonly wasHeld: boolean;
   readonly isClick: boolean;
-  accepted: boolean;
+  accepted: boolean | undefined;
 } & QObject;
 
 // end

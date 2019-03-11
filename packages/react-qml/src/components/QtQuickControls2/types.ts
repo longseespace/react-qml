@@ -12,8 +12,8 @@ type Signal<T> = {
 export type QQuickCheckLabel = {} & QtQuick.QQuickText;
 
 export type QQuickColor = {
-  transparent(color: any, opacity: number): any;
-  blend(a: any, b: any, factor: number): any;
+  transparent(color: any, opacity: number | undefined): any;
+  blend(a: any, b: any, factor: number | undefined): any;
 } & QtQml.QObject;
 
 export type QQuickColorImage = {
@@ -27,13 +27,13 @@ export type QQuickDefaultBusyIndicator = {
 } & QtQuick.QQuickItem;
 
 export type QQuickDefaultDial = {
-  progress: number;
+  progress: number | undefined;
   color: any;
 } & QtQuick.QQuickPaintedItem;
 
 export type QQuickDefaultProgressBar = {
-  indeterminate: boolean;
-  progress: number;
+  indeterminate: boolean | undefined;
+  progress: number | undefined;
   color: any;
 } & QtQuick.QQuickItem;
 
@@ -81,7 +81,7 @@ export type QQuickDefaultStyle = {
 } & QtQml.QObject;
 
 export type QQuickIconImage = {
-  name: string;
+  name: string | undefined;
   color: any;
 } & QtQuick.QQuickImage;
 
@@ -94,38 +94,38 @@ export enum QQuickIconLabel_Display {
 
 export type QQuickIconLabel = {
   icon: any;
-  text: string;
+  text: string | undefined;
   font: any;
   color: any;
-  display: QQuickIconLabel_Display;
-  spacing: number;
-  mirrored: boolean;
+  display: QQuickIconLabel_Display | string;
+  spacing: number | undefined;
+  mirrored: boolean | undefined;
   alignment: any;
-  topPadding: number;
-  leftPadding: number;
-  rightPadding: number;
-  bottomPadding: number;
+  topPadding: number | undefined;
+  leftPadding: number | undefined;
+  rightPadding: number | undefined;
+  bottomPadding: number | undefined;
 } & QtQuick.QQuickItem;
 
 export type QQuickMnemonicLabel = {
-  text: string;
-  mnemonicVisible: boolean;
+  text: string | undefined;
+  mnemonicVisible: boolean | undefined;
 } & QtQuick.QQuickText;
 
 export type QQuickPaddedRectangle = {
-  padding: number;
-  topPadding: number;
-  leftPadding: number;
-  rightPadding: number;
-  bottomPadding: number;
+  padding: number | undefined;
+  topPadding: number | undefined;
+  leftPadding: number | undefined;
+  rightPadding: number | undefined;
+  bottomPadding: number | undefined;
 } & QtQuick.QQuickRectangle;
 
 export type QQuickPlaceholderText = {} & QtQuick.QQuickText;
 
 export type QQuickTumblerView = {
   model: any;
-  delegate: QtQml.QQmlComponent;
-  path: QtQuick.QQuickPath;
+  delegate: QtQml.QQmlComponent | null;
+  path: QtQuick.QQuickPath | null;
 } & QtQuick.QQuickItem;
 
 export enum QQuickAbstractButton_Display {
@@ -136,16 +136,16 @@ export enum QQuickAbstractButton_Display {
 }
 
 export type QQuickAbstractButton = {
-  text: string;
-  down: boolean;
+  text: string | undefined;
+  down: boolean | undefined;
   readonly pressed: boolean;
-  checked: boolean;
-  checkable: boolean;
-  autoExclusive: boolean;
-  indicator: QtQuick.QQuickItem;
+  checked: boolean | undefined;
+  checkable: boolean | undefined;
+  autoExclusive: boolean | undefined;
+  indicator: QtQuick.QQuickItem | null;
   icon: any;
-  display: QQuickAbstractButton_Display;
-  action: QQuickAction;
+  display: QQuickAbstractButton_Display | string;
+  action: QQuickAction | null;
 
   toggle(): void;
 
@@ -161,16 +161,16 @@ export type QQuickAbstractButton = {
 } & QQuickControl;
 
 export type QQuickAction = {
-  text: string;
+  text: string | undefined;
   icon: any;
-  enabled: boolean;
-  checked: boolean;
-  checkable: boolean;
+  enabled: boolean | undefined;
+  checked: boolean | undefined;
+  checkable: boolean | undefined;
   shortcut: any;
 
-  toggle(source: QtQml.QObject): void;
+  toggle(source: QtQml.QObject | null): void;
   toggle(): void;
-  trigger(source: QtQml.QObject): void;
+  trigger(source: QtQml.QObject | null): void;
   trigger(): void;
 
   textChanged: Signal<Function>;
@@ -184,33 +184,33 @@ export type QQuickAction = {
 } & QtQml.QObject;
 
 export type QQuickActionGroup = {
-  checkedAction: QQuickAction;
+  checkedAction: QQuickAction | null;
   readonly actions: QQuickAction;
-  exclusive: boolean;
-  enabled: boolean;
+  exclusive: boolean | undefined;
+  enabled: boolean | undefined;
 
-  addAction(action: QQuickAction): void;
-  removeAction(action: QQuickAction): void;
+  addAction(action: QQuickAction | null): void;
+  removeAction(action: QQuickAction | null): void;
 
   triggered: Signal<Function>;
 } & QtQml.QObject;
 
 export type QQuickActionGroupAttached = {
-  group: QQuickActionGroup;
+  group: QQuickActionGroup | null;
 } & QtQml.QObject;
 
 export type QQuickApplicationWindow = {
-  background: QtQuick.QQuickItem;
+  background: QtQuick.QQuickItem | null;
   readonly contentItem: QtQuick.QQuickItem;
   readonly contentData: QtQml.QObject;
   readonly activeFocusControl: QtQuick.QQuickItem;
-  header: QtQuick.QQuickItem;
-  footer: QtQuick.QQuickItem;
+  header: QtQuick.QQuickItem | null;
+  footer: QtQuick.QQuickItem | null;
   readonly overlay: QQuickOverlay;
   font: any;
   locale: any;
   palette: any;
-  menuBar: QtQuick.QQuickItem;
+  menuBar: QtQuick.QQuickItem | null;
 
   paletteChanged: Signal<Function>;
   menuBarChanged: Signal<Function>;
@@ -227,38 +227,38 @@ export type QQuickApplicationWindowAttached = {
 } & QtQml.QObject;
 
 export type QQuickBusyIndicator = {
-  running: boolean;
+  running: boolean | undefined;
 } & QQuickControl;
 
 export type QQuickButton = {
-  autoRepeat: boolean;
-  highlighted: boolean;
-  flat: boolean;
+  autoRepeat: boolean | undefined;
+  highlighted: boolean | undefined;
+  flat: boolean | undefined;
 } & QQuickAbstractButton;
 
 export type QQuickButtonGroup = {
-  checkedButton: QQuickAbstractButton;
+  checkedButton: QQuickAbstractButton | null;
   readonly buttons: QQuickAbstractButton;
-  exclusive: boolean;
+  exclusive: boolean | undefined;
 
-  addButton(button: QQuickAbstractButton): void;
-  removeButton(button: QQuickAbstractButton): void;
+  addButton(button: QQuickAbstractButton | null): void;
+  removeButton(button: QQuickAbstractButton | null): void;
 
   clicked: Signal<Function>;
   exclusiveChanged: Signal<Function>;
 } & QtQml.QObject;
 
 export type QQuickButtonGroupAttached = {
-  group: QQuickButtonGroup;
+  group: QQuickButtonGroup | null;
 } & QtQml.QObject;
 
 export type QQuickCheckBox = {
-  tristate: boolean;
+  tristate: boolean | undefined;
   checkState: any;
 } & QQuickAbstractButton;
 
 export type QQuickCheckDelegate = {
-  tristate: boolean;
+  tristate: boolean | undefined;
   checkState: any;
 } & QQuickItemDelegate;
 
@@ -266,20 +266,20 @@ export type QQuickComboBox = {
   readonly count: number;
   model: any;
   readonly delegateModel: QtQml.QQmlInstanceModel;
-  pressed: boolean;
+  pressed: boolean | undefined;
   readonly highlightedIndex: number;
-  currentIndex: number;
+  currentIndex: number | undefined;
   readonly currentText: string;
-  displayText: string;
-  textRole: string;
-  delegate: QtQml.QQmlComponent;
-  indicator: QtQuick.QQuickItem;
-  popup: QQuickPopup;
-  flat: boolean;
-  down: boolean;
-  editable: boolean;
-  editText: string;
-  validator: QtQuick.QValidator;
+  displayText: string | undefined;
+  textRole: string | undefined;
+  delegate: QtQml.QQmlComponent | null;
+  indicator: QtQuick.QQuickItem | null;
+  popup: QQuickPopup | null;
+  flat: boolean | undefined;
+  down: boolean | undefined;
+  editable: boolean | undefined;
+  editText: string | undefined;
+  validator: QtQuick.QValidator | null;
   inputMethodHints: any;
   readonly inputMethodComposing: boolean;
   readonly acceptableInput: boolean;
@@ -287,9 +287,9 @@ export type QQuickComboBox = {
   incrementCurrentIndex(): void;
   decrementCurrentIndex(): void;
   selectAll(): void;
-  textAt(index: number): string;
-  find(text: string, flags: any): number;
-  find(text: string): number;
+  textAt(index: number | undefined): string | undefined;
+  find(text: string | undefined, flags: any): number | undefined;
+  find(text: string | undefined): number | undefined;
 
   activated: Signal<Function>;
   highlighted: Signal<Function>;
@@ -309,49 +309,49 @@ export type QQuickContainer = {
   readonly contentModel: any;
   readonly contentData: QtQml.QObject;
   readonly contentChildren: QtQuick.QQuickItem;
-  currentIndex: number;
+  currentIndex: number | undefined;
   readonly currentItem: QtQuick.QQuickItem;
 
-  setCurrentIndex(index: number): void;
+  setCurrentIndex(index: number | undefined): void;
   incrementCurrentIndex(): void;
   decrementCurrentIndex(): void;
-  itemAt(index: number): any;
-  addItem(item: QtQuick.QQuickItem): void;
-  insertItem(index: number, item: QtQuick.QQuickItem): void;
-  moveItem(from: number, to: number): void;
+  itemAt(index: number | undefined): any;
+  addItem(item: QtQuick.QQuickItem | null): void;
+  insertItem(index: number | undefined, item: QtQuick.QQuickItem | null): void;
+  moveItem(from: number | undefined, to: number | undefined): void;
   removeItem(item: any): void;
-  takeItem(index: number): any;
+  takeItem(index: number | undefined): any;
 } & QQuickControl;
 
 export type QQuickControl = {
   font: any;
   readonly availableWidth: number;
   readonly availableHeight: number;
-  padding: number;
-  topPadding: number;
-  leftPadding: number;
-  rightPadding: number;
-  bottomPadding: number;
-  spacing: number;
+  padding: number | undefined;
+  topPadding: number | undefined;
+  leftPadding: number | undefined;
+  rightPadding: number | undefined;
+  bottomPadding: number | undefined;
+  spacing: number | undefined;
   locale: any;
   readonly mirrored: boolean;
   focusPolicy: any;
   focusReason: any;
   readonly visualFocus: boolean;
   readonly hovered: boolean;
-  hoverEnabled: boolean;
-  wheelEnabled: boolean;
-  background: QtQuick.QQuickItem;
-  contentItem: QtQuick.QQuickItem;
+  hoverEnabled: boolean | undefined;
+  wheelEnabled: boolean | undefined;
+  background: QtQuick.QQuickItem | null;
+  contentItem: QtQuick.QQuickItem | null;
   palette: any;
 
   paletteChanged: Signal<Function>;
 } & QtQuick.QQuickItem;
 
 export type QQuickDelayButton = {
-  delay: number;
-  progress: number;
-  transition: QtQuick.QQuickTransition;
+  delay: number | undefined;
+  progress: number | undefined;
+  transition: QtQuick.QQuickTransition | null;
 
   activated: Signal<Function>;
 } & QQuickAbstractButton;
@@ -363,17 +363,17 @@ export enum QQuickDial_SnapMode {
 }
 
 export type QQuickDial = {
-  from: number;
-  to: number;
-  value: number;
+  from: number | undefined;
+  to: number | undefined;
+  value: number | undefined;
   readonly position: number;
   readonly angle: number;
-  stepSize: number;
-  snapMode: QQuickDial_SnapMode;
-  wrap: boolean;
+  stepSize: number | undefined;
+  snapMode: QQuickDial_SnapMode | string;
+  wrap: boolean | undefined;
   readonly pressed: boolean;
-  handle: QtQuick.QQuickItem;
-  live: boolean;
+  handle: QtQuick.QQuickItem | null;
+  live: boolean | undefined;
 
   increase(): void;
   decrease(): void;
@@ -388,15 +388,15 @@ export enum QQuickDialog_StandardCode {
 }
 
 export type QQuickDialog = {
-  title: string;
-  header: QtQuick.QQuickItem;
-  footer: QtQuick.QQuickItem;
+  title: string | undefined;
+  header: QtQuick.QQuickItem | null;
+  footer: QtQuick.QQuickItem | null;
   standardButtons: any;
-  result: number;
+  result: number | undefined;
 
   accept(): void;
   reject(): void;
-  done(result: number): void;
+  done(result: number | undefined): void;
   standardButton(button: any): any;
 
   accepted: Signal<Function>;
@@ -414,10 +414,10 @@ export enum QQuickDialogButtonBox_Position {
 }
 
 export type QQuickDialogButtonBox = {
-  position: QQuickDialogButtonBox_Position;
+  position: QQuickDialogButtonBox_Position | string;
   alignment: any;
   standardButtons: any;
-  delegate: QtQml.QQmlComponent;
+  delegate: QtQml.QQmlComponent | null;
 
   standardButton(button: any): any;
 
@@ -437,9 +437,9 @@ export type QQuickDialogButtonBoxAttached = {
 
 export type QQuickDrawer = {
   edge: any;
-  position: number;
-  dragMargin: number;
-  interactive: boolean;
+  position: number | undefined;
+  dragMargin: number | undefined;
+  interactive: boolean | undefined;
 
   interactiveChanged: Signal<Function>;
 } & QQuickPopup;
@@ -447,17 +447,17 @@ export type QQuickDrawer = {
 export type QQuickFrame = {} & QQuickPane;
 
 export type QQuickGroupBox = {
-  title: string;
-  label: QtQuick.QQuickItem;
+  title: string | undefined;
+  label: QtQuick.QQuickItem | null;
 } & QQuickFrame;
 
 export type QQuickItemDelegate = {
-  highlighted: boolean;
+  highlighted: boolean | undefined;
 } & QQuickAbstractButton;
 
 export type QQuickLabel = {
   font: any;
-  background: QtQuick.QQuickItem;
+  background: QtQuick.QQuickItem | null;
   palette: any;
 
   paletteChanged: Signal<Function>;
@@ -467,28 +467,28 @@ export type QQuickMenu = {
   readonly count: number;
   readonly contentModel: any;
   readonly contentData: QtQml.QObject;
-  title: string;
-  cascade: boolean;
-  overlap: number;
-  delegate: QtQml.QQmlComponent;
-  currentIndex: number;
+  title: string | undefined;
+  cascade: boolean | undefined;
+  overlap: number | undefined;
+  delegate: QtQml.QQmlComponent | null;
+  currentIndex: number | undefined;
 
-  itemAt(index: number): any;
-  addItem(item: QtQuick.QQuickItem): void;
-  insertItem(index: number, item: QtQuick.QQuickItem): void;
-  moveItem(from: number, to: number): void;
+  itemAt(index: number | undefined): any;
+  addItem(item: QtQuick.QQuickItem | null): void;
+  insertItem(index: number | undefined, item: QtQuick.QQuickItem | null): void;
+  moveItem(from: number | undefined, to: number | undefined): void;
   removeItem(item: any): void;
-  takeItem(index: number): any;
-  menuAt(index: number): any;
-  addMenu(menu: QQuickMenu): void;
-  insertMenu(index: number, menu: QQuickMenu): void;
-  removeMenu(menu: QQuickMenu): void;
-  takeMenu(index: number): any;
-  actionAt(index: number): any;
-  addAction(action: QQuickAction): void;
-  insertAction(index: number, action: QQuickAction): void;
-  removeAction(action: QQuickAction): void;
-  takeAction(index: number): any;
+  takeItem(index: number | undefined): any;
+  menuAt(index: number | undefined): any;
+  addMenu(menu: QQuickMenu | null): void;
+  insertMenu(index: number | undefined, menu: QQuickMenu | null): void;
+  removeMenu(menu: QQuickMenu | null): void;
+  takeMenu(index: number | undefined): any;
+  actionAt(index: number | undefined): any;
+  addAction(action: QQuickAction | null): void;
+  insertAction(index: number | undefined, action: QQuickAction | null): void;
+  removeAction(action: QQuickAction | null): void;
+  takeAction(index: number | undefined): any;
   popup(args: any): void;
   dismiss(): void;
 
@@ -501,30 +501,30 @@ export type QQuickMenu = {
 } & QQuickPopup;
 
 export type QQuickMenuBar = {
-  delegate: QtQml.QQmlComponent;
-  contentWidth: number;
-  contentHeight: number;
+  delegate: QtQml.QQmlComponent | null;
+  contentWidth: number | undefined;
+  contentHeight: number | undefined;
   readonly menus: QQuickMenu;
   readonly contentData: QtQml.QObject;
 
-  menuAt(index: number): any;
-  addMenu(menu: QQuickMenu): void;
-  insertMenu(index: number, menu: QQuickMenu): void;
-  removeMenu(menu: QQuickMenu): void;
-  takeMenu(index: number): any;
+  menuAt(index: number | undefined): any;
+  addMenu(menu: QQuickMenu | null): void;
+  insertMenu(index: number | undefined, menu: QQuickMenu | null): void;
+  removeMenu(menu: QQuickMenu | null): void;
+  takeMenu(index: number | undefined): any;
 } & QQuickContainer;
 
 export type QQuickMenuBarItem = {
   readonly menuBar: QQuickMenuBar;
-  menu: QQuickMenu;
-  highlighted: boolean;
+  menu: QQuickMenu | null;
+  highlighted: boolean | undefined;
 
   triggered: Signal<Function>;
 } & QQuickAbstractButton;
 
 export type QQuickMenuItem = {
-  highlighted: boolean;
-  arrow: QtQuick.QQuickItem;
+  highlighted: boolean | undefined;
+  arrow: QtQuick.QQuickItem | null;
   readonly menu: QQuickMenu;
   readonly subMenu: QQuickMenu;
 
@@ -537,8 +537,8 @@ export type QQuickMenuItem = {
 export type QQuickMenuSeparator = {} & QQuickControl;
 
 export type QQuickOverlay = {
-  modal: QtQml.QQmlComponent;
-  modeless: QtQml.QQmlComponent;
+  modal: QtQml.QQmlComponent | null;
+  modeless: QtQml.QQmlComponent | null;
 
   pressed: Signal<Function>;
   released: Signal<Function>;
@@ -546,36 +546,36 @@ export type QQuickOverlay = {
 
 export type QQuickOverlayAttached = {
   readonly overlay: QQuickOverlay;
-  modal: QtQml.QQmlComponent;
-  modeless: QtQml.QQmlComponent;
+  modal: QtQml.QQmlComponent | null;
+  modeless: QtQml.QQmlComponent | null;
 
   pressed: Signal<Function>;
   released: Signal<Function>;
 } & QtQml.QObject;
 
 export type QQuickPage = {
-  title: string;
-  header: QtQuick.QQuickItem;
-  footer: QtQuick.QQuickItem;
+  title: string | undefined;
+  header: QtQuick.QQuickItem | null;
+  footer: QtQuick.QQuickItem | null;
   readonly contentData: QtQml.QObject;
   readonly contentChildren: QtQuick.QQuickItem;
-  contentWidth: number;
-  contentHeight: number;
+  contentWidth: number | undefined;
+  contentHeight: number | undefined;
 
   contentWidthChanged: Signal<Function>;
   contentHeightChanged: Signal<Function>;
 } & QQuickControl;
 
 export type QQuickPageIndicator = {
-  count: number;
-  currentIndex: number;
-  interactive: boolean;
-  delegate: QtQml.QQmlComponent;
+  count: number | undefined;
+  currentIndex: number | undefined;
+  interactive: boolean | undefined;
+  delegate: QtQml.QQmlComponent | null;
 } & QQuickControl;
 
 export type QQuickPane = {
-  contentWidth: number;
-  contentHeight: number;
+  contentWidth: number | undefined;
+  contentHeight: number | undefined;
   readonly contentData: QtQml.QObject;
   readonly contentChildren: QtQuick.QQuickItem;
 } & QQuickControl;
@@ -601,51 +601,51 @@ export enum QQuickPopup_TransformOrigin {
 }
 
 export type QQuickPopup = {
-  x: number;
-  y: number;
-  z: number;
-  width: number;
-  height: number;
-  implicitWidth: number;
-  implicitHeight: number;
-  contentWidth: number;
-  contentHeight: number;
+  x: number | undefined;
+  y: number | undefined;
+  z: number | undefined;
+  width: number | undefined;
+  height: number | undefined;
+  implicitWidth: number | undefined;
+  implicitHeight: number | undefined;
+  contentWidth: number | undefined;
+  contentHeight: number | undefined;
   readonly availableWidth: number;
   readonly availableHeight: number;
-  margins: number;
-  topMargin: number;
-  leftMargin: number;
-  rightMargin: number;
-  bottomMargin: number;
-  padding: number;
-  topPadding: number;
-  leftPadding: number;
-  rightPadding: number;
-  bottomPadding: number;
+  margins: number | undefined;
+  topMargin: number | undefined;
+  leftMargin: number | undefined;
+  rightMargin: number | undefined;
+  bottomMargin: number | undefined;
+  padding: number | undefined;
+  topPadding: number | undefined;
+  leftPadding: number | undefined;
+  rightPadding: number | undefined;
+  bottomPadding: number | undefined;
   locale: any;
   readonly mirrored: boolean;
   font: any;
   palette: any;
-  parent: QtQuick.QQuickItem;
-  background: QtQuick.QQuickItem;
-  contentItem: QtQuick.QQuickItem;
+  parent: QtQuick.QQuickItem | null;
+  background: QtQuick.QQuickItem | null;
+  contentItem: QtQuick.QQuickItem | null;
   readonly contentData: QtQml.QObject;
   readonly contentChildren: QtQuick.QQuickItem;
-  clip: boolean;
-  focus: boolean;
+  clip: boolean | undefined;
+  focus: boolean | undefined;
   readonly activeFocus: boolean;
-  modal: boolean;
-  dim: boolean;
-  visible: boolean;
-  enabled: boolean;
+  modal: boolean | undefined;
+  dim: boolean | undefined;
+  visible: boolean | undefined;
+  enabled: boolean | undefined;
   readonly opened: boolean;
-  opacity: number;
-  scale: number;
-  closePolicy: QQuickPopup_ClosePolicy;
-  transformOrigin: QQuickPopup_TransformOrigin;
-  enter: QtQuick.QQuickTransition;
-  exit: QtQuick.QQuickTransition;
-  spacing: number;
+  opacity: number | undefined;
+  scale: number | undefined;
+  closePolicy: QQuickPopup_ClosePolicy | string;
+  transformOrigin: QQuickPopup_TransformOrigin | string;
+  enter: QtQuick.QQuickTransition | null;
+  exit: QtQuick.QQuickTransition | null;
+  spacing: number | undefined;
 
   open(): void;
   close(): void;
@@ -664,12 +664,12 @@ export type QQuickPopup = {
 } & QtQml.QObject;
 
 export type QQuickProgressBar = {
-  from: number;
-  to: number;
-  value: number;
+  from: number | undefined;
+  to: number | undefined;
+  value: number | undefined;
   readonly position: number;
   readonly visualPosition: number;
-  indeterminate: boolean;
+  indeterminate: boolean | undefined;
 } & QQuickControl;
 
 export type QQuickRadioButton = {} & QQuickAbstractButton;
@@ -683,29 +683,32 @@ export enum QQuickRangeSlider_SnapMode {
 }
 
 export type QQuickRangeSlider = {
-  from: number;
-  to: number;
+  from: number | undefined;
+  to: number | undefined;
   readonly first: QQuickRangeSliderNode;
   readonly second: QQuickRangeSliderNode;
-  stepSize: number;
-  snapMode: QQuickRangeSlider_SnapMode;
+  stepSize: number | undefined;
+  snapMode: QQuickRangeSlider_SnapMode | string;
   orientation: any;
-  live: boolean;
+  live: boolean | undefined;
   readonly horizontal: boolean;
   readonly vertical: boolean;
 
-  setValues(firstValue: number, secondValue: number): void;
+  setValues(
+    firstValue: number | undefined,
+    secondValue: number | undefined
+  ): void;
 
   liveChanged: Signal<Function>;
 } & QQuickControl;
 
 export type QQuickRangeSliderNode = {
-  value: number;
+  value: number | undefined;
   readonly position: number;
   readonly visualPosition: number;
-  handle: QtQuick.QQuickItem;
-  pressed: boolean;
-  hovered: boolean;
+  handle: QtQuick.QQuickItem | null;
+  pressed: boolean | undefined;
+  hovered: boolean | undefined;
 
   increase(): void;
   decrease(): void;
@@ -714,7 +717,7 @@ export type QQuickRangeSliderNode = {
 } & QtQml.QObject;
 
 export type QQuickRoundButton = {
-  radius: number;
+  radius: number | undefined;
 } & QQuickButton;
 
 export enum QQuickScrollBar_SnapMode {
@@ -729,22 +732,22 @@ export enum QQuickScrollBar_Policy {
 }
 
 export type QQuickScrollBar = {
-  size: number;
-  position: number;
-  stepSize: number;
-  active: boolean;
-  pressed: boolean;
+  size: number | undefined;
+  position: number | undefined;
+  stepSize: number | undefined;
+  active: boolean | undefined;
+  pressed: boolean | undefined;
   orientation: any;
-  snapMode: QQuickScrollBar_SnapMode;
-  interactive: boolean;
-  policy: QQuickScrollBar_Policy;
+  snapMode: QQuickScrollBar_SnapMode | string;
+  interactive: boolean | undefined;
+  policy: QQuickScrollBar_Policy | string;
   readonly horizontal: boolean;
   readonly vertical: boolean;
 
   increase(): void;
   decrease(): void;
-  setSize(size: number): void;
-  setPosition(position: number): void;
+  setSize(size: number | undefined): void;
+  setPosition(position: number | undefined): void;
 
   snapModeChanged: Signal<Function>;
   interactiveChanged: Signal<Function>;
@@ -752,30 +755,30 @@ export type QQuickScrollBar = {
 } & QQuickControl;
 
 export type QQuickScrollBarAttached = {
-  horizontal: QQuickScrollBar;
-  vertical: QQuickScrollBar;
+  horizontal: QQuickScrollBar | null;
+  vertical: QQuickScrollBar | null;
 } & QtQml.QObject;
 
 export type QQuickScrollIndicator = {
-  size: number;
-  position: number;
-  active: boolean;
+  size: number | undefined;
+  position: number | undefined;
+  active: boolean | undefined;
   orientation: any;
   readonly horizontal: boolean;
   readonly vertical: boolean;
 
-  setSize(size: number): void;
-  setPosition(position: number): void;
+  setSize(size: number | undefined): void;
+  setPosition(position: number | undefined): void;
 } & QQuickControl;
 
 export type QQuickScrollIndicatorAttached = {
-  horizontal: QQuickScrollIndicator;
-  vertical: QQuickScrollIndicator;
+  horizontal: QQuickScrollIndicator | null;
+  vertical: QQuickScrollIndicator | null;
 } & QtQml.QObject;
 
 export type QQuickScrollView = {
-  contentWidth: number;
-  contentHeight: number;
+  contentWidth: number | undefined;
+  contentHeight: number | undefined;
   readonly contentData: QtQml.QObject;
   readonly contentChildren: QtQuick.QQuickItem;
 } & QQuickControl;
@@ -787,42 +790,42 @@ export enum QQuickSlider_SnapMode {
 }
 
 export type QQuickSlider = {
-  from: number;
-  to: number;
-  value: number;
+  from: number | undefined;
+  to: number | undefined;
+  value: number | undefined;
   readonly position: number;
   readonly visualPosition: number;
-  stepSize: number;
-  snapMode: QQuickSlider_SnapMode;
-  pressed: boolean;
+  stepSize: number | undefined;
+  snapMode: QQuickSlider_SnapMode | string;
+  pressed: boolean | undefined;
   readonly horizontal: boolean;
   readonly vertical: boolean;
   orientation: any;
-  handle: QtQuick.QQuickItem;
-  live: boolean;
+  handle: QtQuick.QQuickItem | null;
+  live: boolean | undefined;
 
   increase(): void;
   decrease(): void;
-  valueAt(position: number): number;
+  valueAt(position: number | undefined): number | undefined;
 
   moved: Signal<Function>;
   liveChanged: Signal<Function>;
 } & QQuickControl;
 
 export type QQuickSpinBox = {
-  from: number;
-  to: number;
-  value: number;
-  stepSize: number;
-  editable: boolean;
-  validator: QtQuick.QValidator;
+  from: number | undefined;
+  to: number | undefined;
+  value: number | undefined;
+  stepSize: number | undefined;
+  editable: boolean | undefined;
+  validator: QtQuick.QValidator | null;
   textFromValue: any;
   valueFromText: any;
   readonly up: QQuickSpinButton;
   readonly down: QQuickSpinButton;
   inputMethodHints: any;
   readonly inputMethodComposing: boolean;
-  wrap: boolean;
+  wrap: boolean | undefined;
 
   increase(): void;
   decrease(): void;
@@ -834,9 +837,9 @@ export type QQuickSpinBox = {
 } & QQuickControl;
 
 export type QQuickSpinButton = {
-  pressed: boolean;
-  indicator: QtQuick.QQuickItem;
-  hovered: boolean;
+  pressed: boolean | undefined;
+  indicator: QtQuick.QQuickItem | null;
+  hovered: boolean | undefined;
 
   hoveredChanged: Signal<Function>;
 } & QtQml.QObject;
@@ -864,19 +867,22 @@ export type QQuickStackView = {
   readonly depth: number;
   readonly currentItem: QtQuick.QQuickItem;
   initialItem: any;
-  popEnter: QtQuick.QQuickTransition;
-  popExit: QtQuick.QQuickTransition;
-  pushEnter: QtQuick.QQuickTransition;
-  pushExit: QtQuick.QQuickTransition;
-  replaceEnter: QtQuick.QQuickTransition;
-  replaceExit: QtQuick.QQuickTransition;
+  popEnter: QtQuick.QQuickTransition | null;
+  popExit: QtQuick.QQuickTransition | null;
+  pushEnter: QtQuick.QQuickTransition | null;
+  pushExit: QtQuick.QQuickTransition | null;
+  replaceEnter: QtQuick.QQuickTransition | null;
+  replaceExit: QtQuick.QQuickTransition | null;
   readonly empty: boolean;
 
-  clear(operation: QQuickStackView_Operation): void;
+  clear(operation: QQuickStackView_Operation | string): void;
   clear(): void;
-  get(index: number, behavior: QQuickStackView_LoadBehavior): any;
-  get(index: number): any;
-  find(callback: any, behavior: QQuickStackView_LoadBehavior): any;
+  get(
+    index: number | undefined,
+    behavior: QQuickStackView_LoadBehavior | string
+  ): any;
+  get(index: number | undefined): any;
+  find(callback: any, behavior: QQuickStackView_LoadBehavior | string): any;
   find(callback: any): any;
   push(args: any): void;
   pop(args: any): void;
@@ -889,7 +895,7 @@ export type QQuickStackViewAttached = {
   readonly index: number;
   readonly view: QQuickStackView;
   readonly status: any;
-  visible: boolean;
+  visible: boolean | undefined;
 
   activated: Signal<Function>;
   activating: Signal<Function>;
@@ -899,16 +905,16 @@ export type QQuickStackViewAttached = {
 } & QtQml.QObject;
 
 export type QQuickSwipe = {
-  position: number;
+  position: number | undefined;
   readonly complete: boolean;
-  left: QtQml.QQmlComponent;
-  behind: QtQml.QQmlComponent;
-  right: QtQml.QQmlComponent;
+  left: QtQml.QQmlComponent | null;
+  behind: QtQml.QQmlComponent | null;
+  right: QtQml.QQmlComponent | null;
   readonly leftItem: QtQuick.QQuickItem;
   readonly behindItem: QtQuick.QQuickItem;
   readonly rightItem: QtQuick.QQuickItem;
-  enabled: boolean;
-  transition: QtQuick.QQuickTransition;
+  enabled: boolean | undefined;
+  transition: QtQuick.QQuickTransition | null;
 
   close(): void;
   open(side: any): void;
@@ -934,7 +940,7 @@ export type QQuickSwipeDelegateAttached = {
 } & QtQml.QObject;
 
 export type QQuickSwipeView = {
-  interactive: boolean;
+  interactive: boolean | undefined;
   orientation: any;
   readonly horizontal: boolean;
   readonly vertical: boolean;
@@ -952,12 +958,12 @@ export type QQuickSwipeViewAttached = {
 } & QtQml.QObject;
 
 export type QQuickSwitch = {
-  position: number;
+  position: number | undefined;
   readonly visualPosition: number;
 } & QQuickAbstractButton;
 
 export type QQuickSwitchDelegate = {
-  position: number;
+  position: number | undefined;
   readonly visualPosition: number;
 } & QQuickItemDelegate;
 
@@ -967,9 +973,9 @@ export enum QQuickTabBar_Position {
 }
 
 export type QQuickTabBar = {
-  position: QQuickTabBar_Position;
-  contentWidth: number;
-  contentHeight: number;
+  position: QQuickTabBar_Position | string;
+  contentWidth: number | undefined;
+  contentHeight: number | undefined;
 
   contentWidthChanged: Signal<Function>;
   contentHeightChanged: Signal<Function>;
@@ -985,13 +991,13 @@ export type QQuickTabButton = {} & QQuickAbstractButton;
 
 export type QQuickTextArea = {
   font: any;
-  implicitWidth: number;
-  implicitHeight: number;
-  background: QtQuick.QQuickItem;
-  placeholderText: string;
+  implicitWidth: number | undefined;
+  implicitHeight: number | undefined;
+  background: QtQuick.QQuickItem | null;
+  placeholderText: string | undefined;
   focusReason: any;
   readonly hovered: boolean;
-  hoverEnabled: boolean;
+  hoverEnabled: boolean | undefined;
   palette: any;
 
   implicitWidthChanged3: Signal<Function>;
@@ -1005,18 +1011,18 @@ export type QQuickTextArea = {
 } & QtQuick.QQuickTextEdit;
 
 export type QQuickTextAreaAttached = {
-  flickable: QQuickTextArea;
+  flickable: QQuickTextArea | null;
 } & QtQml.QObject;
 
 export type QQuickTextField = {
   font: any;
-  implicitWidth: number;
-  implicitHeight: number;
-  background: QtQuick.QQuickItem;
-  placeholderText: string;
+  implicitWidth: number | undefined;
+  implicitHeight: number | undefined;
+  background: QtQuick.QQuickItem | null;
+  placeholderText: string | undefined;
   focusReason: any;
   readonly hovered: boolean;
-  hoverEnabled: boolean;
+  hoverEnabled: boolean | undefined;
   palette: any;
 
   implicitWidthChanged3: Signal<Function>;
@@ -1035,7 +1041,7 @@ export enum QQuickToolBar_Position {
 }
 
 export type QQuickToolBar = {
-  position: QQuickToolBar_Position;
+  position: QQuickToolBar_Position | string;
 } & QQuickPane;
 
 export type QQuickToolButton = {} & QQuickButton;
@@ -1047,31 +1053,31 @@ export type QQuickToolSeparator = {
 } & QQuickControl;
 
 export type QQuickToolTip = {
-  delay: number;
-  timeout: number;
-  text: string;
+  delay: number | undefined;
+  timeout: number | undefined;
+  text: string | undefined;
 } & QQuickPopup;
 
 export type QQuickToolTipAttached = {
-  text: string;
-  delay: number;
-  timeout: number;
-  visible: boolean;
+  text: string | undefined;
+  delay: number | undefined;
+  timeout: number | undefined;
+  visible: boolean | undefined;
   readonly toolTip: QQuickToolTip;
 
-  show(text: string, ms: number): void;
-  show(text: string): void;
+  show(text: string | undefined, ms: number | undefined): void;
+  show(text: string | undefined): void;
   hide(): void;
 } & QtQml.QObject;
 
 export type QQuickTumbler = {
   model: any;
   readonly count: number;
-  currentIndex: number;
+  currentIndex: number | undefined;
   readonly currentItem: QtQuick.QQuickItem;
-  delegate: QtQml.QQmlComponent;
-  visibleItemCount: number;
-  wrap: boolean;
+  delegate: QtQml.QQmlComponent | null;
+  visibleItemCount: number | undefined;
+  wrap: boolean | undefined;
   readonly moving: boolean;
 
   wrapChanged: Signal<Function>;

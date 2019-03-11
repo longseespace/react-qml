@@ -10,81 +10,120 @@ type Signal<T> = {
 };
 
 export type QQuickTouchEventSequence = {
-  press(touchId: number, item: QtQml.QObject, x: number, y: number): any;
-  move(touchId: number, item: QtQml.QObject, x: number, y: number): any;
-  release(touchId: number, item: QtQml.QObject, x: number, y: number): any;
-  stationary(touchId: number): any;
+  press(
+    touchId: number | undefined,
+    item: QtQml.QObject | null,
+    x: number | undefined,
+    y: number | undefined
+  ): any;
+  move(
+    touchId: number | undefined,
+    item: QtQml.QObject | null,
+    x: number | undefined,
+    y: number | undefined
+  ): any;
+  release(
+    touchId: number | undefined,
+    item: QtQml.QObject | null,
+    x: number | undefined,
+    y: number | undefined
+  ): any;
+  stationary(touchId: number | undefined): any;
   commit(): any;
 } & QtQml.QObject;
 
 export type QuickTestEvent = {
   readonly defaultMouseDelay: number;
 
-  keyPress(key: number, modifiers: number, delay: number): boolean;
-  keyRelease(key: number, modifiers: number, delay: number): boolean;
-  keyClick(key: number, modifiers: number, delay: number): boolean;
-  keyPressChar(character: string, modifiers: number, delay: number): boolean;
-  keyReleaseChar(character: string, modifiers: number, delay: number): boolean;
-  keyClickChar(character: string, modifiers: number, delay: number): boolean;
-  keySequence(keySequence: any): boolean;
+  keyPress(
+    key: number | undefined,
+    modifiers: number | undefined,
+    delay: number | undefined
+  ): boolean | undefined;
+  keyRelease(
+    key: number | undefined,
+    modifiers: number | undefined,
+    delay: number | undefined
+  ): boolean | undefined;
+  keyClick(
+    key: number | undefined,
+    modifiers: number | undefined,
+    delay: number | undefined
+  ): boolean | undefined;
+  keyPressChar(
+    character: string | undefined,
+    modifiers: number | undefined,
+    delay: number | undefined
+  ): boolean | undefined;
+  keyReleaseChar(
+    character: string | undefined,
+    modifiers: number | undefined,
+    delay: number | undefined
+  ): boolean | undefined;
+  keyClickChar(
+    character: string | undefined,
+    modifiers: number | undefined,
+    delay: number | undefined
+  ): boolean | undefined;
+  keySequence(keySequence: any): boolean | undefined;
   mousePress(
-    item: QtQml.QObject,
-    x: number,
-    y: number,
-    button: number,
-    modifiers: number,
-    delay: number
-  ): boolean;
+    item: QtQml.QObject | null,
+    x: number | undefined,
+    y: number | undefined,
+    button: number | undefined,
+    modifiers: number | undefined,
+    delay: number | undefined
+  ): boolean | undefined;
   mouseRelease(
-    item: QtQml.QObject,
-    x: number,
-    y: number,
-    button: number,
-    modifiers: number,
-    delay: number
-  ): boolean;
+    item: QtQml.QObject | null,
+    x: number | undefined,
+    y: number | undefined,
+    button: number | undefined,
+    modifiers: number | undefined,
+    delay: number | undefined
+  ): boolean | undefined;
   mouseClick(
-    item: QtQml.QObject,
-    x: number,
-    y: number,
-    button: number,
-    modifiers: number,
-    delay: number
-  ): boolean;
+    item: QtQml.QObject | null,
+    x: number | undefined,
+    y: number | undefined,
+    button: number | undefined,
+    modifiers: number | undefined,
+    delay: number | undefined
+  ): boolean | undefined;
   mouseDoubleClick(
-    item: QtQml.QObject,
-    x: number,
-    y: number,
-    button: number,
-    modifiers: number,
-    delay: number
-  ): boolean;
+    item: QtQml.QObject | null,
+    x: number | undefined,
+    y: number | undefined,
+    button: number | undefined,
+    modifiers: number | undefined,
+    delay: number | undefined
+  ): boolean | undefined;
   mouseDoubleClickSequence(
-    item: QtQml.QObject,
-    x: number,
-    y: number,
-    button: number,
-    modifiers: number,
-    delay: number
-  ): boolean;
+    item: QtQml.QObject | null,
+    x: number | undefined,
+    y: number | undefined,
+    button: number | undefined,
+    modifiers: number | undefined,
+    delay: number | undefined
+  ): boolean | undefined;
   mouseMove(
-    item: QtQml.QObject,
-    x: number,
-    y: number,
-    delay: number,
-    buttons: number
-  ): boolean;
+    item: QtQml.QObject | null,
+    x: number | undefined,
+    y: number | undefined,
+    delay: number | undefined,
+    buttons: number | undefined
+  ): boolean | undefined;
   mouseWheel(
-    item: QtQml.QObject,
-    x: number,
-    y: number,
-    buttons: number,
-    modifiers: number,
-    xDelta: number,
-    yDelta: number,
-    delay: number
-  ): boolean;
-  touchEvent(item: QtQml.QObject): any;
+    item: QtQml.QObject | null,
+    x: number | undefined,
+    y: number | undefined,
+    buttons: number | undefined,
+    modifiers: number | undefined,
+    xDelta: number | undefined,
+    yDelta: number | undefined,
+    delay: number | undefined
+  ): boolean | undefined;
+  touchEvent(item: QtQml.QObject | null): any;
   touchEvent(): any;
 } & QtQml.QObject;
 
@@ -94,11 +133,11 @@ export enum QuickTestResult_RunMode {
 }
 
 export type QuickTestResult = {
-  testCaseName: string;
-  functionName: string;
-  dataTag: string;
+  testCaseName: string | undefined;
+  functionName: string | undefined;
+  dataTag: string | undefined;
   readonly failed: boolean;
-  skipped: boolean;
+  skipped: boolean | undefined;
   readonly passCount: number;
   readonly failCount: number;
   readonly skipCount: number;
@@ -113,52 +152,74 @@ export type QuickTestResult = {
   finishTestDataCleanup(): void;
   finishTestFunction(): void;
   stringify(args: any): void;
-  fail(message: string, location: string, line: number): void;
+  fail(
+    message: string | undefined,
+    location: string | undefined,
+    line: number | undefined
+  ): void;
   verify(
-    success: boolean,
-    message: string,
-    location: string,
-    line: number
-  ): boolean;
+    success: boolean | undefined,
+    message: string | undefined,
+    location: string | undefined,
+    line: number | undefined
+  ): boolean | undefined;
   compare(
-    success: boolean,
-    message: string,
+    success: boolean | undefined,
+    message: string | undefined,
     val1: any,
     val2: any,
-    location: string,
-    line: number
-  ): boolean;
-  fuzzyCompare(actual: any, expected: any, delta: number): boolean;
-  skip(message: string, location: string, line: number): void;
+    location: string | undefined,
+    line: number | undefined
+  ): boolean | undefined;
+  fuzzyCompare(
+    actual: any,
+    expected: any,
+    delta: number | undefined
+  ): boolean | undefined;
+  skip(
+    message: string | undefined,
+    location: string | undefined,
+    line: number | undefined
+  ): void;
   expectFail(
-    tag: string,
-    comment: string,
-    location: string,
-    line: number
-  ): boolean;
+    tag: string | undefined,
+    comment: string | undefined,
+    location: string | undefined,
+    line: number | undefined
+  ): boolean | undefined;
   expectFailContinue(
-    tag: string,
-    comment: string,
-    location: string,
-    line: number
-  ): boolean;
-  warn(message: string, location: string, line: number): void;
-  ignoreWarning(message: string): void;
-  wait(ms: number): void;
-  sleep(ms: number): void;
-  waitForRendering(item: QtQuick.QQuickItem, timeout: number): boolean;
-  waitForRendering(item: QtQuick.QQuickItem): boolean;
+    tag: string | undefined,
+    comment: string | undefined,
+    location: string | undefined,
+    line: number | undefined
+  ): boolean | undefined;
+  warn(
+    message: string | undefined,
+    location: string | undefined,
+    line: number | undefined
+  ): void;
+  ignoreWarning(message: string | undefined): void;
+  wait(ms: number | undefined): void;
+  sleep(ms: number | undefined): void;
+  waitForRendering(
+    item: QtQuick.QQuickItem | null,
+    timeout: number | undefined
+  ): boolean | undefined;
+  waitForRendering(item: QtQuick.QQuickItem | null): boolean | undefined;
   startMeasurement(): void;
   beginDataRun(): void;
   endDataRun(): void;
-  measurementAccepted(): boolean;
-  needsMoreMeasurements(): boolean;
-  startBenchmark(runMode: QuickTestResult_RunMode, tag: string): void;
-  isBenchmarkDone(): boolean;
+  measurementAccepted(): boolean | undefined;
+  needsMoreMeasurements(): boolean | undefined;
+  startBenchmark(
+    runMode: QuickTestResult_RunMode | string,
+    tag: string | undefined
+  ): void;
+  isBenchmarkDone(): boolean | undefined;
   nextBenchmark(): void;
   stopBenchmark(): void;
-  grabImage(item: QtQuick.QQuickItem): any;
-  findChild(parent: QtQml.QObject, objectName: string): any;
+  grabImage(item: QtQuick.QQuickItem | null): any;
+  findChild(parent: QtQml.QObject | null, objectName: string | undefined): any;
 
   programNameChanged: Signal<Function>;
 } & QtQml.QObject;
@@ -168,11 +229,11 @@ export type QuickTestUtil = {
   readonly dragThreshold: number;
 
   typeName(v: any): any;
-  compare(act: any, exp: any): boolean;
-  callerFile(frameIndex: number): any;
+  compare(act: any, exp: any): boolean | undefined;
+  callerFile(frameIndex: number | undefined): any;
   callerFile(): any;
-  callerLine(frameIndex: number): number;
-  callerLine(): number;
+  callerLine(frameIndex: number | undefined): number | undefined;
+  callerLine(): number | undefined;
 } & QtQml.QObject;
 
 // end

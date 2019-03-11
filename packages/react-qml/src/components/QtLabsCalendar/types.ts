@@ -30,32 +30,35 @@ export type QQuickCalendarModel = {
   to: any;
   readonly count: number;
 
-  monthAt(index: number): number;
-  yearAt(index: number): number;
-  indexOf(date: any): number;
-  indexOf(year: number, month: number): number;
+  monthAt(index: number | undefined): number | undefined;
+  yearAt(index: number | undefined): number | undefined;
+  indexOf(date: any): number | undefined;
+  indexOf(
+    year: number | undefined,
+    month: number | undefined
+  ): number | undefined;
 } & QtQuick.QAbstractListModel;
 
 export type QQuickControl = {
   font: any;
   readonly availableWidth: number;
   readonly availableHeight: number;
-  padding: number;
-  topPadding: number;
-  leftPadding: number;
-  rightPadding: number;
-  bottomPadding: number;
-  spacing: number;
+  padding: number | undefined;
+  topPadding: number | undefined;
+  leftPadding: number | undefined;
+  rightPadding: number | undefined;
+  bottomPadding: number | undefined;
+  spacing: number | undefined;
   locale: any;
   readonly mirrored: boolean;
   focusPolicy: any;
   focusReason: any;
   readonly visualFocus: boolean;
   readonly hovered: boolean;
-  hoverEnabled: boolean;
-  wheelEnabled: boolean;
-  background: QtQuick.QQuickItem;
-  contentItem: QtQuick.QQuickItem;
+  hoverEnabled: boolean | undefined;
+  wheelEnabled: boolean | undefined;
+  background: QtQuick.QQuickItem | null;
+  contentItem: QtQuick.QQuickItem | null;
   palette: any;
 
   paletteChanged: Signal<Function>;
@@ -63,15 +66,15 @@ export type QQuickControl = {
 
 export type QQuickDayOfWeekRow = {
   source: any;
-  delegate: QtQml.QQmlComponent;
+  delegate: QtQml.QQmlComponent | null;
 } & QQuickControl;
 
 export type QQuickMonthGrid = {
-  month: number;
-  year: number;
+  month: number | undefined;
+  year: number | undefined;
   source: any;
-  title: string;
-  delegate: QtQml.QQmlComponent;
+  title: string | undefined;
+  delegate: QtQml.QQmlComponent | null;
 
   pressed: Signal<Function>;
   released: Signal<Function>;
@@ -80,10 +83,10 @@ export type QQuickMonthGrid = {
 } & QQuickControl;
 
 export type QQuickWeekNumberColumn = {
-  month: number;
-  year: number;
+  month: number | undefined;
+  year: number | undefined;
   source: any;
-  delegate: QtQml.QQmlComponent;
+  delegate: QtQml.QQmlComponent | null;
 } & QQuickControl;
 
 // end

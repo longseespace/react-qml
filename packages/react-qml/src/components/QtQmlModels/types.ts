@@ -14,32 +14,58 @@ export enum QAbstractItemModel_LayoutChangeHint {
 }
 
 export type QAbstractItemModel = {
-  submit(): boolean;
+  submit(): boolean | undefined;
   revert(): void;
-  hasIndex(row: number, column: number, parent: any): boolean;
-  hasIndex(row: number, column: number): boolean;
-  index(row: number, column: number, parent: any): any;
-  index(row: number, column: number): any;
+  hasIndex(
+    row: number | undefined,
+    column: number | undefined,
+    parent: any
+  ): boolean | undefined;
+  hasIndex(
+    row: number | undefined,
+    column: number | undefined
+  ): boolean | undefined;
+  index(row: number | undefined, column: number | undefined, parent: any): any;
+  index(row: number | undefined, column: number | undefined): any;
   parent(child: any): any;
-  sibling(row: number, column: number, idx: any): any;
-  rowCount(parent: any): number;
-  rowCount(): number;
-  columnCount(parent: any): number;
-  columnCount(): number;
-  hasChildren(parent: any): boolean;
-  hasChildren(): boolean;
-  data(index: any, role: number): any;
+  sibling(row: number | undefined, column: number | undefined, idx: any): any;
+  rowCount(parent: any): number | undefined;
+  rowCount(): number | undefined;
+  columnCount(parent: any): number | undefined;
+  columnCount(): number | undefined;
+  hasChildren(parent: any): boolean | undefined;
+  hasChildren(): boolean | undefined;
+  data(index: any, role: number | undefined): any;
   data(index: any): any;
-  setData(index: any, value: any, role: number): boolean;
-  setData(index: any, value: any): boolean;
-  headerData(section: number, orientation: any, role: number): any;
-  headerData(section: number, orientation: any): any;
+  setData(
+    index: any,
+    value: any,
+    role: number | undefined
+  ): boolean | undefined;
+  setData(index: any, value: any): boolean | undefined;
+  headerData(
+    section: number | undefined,
+    orientation: any,
+    role: number | undefined
+  ): any;
+  headerData(section: number | undefined, orientation: any): any;
   fetchMore(parent: any): void;
-  canFetchMore(parent: any): boolean;
+  canFetchMore(parent: any): boolean | undefined;
   flags(index: any): any;
-  match(start: any, role: number, value: any, hits: number, flags: any): any;
-  match(start: any, role: number, value: any, hits: number): any;
-  match(start: any, role: number, value: any): any;
+  match(
+    start: any,
+    role: number | undefined,
+    value: any,
+    hits: number | undefined,
+    flags: any
+  ): any;
+  match(
+    start: any,
+    role: number | undefined,
+    value: any,
+    hits: number | undefined
+  ): any;
+  match(start: any, role: number | undefined, value: any): any;
 
   dataChanged: Signal<Function>;
   headerDataChanged: Signal<Function>;
@@ -78,7 +104,7 @@ export enum QItemSelectionModel_SelectionFlags {
 }
 
 export type QItemSelectionModel = {
-  model: QAbstractItemModel;
+  model: QAbstractItemModel | null;
   readonly hasSelection: boolean;
   readonly currentIndex: any;
   readonly selection: any;
@@ -91,14 +117,23 @@ export type QItemSelectionModel = {
   reset(): void;
   clearSelection(): void;
   clearCurrentIndex(): void;
-  isSelected(index: any): boolean;
-  isRowSelected(row: number, parent: any): boolean;
-  isColumnSelected(column: number, parent: any): boolean;
-  rowIntersectsSelection(row: number, parent: any): boolean;
-  columnIntersectsSelection(column: number, parent: any): boolean;
-  selectedRows(column: number): any;
+  isSelected(index: any): boolean | undefined;
+  isRowSelected(row: number | undefined, parent: any): boolean | undefined;
+  isColumnSelected(
+    column: number | undefined,
+    parent: any
+  ): boolean | undefined;
+  rowIntersectsSelection(
+    row: number | undefined,
+    parent: any
+  ): boolean | undefined;
+  columnIntersectsSelection(
+    column: number | undefined,
+    parent: any
+  ): boolean | undefined;
+  selectedRows(column: number | undefined): any;
   selectedRows(): any;
-  selectedColumns(row: number): any;
+  selectedColumns(row: number | undefined): any;
   selectedColumns(): any;
 
   selectionChanged: Signal<Function>;
@@ -110,15 +145,15 @@ export type QItemSelectionModel = {
 
 export type QQmlDelegateModel = {
   model: any;
-  delegate: QtQml.QQmlComponent;
-  filterOnGroup: string;
+  delegate: QtQml.QQmlComponent | null;
+  filterOnGroup: string | undefined;
   readonly items: QQmlDelegateModelGroup;
   readonly persistedItems: QQmlDelegateModelGroup;
   readonly groups: QQmlDelegateModelGroup;
   readonly parts: QtQml.QObject;
   rootIndex: any;
 
-  modelIndex(idx: number): any;
+  modelIndex(idx: number | undefined): any;
   parentModelIndex(): any;
 
   filterGroupChanged: Signal<Function>;
@@ -135,8 +170,8 @@ export type QQmlDelegateModelAttached = {
 
 export type QQmlDelegateModelGroup = {
   readonly count: number;
-  name: string;
-  includeByDefault: boolean;
+  name: string | undefined;
+  includeByDefault: boolean | undefined;
 
   insert(param0: any): void;
   create(param0: any): void;
@@ -146,7 +181,7 @@ export type QQmlDelegateModelGroup = {
   removeGroups(param0: any): void;
   setGroups(param0: any): void;
   move(param0: any): void;
-  get(index: number): any;
+  get(index: number | undefined): any;
 
   defaultIncludeChanged: Signal<Function>;
   changed: Signal<Function>;
@@ -158,16 +193,24 @@ export type QQmlListElement = {} & QtQml.QObject;
 
 export type QQmlListModel = {
   readonly count: number;
-  dynamicRoles: boolean;
+  dynamicRoles: boolean | undefined;
 
   clear(): void;
   remove(args: any): void;
   append(args: any): void;
   insert(args: any): void;
-  get(index: number): any;
-  set(index: number, param1: any): void;
-  setProperty(index: number, property: string, value: any): void;
-  move(from: number, to: number, count: number): void;
+  get(index: number | undefined): any;
+  set(index: number | undefined, param1: any): void;
+  setProperty(
+    index: number | undefined,
+    property: string | undefined,
+    value: any
+  ): void;
+  move(
+    from: number | undefined,
+    to: number | undefined,
+    count: number | undefined
+  ): void;
   sync(): void;
 } & QAbstractListModel;
 
@@ -175,13 +218,17 @@ export type QQmlObjectModel = {
   readonly children: QtQml.QObject;
 
   clear(): void;
-  get(index: number): any;
-  append(object: QtQml.QObject): void;
-  insert(index: number, object: QtQml.QObject): void;
-  move(from: number, to: number, n: number): void;
-  move(from: number, to: number): void;
-  remove(index: number, n: number): void;
-  remove(index: number): void;
+  get(index: number | undefined): any;
+  append(object: QtQml.QObject | null): void;
+  insert(index: number | undefined, object: QtQml.QObject | null): void;
+  move(
+    from: number | undefined,
+    to: number | undefined,
+    n: number | undefined
+  ): void;
+  move(from: number | undefined, to: number | undefined): void;
+  remove(index: number | undefined, n: number | undefined): void;
+  remove(index: number | undefined): void;
 } & QtQml.QQmlInstanceModel;
 
 export type QQmlObjectModelAttached = {

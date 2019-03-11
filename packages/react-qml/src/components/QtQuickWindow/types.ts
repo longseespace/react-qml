@@ -9,8 +9,8 @@ type Signal<T> = {
 };
 
 export type QQuickRootItem = {
-  setWidth(w: number): void;
-  setHeight(h: number): void;
+  setWidth(w: number | undefined): void;
+  setHeight(h: number | undefined): void;
 } & QtQuick.QQuickItem;
 
 export type QQuickScreen = {} & QtQml.QObject;
@@ -18,7 +18,10 @@ export type QQuickScreen = {} & QtQml.QObject;
 export type QQuickScreenAttached = {
   orientationUpdateMask: any;
 
-  angleBetween(a: number, b: number): number;
+  angleBetween(
+    a: number | undefined,
+    b: number | undefined
+  ): number | undefined;
 } & QQuickScreenInfo;
 
 export type QQuickScreenInfo = {
@@ -90,9 +93,9 @@ export type QQuickWindowAttached = {
 } & QtQml.QObject;
 
 export type QQuickWindowQmlImpl = {
-  visible: boolean;
+  visible: boolean | undefined;
   visibility: any;
-  screen: QtQml.QObject;
+  screen: QtQml.QObject | null;
 
   visibleChanged: Signal<Function>;
   visibilityChanged: Signal<Function>;
@@ -113,46 +116,51 @@ export enum QWindow_AncestorMode {
 }
 
 export type QWindow = {
-  title: string;
+  title: string | undefined;
   modality: any;
   flags: any;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  minimumWidth: number;
-  minimumHeight: number;
-  maximumWidth: number;
-  maximumHeight: number;
-  visible: boolean;
+  x: number | undefined;
+  y: number | undefined;
+  width: number | undefined;
+  height: number | undefined;
+  minimumWidth: number | undefined;
+  minimumHeight: number | undefined;
+  maximumWidth: number | undefined;
+  maximumHeight: number | undefined;
+  visible: boolean | undefined;
   readonly active: boolean;
-  visibility: QWindow_Visibility;
+  visibility: QWindow_Visibility | string;
   contentOrientation: any;
-  opacity: number;
+  opacity: number | undefined;
 
   requestActivate(): void;
-  setVisible(visible: boolean): void;
+  setVisible(visible: boolean | undefined): void;
   show(): void;
   hide(): void;
   showMinimized(): void;
   showMaximized(): void;
   showFullScreen(): void;
   showNormal(): void;
-  close(): boolean;
+  close(): boolean | undefined;
   raise(): void;
   lower(): void;
-  setTitle(param0: string): void;
-  setX(arg: number): void;
-  setY(arg: number): void;
-  setWidth(arg: number): void;
-  setHeight(arg: number): void;
-  setGeometry(posx: number, posy: number, w: number, h: number): void;
+  setTitle(param0: string | undefined): void;
+  setX(arg: number | undefined): void;
+  setY(arg: number | undefined): void;
+  setWidth(arg: number | undefined): void;
+  setHeight(arg: number | undefined): void;
+  setGeometry(
+    posx: number | undefined,
+    posy: number | undefined,
+    w: number | undefined,
+    h: number | undefined
+  ): void;
   setGeometry(rect: any): void;
-  setMinimumWidth(w: number): void;
-  setMinimumHeight(h: number): void;
-  setMaximumWidth(w: number): void;
-  setMaximumHeight(h: number): void;
-  alert(msec: number): void;
+  setMinimumWidth(w: number | undefined): void;
+  setMinimumHeight(h: number | undefined): void;
+  setMaximumWidth(w: number | undefined): void;
+  setMaximumHeight(h: number | undefined): void;
+  alert(msec: number | undefined): void;
   requestUpdate(): void;
 
   screenChanged: Signal<Function>;

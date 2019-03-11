@@ -9,7 +9,7 @@ type Signal<T> = {
 };
 
 export type QAbstractVideoFilter = {
-  active: boolean;
+  active: boolean | undefined;
 } & QtQml.QObject;
 
 export enum QCamera_Status {
@@ -136,34 +136,34 @@ export enum QDeclarativeAudio_AudioRole {
 }
 
 export type QDeclarativeAudio = {
-  source: string;
-  playlist: QDeclarativePlaylist;
-  loops: number;
-  readonly playbackState: QDeclarativeAudio_PlaybackState;
-  autoPlay: boolean;
-  autoLoad: boolean;
-  readonly status: QDeclarativeAudio_Status;
+  source: string | undefined;
+  playlist: QDeclarativePlaylist | null;
+  loops: number | undefined;
+  readonly playbackState: QDeclarativeAudio_PlaybackState | string;
+  autoPlay: boolean | undefined;
+  autoLoad: boolean | undefined;
+  readonly status: QDeclarativeAudio_Status | string;
   readonly duration: number;
   readonly position: number;
-  volume: number;
-  muted: boolean;
+  volume: number | undefined;
+  muted: boolean | undefined;
   readonly hasAudio: boolean;
   readonly hasVideo: boolean;
   readonly bufferProgress: number;
   readonly seekable: boolean;
-  playbackRate: number;
-  readonly error: QDeclarativeAudio_Error;
+  playbackRate: number | undefined;
+  readonly error: QDeclarativeAudio_Error | string;
   readonly errorString: string;
   readonly metaData: QDeclarativeMediaMetaData;
   readonly mediaObject: QtQml.QObject;
-  readonly availability: QDeclarativeAudio_Availability;
-  audioRole: QDeclarativeAudio_AudioRole;
-  notifyInterval: number;
+  readonly availability: QDeclarativeAudio_Availability | string;
+  audioRole: QDeclarativeAudio_AudioRole | string;
+  notifyInterval: number | undefined;
 
   play(): void;
   pause(): void;
   stop(): void;
-  seek(position: number): void;
+  seek(position: number | undefined): void;
   supportedAudioRoles(): any;
 
   playlistChanged: Signal<Function>;
@@ -282,20 +282,20 @@ export enum QDeclarativeCamera_Availability {
 }
 
 export type QDeclarativeCamera = {
-  deviceId: string;
-  position: QDeclarativeCamera_Position;
+  deviceId: string | undefined;
+  position: QDeclarativeCamera_Position | string;
   readonly displayName: string;
   readonly orientation: number;
-  captureMode: QDeclarativeCamera_CaptureMode;
-  cameraState: QDeclarativeCamera_State;
-  readonly cameraStatus: QDeclarativeCamera_Status;
-  readonly lockStatus: QDeclarativeCamera_LockStatus;
-  readonly errorCode: QDeclarativeCamera_Error;
+  captureMode: QDeclarativeCamera_CaptureMode | string;
+  cameraState: QDeclarativeCamera_State | string;
+  readonly cameraStatus: QDeclarativeCamera_Status | string;
+  readonly lockStatus: QDeclarativeCamera_LockStatus | string;
+  readonly errorCode: QDeclarativeCamera_Error | string;
   readonly errorString: string;
-  readonly availability: QDeclarativeCamera_Availability;
-  opticalZoom: number;
+  readonly availability: QDeclarativeCamera_Availability | string;
+  opticalZoom: number | undefined;
   readonly maximumOpticalZoom: number;
-  digitalZoom: number;
+  digitalZoom: number | undefined;
   readonly maximumDigitalZoom: number;
   readonly mediaObject: QtQml.QObject;
   readonly imageCapture: QDeclarativeCameraCapture;
@@ -307,19 +307,19 @@ export type QDeclarativeCamera = {
   readonly metaData: QDeclarativeMediaMetaData;
   readonly viewfinder: QDeclarativeCameraViewfinder;
 
-  setCaptureMode(mode: QDeclarativeCamera_CaptureMode): void;
+  setCaptureMode(mode: QDeclarativeCamera_CaptureMode | string): void;
   start(): void;
   stop(): void;
-  setCameraState(state: QDeclarativeCamera_State): void;
+  setCameraState(state: QDeclarativeCamera_State | string): void;
   searchAndLock(): void;
   unlock(): void;
-  setOpticalZoom(param0: number): void;
-  setDigitalZoom(param0: number): void;
+  setOpticalZoom(param0: number | undefined): void;
+  setDigitalZoom(param0: number | undefined): void;
   supportedViewfinderResolutions(
-    minimumFrameRate: number,
-    maximumFrameRate: number
+    minimumFrameRate: number | undefined,
+    maximumFrameRate: number | undefined
   ): any;
-  supportedViewfinderResolutions(minimumFrameRate: number): any;
+  supportedViewfinderResolutions(minimumFrameRate: number | undefined): any;
   supportedViewfinderResolutions(): any;
   supportedViewfinderFrameRateRanges(resolution: any): any;
   supportedViewfinderFrameRateRanges(): any;
@@ -345,11 +345,11 @@ export type QDeclarativeCameraCapture = {
   readonly errorString: string;
   readonly supportedResolutions: any;
 
-  capture(): number;
-  captureToLocation(location: string): number;
+  capture(): number | undefined;
+  captureToLocation(location: string | undefined): number | undefined;
   cancelCapture(): void;
   setResolution(resolution: any): void;
-  setMetadata(key: string, value: any): void;
+  setMetadata(key: string | undefined, value: any): void;
 
   readyForCaptureChanged: Signal<Function>;
   imageExposed: Signal<Function>;
@@ -391,22 +391,24 @@ export enum QDeclarativeCameraExposure_MeteringMode {
 }
 
 export type QDeclarativeCameraExposure = {
-  exposureCompensation: number;
+  exposureCompensation: number | undefined;
   readonly iso: number;
   readonly shutterSpeed: number;
   readonly aperture: number;
-  manualShutterSpeed: number;
-  manualAperture: number;
-  manualIso: number;
-  exposureMode: QDeclarativeCameraExposure_ExposureMode;
+  manualShutterSpeed: number | undefined;
+  manualAperture: number | undefined;
+  manualIso: number | undefined;
+  exposureMode: QDeclarativeCameraExposure_ExposureMode | string;
   spotMeteringPoint: any;
-  meteringMode: QDeclarativeCameraExposure_MeteringMode;
+  meteringMode: QDeclarativeCameraExposure_MeteringMode | string;
 
-  setExposureMode(param0: QDeclarativeCameraExposure_ExposureMode): void;
-  setExposureCompensation(ev: number): void;
-  setManualAperture(param0: number): void;
-  setManualShutterSpeed(param0: number): void;
-  setManualIsoSensitivity(iso: number): void;
+  setExposureMode(
+    param0: QDeclarativeCameraExposure_ExposureMode | string
+  ): void;
+  setExposureCompensation(ev: number | undefined): void;
+  setManualAperture(param0: number | undefined): void;
+  setManualShutterSpeed(param0: number | undefined): void;
+  setManualIsoSensitivity(iso: number | undefined): void;
   setAutoAperture(): void;
   setAutoShutterSpeed(): void;
   setAutoIsoSensitivity(): void;
@@ -438,10 +440,10 @@ export enum QDeclarativeCameraFlash_FlashMode {
 
 export type QDeclarativeCameraFlash = {
   readonly ready: boolean;
-  mode: QDeclarativeCameraFlash_FlashMode;
+  mode: QDeclarativeCameraFlash_FlashMode | string;
   readonly supportedModes: any;
 
-  setFlashMode(param0: QDeclarativeCameraFlash_FlashMode): void;
+  setFlashMode(param0: QDeclarativeCameraFlash_FlashMode | string): void;
 
   flashReady: Signal<Function>;
   flashModeChanged: Signal<Function>;
@@ -463,18 +465,22 @@ export enum QDeclarativeCameraFocus_FocusPointMode {
 }
 
 export type QDeclarativeCameraFocus = {
-  focusMode: QDeclarativeCameraFocus_FocusMode;
-  focusPointMode: QDeclarativeCameraFocus_FocusPointMode;
+  focusMode: QDeclarativeCameraFocus_FocusMode | string;
+  focusPointMode: QDeclarativeCameraFocus_FocusPointMode | string;
   customFocusPoint: any;
   readonly focusZones: QtQml.QObject;
 
-  setFocusMode(param0: QDeclarativeCameraFocus_FocusMode): void;
-  setFocusPointMode(mode: QDeclarativeCameraFocus_FocusPointMode): void;
+  setFocusMode(param0: QDeclarativeCameraFocus_FocusMode | string): void;
+  setFocusPointMode(
+    mode: QDeclarativeCameraFocus_FocusPointMode | string
+  ): void;
   setCustomFocusPoint(point: any): void;
-  isFocusModeSupported(mode: QDeclarativeCameraFocus_FocusMode): boolean;
+  isFocusModeSupported(
+    mode: QDeclarativeCameraFocus_FocusMode | string
+  ): boolean | undefined;
   isFocusPointModeSupported(
-    mode: QDeclarativeCameraFocus_FocusPointMode
-  ): boolean;
+    mode: QDeclarativeCameraFocus_FocusPointMode | string
+  ): boolean | undefined;
 
   focusModeChanged: Signal<Function>;
   focusPointModeChanged: Signal<Function>;
@@ -507,24 +513,24 @@ export enum QDeclarativeCameraImageProcessing_ColorFilter {
 }
 
 export type QDeclarativeCameraImageProcessing = {
-  whiteBalanceMode: QDeclarativeCameraImageProcessing_WhiteBalanceMode;
-  manualWhiteBalance: number;
-  brightness: number;
-  contrast: number;
-  saturation: number;
-  sharpeningLevel: number;
-  denoisingLevel: number;
-  colorFilter: QDeclarativeCameraImageProcessing_ColorFilter;
+  whiteBalanceMode: QDeclarativeCameraImageProcessing_WhiteBalanceMode | string;
+  manualWhiteBalance: number | undefined;
+  brightness: number | undefined;
+  contrast: number | undefined;
+  saturation: number | undefined;
+  sharpeningLevel: number | undefined;
+  denoisingLevel: number | undefined;
+  colorFilter: QDeclarativeCameraImageProcessing_ColorFilter | string;
 
   setWhiteBalanceMode(mode: any): void;
-  setManualWhiteBalance(colorTemp: number): void;
-  setBrightness(value: number): void;
-  setContrast(value: number): void;
-  setSaturation(value: number): void;
-  setSharpeningLevel(value: number): void;
-  setDenoisingLevel(value: number): void;
+  setManualWhiteBalance(colorTemp: number | undefined): void;
+  setBrightness(value: number | undefined): void;
+  setContrast(value: number | undefined): void;
+  setSaturation(value: number | undefined): void;
+  setSharpeningLevel(value: number | undefined): void;
+  setDenoisingLevel(value: number | undefined): void;
   setColorFilter(
-    colorFilter: QDeclarativeCameraImageProcessing_ColorFilter
+    colorFilter: QDeclarativeCameraImageProcessing_ColorFilter | string
   ): void;
 
   whiteBalanceModeChanged: Signal<Function>;
@@ -563,46 +569,46 @@ export enum QDeclarativeCameraRecorder_Error {
 }
 
 export type QDeclarativeCameraRecorder = {
-  recorderState: QDeclarativeCameraRecorder_RecorderState;
-  readonly recorderStatus: QDeclarativeCameraRecorder_RecorderStatus;
-  videoCodec: string;
+  recorderState: QDeclarativeCameraRecorder_RecorderState | string;
+  readonly recorderStatus: QDeclarativeCameraRecorder_RecorderStatus | string;
+  videoCodec: string | undefined;
   resolution: any;
-  frameRate: number;
-  videoBitRate: number;
-  videoEncodingMode: QDeclarativeCameraRecorder_EncodingMode;
-  audioCodec: string;
-  audioBitRate: number;
-  audioChannels: number;
-  audioSampleRate: number;
-  audioEncodingMode: QDeclarativeCameraRecorder_EncodingMode;
-  mediaContainer: string;
+  frameRate: number | undefined;
+  videoBitRate: number | undefined;
+  videoEncodingMode: QDeclarativeCameraRecorder_EncodingMode | string;
+  audioCodec: string | undefined;
+  audioBitRate: number | undefined;
+  audioChannels: number | undefined;
+  audioSampleRate: number | undefined;
+  audioEncodingMode: QDeclarativeCameraRecorder_EncodingMode | string;
+  mediaContainer: string | undefined;
   readonly duration: any;
-  outputLocation: string;
+  outputLocation: string | undefined;
   readonly actualLocation: string;
-  muted: boolean;
+  muted: boolean | undefined;
   readonly errorString: string;
-  readonly errorCode: QDeclarativeCameraRecorder_Error;
+  readonly errorCode: QDeclarativeCameraRecorder_Error | string;
 
-  setOutputLocation(location: string): void;
+  setOutputLocation(location: string | undefined): void;
   record(): void;
   stop(): void;
   setRecorderState(state: any): void;
-  setMuted(muted: boolean): void;
-  setMetadata(key: string, value: any): void;
+  setMuted(muted: boolean | undefined): void;
+  setMetadata(key: string | undefined, value: any): void;
   setCaptureResolution(resolution: any): void;
-  setAudioCodec(codec: string): void;
-  setVideoCodec(codec: string): void;
-  setMediaContainer(container: string): void;
-  setFrameRate(frameRate: number): void;
-  setVideoBitRate(rate: number): void;
-  setAudioBitRate(rate: number): void;
-  setAudioChannels(channels: number): void;
-  setAudioSampleRate(rate: number): void;
+  setAudioCodec(codec: string | undefined): void;
+  setVideoCodec(codec: string | undefined): void;
+  setMediaContainer(container: string | undefined): void;
+  setFrameRate(frameRate: number | undefined): void;
+  setVideoBitRate(rate: number | undefined): void;
+  setAudioBitRate(rate: number | undefined): void;
+  setAudioChannels(channels: number | undefined): void;
+  setAudioSampleRate(rate: number | undefined): void;
   setVideoEncodingMode(
-    encodingMode: QDeclarativeCameraRecorder_EncodingMode
+    encodingMode: QDeclarativeCameraRecorder_EncodingMode | string
   ): void;
   setAudioEncodingMode(
-    encodingMode: QDeclarativeCameraRecorder_EncodingMode
+    encodingMode: QDeclarativeCameraRecorder_EncodingMode | string
   ): void;
 
   recorderStateChanged: Signal<Function>;
@@ -627,8 +633,8 @@ export type QDeclarativeCameraRecorder = {
 
 export type QDeclarativeCameraViewfinder = {
   resolution: any;
-  minimumFrameRate: number;
-  maximumFrameRate: number;
+  minimumFrameRate: number | undefined;
+  maximumFrameRate: number | undefined;
 } & QtQml.QObject;
 
 export type QDeclarativeMediaMetaData = {
@@ -736,10 +742,10 @@ export type QDeclarativeMultimediaGlobal = {
   readonly availableCameras: any;
 
   convertVolume(
-    volume: number,
-    from: QDeclarativeMultimediaGlobal_VolumeScale,
-    to: QDeclarativeMultimediaGlobal_VolumeScale
-  ): number;
+    volume: number | undefined,
+    from: QDeclarativeMultimediaGlobal_VolumeScale | string,
+    to: QDeclarativeMultimediaGlobal_VolumeScale | string
+  ): number | undefined;
 } & QtQml.QObject;
 
 export enum QDeclarativePlaylist_PlaybackMode {
@@ -758,35 +764,47 @@ export enum QDeclarativePlaylist_Error {
 }
 
 export type QDeclarativePlaylist = {
-  playbackMode: QDeclarativePlaylist_PlaybackMode;
+  playbackMode: QDeclarativePlaylist_PlaybackMode | string;
   readonly currentItemSource: string;
-  currentIndex: number;
+  currentIndex: number | undefined;
   readonly itemCount: number;
   readonly readOnly: boolean;
-  readonly error: QDeclarativePlaylist_Error;
+  readonly error: QDeclarativePlaylist_Error | string;
   readonly errorString: string;
   readonly items: QDeclarativePlaylistItem;
 
-  itemSource(index: number): string;
-  nextIndex(steps: number): number;
-  nextIndex(): number;
-  previousIndex(steps: number): number;
-  previousIndex(): number;
+  itemSource(index: number | undefined): string | undefined;
+  nextIndex(steps: number | undefined): number | undefined;
+  nextIndex(): number | undefined;
+  previousIndex(steps: number | undefined): number | undefined;
+  previousIndex(): number | undefined;
   next(): void;
   previous(): void;
   shuffle(): void;
-  load(location: string, format: string): void;
-  load(location: string): void;
-  save(location: string, format: string): boolean;
-  save(location: string): boolean;
-  addItem(source: string): boolean;
-  addItems(sources: any): boolean;
-  insertItem(index: number, source: string): boolean;
-  insertItems(index: number, sources: any): boolean;
-  moveItem(from: number, to: number): boolean;
-  removeItem(index: number): boolean;
-  removeItems(start: number, end: number): boolean;
-  clear(): boolean;
+  load(location: string | undefined, format: string | undefined): void;
+  load(location: string | undefined): void;
+  save(
+    location: string | undefined,
+    format: string | undefined
+  ): boolean | undefined;
+  save(location: string | undefined): boolean | undefined;
+  addItem(source: string | undefined): boolean | undefined;
+  addItems(sources: any): boolean | undefined;
+  insertItem(
+    index: number | undefined,
+    source: string | undefined
+  ): boolean | undefined;
+  insertItems(index: number | undefined, sources: any): boolean | undefined;
+  moveItem(
+    from: number | undefined,
+    to: number | undefined
+  ): boolean | undefined;
+  removeItem(index: number | undefined): boolean | undefined;
+  removeItems(
+    start: number | undefined,
+    end: number | undefined
+  ): boolean | undefined;
+  clear(): boolean | undefined;
 
   itemAboutToBeInserted: Signal<Function>;
   itemInserted: Signal<Function>;
@@ -798,7 +816,7 @@ export type QDeclarativePlaylist = {
 } & QtQuick.QAbstractListModel;
 
 export type QDeclarativePlaylistItem = {
-  source: string;
+  source: string | undefined;
 } & QtQml.QObject;
 
 export enum QDeclarativeRadio_State {
@@ -835,27 +853,27 @@ export enum QDeclarativeRadio_Availability {
 }
 
 export type QDeclarativeRadio = {
-  readonly state: QDeclarativeRadio_State;
-  band: QDeclarativeRadio_Band;
-  frequency: number;
+  readonly state: QDeclarativeRadio_State | string;
+  band: QDeclarativeRadio_Band | string;
+  frequency: number | undefined;
   readonly stereo: boolean;
-  stereoMode: QDeclarativeRadio_StereoMode;
+  stereoMode: QDeclarativeRadio_StereoMode | string;
   readonly signalStrength: number;
-  volume: number;
-  muted: boolean;
+  volume: number | undefined;
+  muted: boolean | undefined;
   readonly searching: boolean;
   readonly frequencyStep: number;
   readonly minimumFrequency: number;
   readonly maximumFrequency: number;
   readonly antennaConnected: boolean;
-  readonly availability: QDeclarativeRadio_Availability;
+  readonly availability: QDeclarativeRadio_Availability | string;
   readonly radioData: QDeclarativeRadioData;
 
   setBand(band: any): void;
-  setFrequency(frequency: number): void;
+  setFrequency(frequency: number | undefined): void;
   setStereoMode(stereoMode: any): void;
-  setVolume(volume: number): void;
-  setMuted(muted: boolean): void;
+  setVolume(volume: number | undefined): void;
+  setMuted(muted: boolean | undefined): void;
   cancelScan(): void;
   scanDown(): void;
   scanUp(): void;
@@ -865,7 +883,7 @@ export type QDeclarativeRadio = {
   searchAllStations(): void;
   start(): void;
   stop(): void;
-  isAvailable(): boolean;
+  isAvailable(): boolean | undefined;
 
   stateChanged: Signal<Function>;
   bandChanged: Signal<Function>;
@@ -951,11 +969,11 @@ export type QDeclarativeRadioData = {
   readonly programTypeName: string;
   readonly stationName: string;
   readonly radioText: string;
-  alternativeFrequenciesEnabled: boolean;
-  readonly availability: QDeclarativeRadioData_Availability;
+  alternativeFrequenciesEnabled: boolean | undefined;
+  readonly availability: QDeclarativeRadioData_Availability | string;
 
-  setAlternativeFrequenciesEnabled(enabled: boolean): void;
-  isAvailable(): boolean;
+  setAlternativeFrequenciesEnabled(enabled: boolean | undefined): void;
+  isAvailable(): boolean | undefined;
 
   stationIdChanged: Signal<Function>;
   programTypeChanged: Signal<Function>;
@@ -969,8 +987,8 @@ export type QDeclarativeRadioData = {
 } & QtQml.QObject;
 
 export type QDeclarativeTorch = {
-  enabled: boolean;
-  power: number;
+  enabled: boolean | undefined;
+  power: number | undefined;
 } & QtQml.QObject;
 
 export enum QDeclarativeVideoOutput_FillMode {
@@ -980,10 +998,10 @@ export enum QDeclarativeVideoOutput_FillMode {
 }
 
 export type QDeclarativeVideoOutput = {
-  source: QtQml.QObject;
-  fillMode: QDeclarativeVideoOutput_FillMode;
-  orientation: number;
-  autoOrientation: boolean;
+  source: QtQml.QObject | null;
+  fillMode: QDeclarativeVideoOutput_FillMode | string;
+  orientation: number | undefined;
+  autoOrientation: boolean | undefined;
   readonly sourceRect: any;
   readonly contentRect: any;
   readonly filters: QAbstractVideoFilter;
@@ -1001,7 +1019,7 @@ export type QDeclarativeVideoOutput = {
 } & QtQuick.QQuickItem;
 
 export type QMediaObject = {
-  notifyInterval: number;
+  notifyInterval: number | undefined;
 
   notifyIntervalChanged: Signal<Function>;
   metaDataAvailableChanged: Signal<Function>;
@@ -1020,14 +1038,14 @@ export enum QSoundEffect_Status {
 }
 
 export type QSoundEffect = {
-  source: string;
-  loops: number;
+  source: string | undefined;
+  loops: number | undefined;
   readonly loopsRemaining: number;
-  volume: number;
-  muted: boolean;
+  volume: number | undefined;
+  muted: boolean | undefined;
   readonly playing: boolean;
-  readonly status: QSoundEffect_Status;
-  category: string;
+  readonly status: QSoundEffect_Status | string;
+  category: string | undefined;
 
   play(): void;
   stop(): void;
