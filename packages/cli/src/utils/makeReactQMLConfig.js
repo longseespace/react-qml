@@ -335,6 +335,8 @@ const getDefaultConfig = ({
         `.${platform}.ts`,
         '.js',
         '.ts',
+        `.${platform}.jsx`,
+        `.${platform}.tsx`,
         '.jsx',
         '.tsx',
       ],
