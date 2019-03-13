@@ -1,6 +1,9 @@
 import React from 'react';
 
-import QtQuickWindow, { QQuickWindow } from '../../QtQuickWindow';
+import QtQuickWindow, {
+  QQuickWindow,
+  QWindow_Visibility,
+} from '../../QtQuickWindow';
 import { QQuickCloseEvent } from '../../QtQuick';
 
 const NativeWindow = QtQuickWindow.Window;
@@ -9,6 +12,7 @@ type Props = {
   forwardedRef?: any;
   visible?: boolean;
   onClosing?: (ev: QQuickCloseEvent) => void;
+  visibility?: QWindow_Visibility | string;
 } & { [key: string]: any };
 
 class WindowWrapper extends React.Component<Props> {
@@ -21,17 +25,19 @@ class WindowWrapper extends React.Component<Props> {
 
   render() {
     const {
-      onClosing,
-      visible = true,
+      onClosing, // unused
+      visible,
+      visibility,
       forwardedRef,
       ...otherProps
     } = this.props;
+    const defaultVisibility = visible ? 'AutomaticVisibility' : 'Hidden';
     return (
       <NativeWindow
         ref={forwardedRef}
         onClosing={this.onClosing}
         visible={visible}
-        visibility={visible ? 'AutomaticVisibility' : 'Hidden'}
+        visibility={visibility ? visibility : defaultVisibility}
         {...otherProps}
       />
     );
