@@ -150,7 +150,6 @@ const getDefaultConfig = ({
         {
           test: /\.tsx?$/,
           use: [
-            require.resolve('ts-loader'),
             {
               loader: require.resolve('babel-loader'),
               options: Object.assign({}, getBabelConfig(root), {
@@ -162,6 +161,7 @@ const getDefaultConfig = ({
                 cacheDirectory: dev,
               }),
             },
+            require.resolve('ts-loader'),
           ],
           exclude: jsExcludePattern,
         },
