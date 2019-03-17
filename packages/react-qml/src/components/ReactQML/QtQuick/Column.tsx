@@ -1,35 +1,31 @@
 import React from 'react';
-import QtQuick from '../../QtQuick';
+import QtQuick, { QQuickColumn, QQuickTransition } from '../../QtQuick';
 const Positioner = QtQuick.Column;
 
-export type QmlPositioner = {
+export type Props = {
   populate?: any;
   add?: any;
   move?: any;
-};
-
-export type PositionerProps = {
-  populate: any;
-  add: any;
-  move: any;
-};
+} & { [key: string]: any };
 
 // TODO: forwardedRef
-class Column extends React.Component<PositionerProps> {
-  controlRef = React.createRef();
-  populateRef = React.createRef();
-  addRef = React.createRef();
-  moveRef = React.createRef();
+class Column extends React.Component<Props> {
+  private controlRef = React.createRef<QQuickColumn>();
+  private populateRef = React.createRef<QQuickTransition>();
+  private addRef = React.createRef<QQuickTransition>();
+  private moveRef = React.createRef<QQuickTransition>();
 
   componentDidUpdate() {
-    const $control = this.controlRef.current as QmlPositioner;
+    const $control = this.controlRef.current;
     const $populate = this.populateRef.current;
     const $add = this.addRef.current;
     const $move = this.moveRef.current;
 
-    $control.populate = $populate;
-    $control.add = $add;
-    $control.move = $move;
+    if ($control) {
+      $control.populate = $populate;
+      $control.add = $add;
+      $control.move = $move;
+    }
   }
 
   render() {

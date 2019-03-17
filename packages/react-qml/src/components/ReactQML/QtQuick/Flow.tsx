@@ -1,34 +1,31 @@
 import React from 'react';
-import QtQuick from '../../QtQuick';
+import QtQuick, { QQuickFlow, QQuickTransition } from '../../QtQuick';
 const Positioner = QtQuick.Flow;
 
-export type QmlPositioner = {
+export type Props = {
   populate?: any;
   add?: any;
   move?: any;
-};
+} & { [key: string]: any };
 
-export type PositionerProps = {
-  populate: any;
-  add: any;
-  move: any;
-};
-
-class Flow extends React.Component<PositionerProps> {
-  controlRef = React.createRef();
-  populateRef = React.createRef();
-  addRef = React.createRef();
-  moveRef = React.createRef();
+// TODO: forwardedRef
+class Flow extends React.Component<Props> {
+  private controlRef = React.createRef<QQuickFlow>();
+  private populateRef = React.createRef<QQuickTransition>();
+  private addRef = React.createRef<QQuickTransition>();
+  private moveRef = React.createRef<QQuickTransition>();
 
   componentDidUpdate() {
-    const $control = this.controlRef.current as QmlPositioner;
+    const $control = this.controlRef.current;
     const $populate = this.populateRef.current;
     const $add = this.addRef.current;
     const $move = this.moveRef.current;
 
-    $control.populate = $populate;
-    $control.add = $add;
-    $control.move = $move;
+    if ($control) {
+      $control.populate = $populate;
+      $control.add = $add;
+      $control.move = $move;
+    }
   }
 
   render() {
