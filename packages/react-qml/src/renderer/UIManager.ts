@@ -77,6 +77,17 @@ function appendChild(
   const parent = parentContainer.element;
   const child = childContainer.element;
 
+  // appending new child or just moving around?
+  const moving =
+    findChildIndex(parent[parentContainer.metadata.defaultProp], child) > -1;
+
+  if (moving && child.parent && parent.children) {
+    // moving only applied for visual items
+    const childIndex = findChildIndex(parent.children, child);
+    moveChild(parentContainer, childIndex, parent.children.length - 1);
+    return;
+  }
+
   const parentType = getObjectType(parent);
   const childType = getObjectType(child);
 
@@ -187,29 +198,62 @@ function removeChildElement(
   child.destroy();
 }
 
-// TODO: fix this
+function moveChild(
+  parent: RQElementContainer,
+  fromIndex: number,
+  toIndex: number
+) {
+  const children = parent.element.children;
+  if (!children) {
+    console.warn("Move child doesn't work with non-visual items");
+    return;
+  }
+
+  const collection = [];
+
+  for (let i = 0; i < children.length; i++) {
+    collection.push(children[i]);
+  }
+
+  const sourceItem = collection[fromIndex];
+
+  collection.splice(fromIndex, 1);
+  collection.splice(toIndex, 0, sourceItem);
+  for (let i = children.length - 1; i >= 0; i--) {
+    children[i].parent = null;
+  }
+
+  for (let i = 0; i < collection.length; i++) {
+    children[i] = collection[i];
+    children[i].parent = parent.element;
+  }
+}
+
 function insertBefore(
   parent: RQElementContainer,
   child: RQElementContainer,
   beforeChild: RQElementContainer
 ) {
-  const parentData = parent.element[parent.metadata.defaultProp];
-  if (parentData) {
-    // there is no indexOf for qml list, sad
-    // @see https://stackoverflow.com/questions/43030433/qtquick-item-children-indexof-doesnt-exist
-    const childIndex = findChildIndex(parentData, child.element);
-    const beforeChildIndex = findChildIndex(parentData, beforeChild.element);
+  const children = parent.element.children;
+  if (!children) {
+    console.warn("Move child doesn't work with non-visual items");
+    return;
+  }
 
-    // Move existing child or add new child?
-    if (childIndex >= 0) {
-      // move from childIndex to beforeChildIndex
-      // moveChild(parentData, childIndex, beforeChildIndex);
-    } else {
-      // insert child into beforeChildIndex first
-      appendChild(parent, child);
-      // then move
-      // moveChild(parentData, parentData.length - 1, beforeChildIndex);
-    }
+  // there is no indexOf for qml list, sad
+  // @see https://stackoverflow.com/questions/43030433/qtquick-item-children-indexof-doesnt-exist
+  const childIndex = findChildIndex(children, child.element);
+  const beforeChildIndex = findChildIndex(children, beforeChild.element);
+
+  // Move existing child or add new child?
+  if (childIndex >= 0) {
+    // move from childIndex to beforeChildIndex
+    moveChild(parent, childIndex, beforeChildIndex - 1);
+  } else {
+    // insert child into beforeChildIndex first
+    appendChild(parent, child);
+    // then move
+    moveChild(parent, children.length - 1, beforeChildIndex - 1);
   }
 }
 
