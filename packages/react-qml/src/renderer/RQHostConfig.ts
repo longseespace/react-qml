@@ -75,7 +75,7 @@ const hostConfig: RQHostConfig = {
   getRootHostContext(rootContainerInstance: Container): HostContext {
     const rootContext = UIManager.getHostContext(rootContainerInstance);
     console.log('getRootHostContext', rootContext.element);
-    UIManager.removeAllChildren(rootContext);
+    // UIManager.removeAllChildren(rootContext);
     return rootContext;
   },
   getChildHostContext(
@@ -135,7 +135,7 @@ const hostConfig: RQHostConfig = {
   },
   appendInitialChild(parent: Instance, child: Instance | TextInstance): void {
     console.log('appendInitialChild', parent.element, child.element);
-    UIManager.appendChild(parent, child);
+    parent.appendChild(child);
   },
   finalizeInitialChildren(
     parentInstance: Instance,
@@ -166,14 +166,14 @@ const hostConfig: RQHostConfig = {
   supportsMutation: true,
   appendChild(parent: Instance, child: Instance | TextInstance) {
     console.log('appendChild', parent.element, child.element);
-    UIManager.appendChild(parent, child);
+    parent.appendChild(child);
   },
   appendChildToContainer(
     container: Container,
     child: Instance | TextInstance
   ): void {
     console.log('appendChildToContainer', container, child.element);
-    UIManager.appendChild(container, child);
+    container.appendChild(child);
   },
   commitTextUpdate(
     textInstance: TextInstance,
@@ -216,14 +216,14 @@ const hostConfig: RQHostConfig = {
   },
   removeChild(parent: Instance, child: Instance | TextInstance): void {
     console.log('removeChild', parent.element, child.element);
-    UIManager.removeChild(parent, child);
+    parent.removeChild(child);
   },
   removeChildFromContainer(
     container: Container,
     child: Instance | TextInstance
   ): void {
     console.log('removeChildFromContainer', container, child.element);
-    UIManager.removeChild(container, child);
+    container.removeChild(child);
   },
   insertBefore(
     parentInstance: Instance,

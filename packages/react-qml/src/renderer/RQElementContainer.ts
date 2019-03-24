@@ -1,6 +1,7 @@
 import { RegistryComponentMetadata } from '../common/AppRegistry';
 import { diffProps, updateProps } from './RQAttributePayload';
 import { inspect } from 'util';
+import UIManager from './UIManager';
 
 export type RQElementMeasureCallback = (
   x: number,
@@ -22,10 +23,19 @@ class RQElementContainer {
   readonly metadata: RegistryComponentMetadata;
   readonly viewTag: number;
 
-  constructor(element: Qml.QmlElement, metadata: RegistryComponentMetadata) {
+  parent: RQElementContainer | undefined;
+  private children: Set<RQElementContainer>;
+
+  constructor(
+    element: Qml.QmlElement,
+    metadata: RegistryComponentMetadata,
+    parent?: RQElementContainer
+  ) {
     this.element = element;
     this.metadata = metadata;
     this.viewTag = ++globalTagCounter;
+    this.children = new Set();
+    this.parent = parent;
   }
 
   setNativeProps(props: any) {
@@ -61,6 +71,31 @@ class RQElementContainer {
 
   getViewTag() {
     return this.viewTag;
+  }
+
+  appendChild(child: RQElementContainer) {
+    // on Container level
+    this.children.add(child);
+    child.parent = this;
+
+    // on Element level
+    UIManager.appendChild(this, child);
+  }
+
+  removeChild(child: RQElementContainer) {
+    // remove children recursively
+    child.removeAllChildren();
+
+    // then remove child
+    child.parent = undefined;
+    this.children.delete(child);
+    UIManager.removeChild(this, child);
+  }
+
+  removeAllChildren() {
+    this.children.forEach(child => {
+      this.removeChild(child);
+    });
   }
 }
 

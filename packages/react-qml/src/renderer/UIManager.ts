@@ -18,6 +18,7 @@ const createHostContext = (rootContainerInstance: RQElementContainer) => {
     rootContainerInstance.element,
     'HostContext'
   );
+  fakeRoot.objectName = 'HostContext';
   return new RQElementContainer(fakeRoot, {
     defaultProp: 'data',
   });
@@ -27,6 +28,7 @@ function getHostContext(rootContainerInstance: RQElementContainer) {
   let rootContext = contextRoots.get(rootContainerInstance);
   if (!rootContext) {
     rootContext = createHostContext(rootContainerInstance);
+    contextRoots.set(rootContainerInstance, rootContext);
   }
 
   return rootContext;
@@ -44,10 +46,12 @@ function createElementContainer(
   if (rawComponentDefinition) {
     const { rawContent, metadata } = rawComponentDefinition;
     const element = Qt.createQmlObject(rawContent, hostElement, type);
-    const container = new RQElementContainer(element, metadata);
+    const container = new RQElementContainer(element, metadata, hostContext);
     container.setNativeProps(props);
     console.log('\n\n\nCreate new element');
     console.log(element, '\n\n\n');
+
+    console.log('DEBUG OBJECT CREATE ', element);
 
     return container;
   }
@@ -59,10 +63,12 @@ function createElementContainer(
     if (!element) {
       throw new Error(`Unable to create element: ${type}`);
     }
-    const container = new RQElementContainer(element, metadata);
+    const container = new RQElementContainer(element, metadata, hostContext);
     container.setNativeProps(props);
     console.log('\n\n\nCreate new element');
     console.log(element, '\n\n\n');
+
+    console.log('DEBUG OBJECT CREATE ', element);
 
     return container;
   }
@@ -195,7 +201,8 @@ function removeChildElement(
     }
   }
 
-  child.destroy();
+  child.destroy(1);
+  console.log('DEBUG OBJECT DESTROY', child);
 }
 
 function moveChild(
