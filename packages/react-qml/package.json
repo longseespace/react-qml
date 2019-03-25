@@ -1,6 +1,6 @@
 {
   "name": "react-qml",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "React QML",
   "main": "dist/index.js",
   "files": [
