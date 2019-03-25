@@ -37,7 +37,7 @@
   "homepage": "https://github.com/longseespace/react-qml#readme",
   "dependencies": {
     "invariant": "^2.2.4",
-    "react-reconciler": "^0.18.0"
+    "react-reconciler": "^0.20.3"
   },
   "peerDependencies": {
     "react": "^16"
