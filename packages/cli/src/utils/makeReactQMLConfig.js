@@ -91,9 +91,15 @@ const rxjsConstructorPatcher = StringReplacePlugin.replace({
 const errorNamePatcher = StringReplacePlugin.replace({
   replacements: [
     {
-      pattern: /error\.name =/gi,
+      pattern: /error\.name = 'Invariant Violation';/gi,
       replacement: () => {
-        return `// error.name =`;
+        return `Object.defineProperty(error, 'name', { value: 'Invariant Violation' });`;
+      },
+    },
+    {
+      pattern: /err\.name = 'Invariant Violation';/gi,
+      replacement: () => {
+        return `Object.defineProperty(err, 'name', { value: 'Invariant Violation' });`;
       },
     },
   ],
@@ -225,7 +231,7 @@ const getDefaultConfig = ({
           loader: rxjsConstructorPatcher,
         },
         {
-          test: /(invariant|invariant(\/|\\)browser)\.js$/,
+          test: /.js$/,
           loader: errorNamePatcher,
         },
         {
@@ -276,6 +282,8 @@ const getDefaultConfig = ({
         minimize: !!minify,
         debug: dev,
       }),
+
+      new StringReplacePlugin(),
     ].concat(
       dev
         ? [
