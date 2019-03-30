@@ -131,33 +131,8 @@ module.exports = ({
       name: 'platform',
       description: 'Platform to bundle for',
       required: true,
-      choices: [
-        {
-          value: 'macos',
-          description: 'Serves MacOS bundle',
-        },
-        {
-          value: 'windows',
-          description: 'Serves Windows bundle',
-        },
-        {
-          value: 'linux',
-          description: 'Serves Linux bundle',
-        },
-        {
-          value: 'ios',
-          description: 'Serves iOS bundle',
-        },
-        {
-          value: 'android',
-          description: 'Serves Android bundle',
-        },
-        {
-          value: 'all',
-          description: 'Serves all platforms',
-        },
-      ],
-      example: 'react-qml bundle --platform macos',
+      default: 'osx',
+      example: 'react-qml bundle --platform osx',
     },
     {
       name: 'bundleOutput',

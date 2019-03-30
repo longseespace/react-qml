@@ -17,7 +17,19 @@ const getBabelConfig = require('./getBabelConfig');
 const haulProgressBar = require('./haulProgressBar');
 const createQrc = require('./createQrc');
 
-const PLATFORMS = ['ios', 'android', 'macos', 'windows', 'linux'];
+// supported platforms
+// @see https://doc.qt.io/qt-5/qml-qtqml-qt.html#platform-prop
+const PLATFORMS = [
+  'ios',
+  'android',
+  'osx',
+  'windows',
+  'linux',
+  'tvos',
+  'qnx',
+  'unix',
+  'winrt',
+];
 
 type ConfigOptions = {
   root: string,
