@@ -6,7 +6,9 @@ import {
   getObjectType,
   findChildIndex,
   isWindow,
+  findModelChildIndex,
 } from './utils';
+import { QQmlObjectModel } from '../components/QtQuick';
 
 const contextRoots = new Map<RQElementContainer, RQElementContainer>();
 
@@ -210,6 +212,13 @@ function moveChild(
   fromIndex: number,
   toIndex: number
 ) {
+  const parentType = getObjectType(parent.element);
+  if (parentType === 'QQmlObjectModel') {
+    const model = parent.element as QQmlObjectModel;
+    model.move(fromIndex, toIndex);
+    return;
+  }
+
   const children = parent.element.children;
   if (!children) {
     console.warn("Move child doesn't work with non-visual items");
@@ -241,6 +250,26 @@ function insertBefore(
   child: RQElementContainer,
   beforeChild: RQElementContainer
 ) {
+  const parentType = getObjectType(parent.element);
+  if (parentType === 'QQmlObjectModel') {
+    const model = parent.element as QQmlObjectModel;
+    const childIndex = findModelChildIndex(model, child.element);
+    const beforeChildIndex = findModelChildIndex(model, beforeChild.element);
+
+    // Move existing child or add new child?
+    if (childIndex >= 0) {
+      // move from childIndex to beforeChildIndex-1
+      moveChild(parent, childIndex, beforeChildIndex);
+    } else {
+      // insert child into beforeChildIndex first
+      appendChild(parent, child);
+      // then move
+      moveChild(parent, model.count - 1, beforeChildIndex);
+    }
+
+    return;
+  }
+
   const children = parent.element.children;
   if (!children) {
     console.warn("Move child doesn't work with non-visual items");
@@ -254,7 +283,7 @@ function insertBefore(
 
   // Move existing child or add new child?
   if (childIndex >= 0) {
-    // move from childIndex to beforeChildIndex
+    // move from childIndex to beforeChildIndex-1
     moveChild(parent, childIndex, beforeChildIndex - 1);
   } else {
     // insert child into beforeChildIndex first
