@@ -239,6 +239,15 @@ const hostConfig: RQHostConfig = {
   ): void {
     UIManager.insertBefore(container, child, beforeChild);
   },
+  // @ts-ignore
+  hideInstance(instance: Instance): void {
+    instance.element.visible = false;
+  },
+  hideTextInstance(instance: Instance): void {},
+  unhideInstance(instance: Instance): void {},
+  unhideTextInstance(instance: Instance): void {
+    instance.element.visible = true;
+  },
 };
 
 export default hostConfig;

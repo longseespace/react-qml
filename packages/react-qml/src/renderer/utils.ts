@@ -57,6 +57,9 @@ export function isQuickItem(obj: any) {
 }
 
 export function findChildIndex(parentData: any, child: Qml.QmlElement) {
+  if (!parentData) {
+    return -1;
+  }
   for (let index = 0; index < parentData.length; index++) {
     const element = parentData[index];
     if (element === child) {

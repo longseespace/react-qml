@@ -131,9 +131,17 @@ function appendChild(
     child.target = parent;
   }
 
-  if (isQuickItem(parent) && isQuickItem(child)) {
-    console.log('child.parent=parent', parentType);
-    child.parent = parent;
+  if (parent.contentItem && child.hasOwnProperty('parent')) {
+    try {
+      child.parent = parent.contentItem;
+    } catch (ex) {
+      // child.parent = parent;
+    }
+  } else {
+    if (isQuickItem(parent) && isQuickItem(child)) {
+      console.log('child.parent=parent', parentType);
+      child.parent = parent;
+    }
   }
 
   // append child to parent's default prop
