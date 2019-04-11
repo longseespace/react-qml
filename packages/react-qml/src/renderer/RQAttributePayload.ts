@@ -198,7 +198,14 @@ function handleGroupProps(
       continue;
     }
 
-    qmlElement[group][propKey] = undefined;
+    // not every element/prop allow setting to undefined
+    try {
+      qmlElement[group][propKey] = undefined;
+    } catch (ex) {
+      console.warn(
+        `Cannot unset property '${propKey}' of ${qmlElement}.${group}`
+      );
+    }
   }
 
   // phase 2: look for actual changes
@@ -264,16 +271,18 @@ export function updateProps(
     const isObjectProp = typeof qmlElement[propKey] === 'object';
     if (Array.isArray(propValue) && isObjectProp) {
       const [lastPropValue, nextPropValue] = propValue;
-      console.log('updateProps', propKey);
-      console.log(
-        inspect(nextPropValue, {
-          depth: 1,
-        })
-      );
+      if (typeof nextPropValue === 'object') {
+        console.log('updateProps', propKey);
+        console.log(
+          inspect(nextPropValue, {
+            depth: 1,
+          })
+        );
 
-      handleGroupProps(qmlElement, propKey, lastPropValue, nextPropValue);
+        handleGroupProps(qmlElement, propKey, lastPropValue, nextPropValue);
 
-      continue;
+        continue;
+      }
     }
 
     if (!qmlElement.hasOwnProperty(propKey)) {

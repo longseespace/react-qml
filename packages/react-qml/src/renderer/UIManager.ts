@@ -211,6 +211,13 @@ function removeChildElement(
     }
   }
 
+  if (child.hasOwnProperty('parent')) {
+    try {
+      child.parent = null;
+    } catch (error) {
+      // ignore
+    }
+  }
   child.destroy(1);
   console.log('DEBUG OBJECT DESTROY', child);
 }
@@ -297,7 +304,7 @@ function insertBefore(
     // insert child into beforeChildIndex first
     appendChild(parent, child);
     // then move
-    moveChild(parent, children.length - 1, beforeChildIndex - 1);
+    moveChild(parent, children.length - 1, beforeChildIndex);
   }
 }
 
