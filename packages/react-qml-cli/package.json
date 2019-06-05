@@ -91,7 +91,7 @@
     "webpack": "3.8.1",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.19.1",
-    "ws": "^2.2.2"
+    "ws": "^3.3.1"
   },
   "devDependencies": {
     "all-contributors-cli": "^4.5.1",
