@@ -47,6 +47,19 @@ export function isWindow(obj: object) {
   return isQtObject && isWindowType;
 }
 
+export function isPlatformDialog(obj: object) {
+  const isQtObject = Qt.isQtObject(obj);
+  const objType = getObjectType(obj);
+
+  const isPlatformDialogType =
+    objType === 'QQuickPlatformDialog' ||
+    objType === 'QQuickPlatformFileDialog' ||
+    objType === 'QQuickPlatformColorDialog' ||
+    objType === 'QQuickPlatformFolderDialog' ||
+    objType === 'QQuickPlatformFontDialog';
+  return isQtObject && isPlatformDialogType;
+}
+
 // TODO: revise this later
 export function isQuickItem(obj: any) {
   const isQtObject = Qt.isQtObject(obj);

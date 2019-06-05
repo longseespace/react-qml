@@ -7,6 +7,7 @@ import {
   findChildIndex,
   isWindow,
   findModelChildIndex,
+  isPlatformDialog,
 } from './utils';
 import { QQmlObjectModel } from '../components/QtQuick';
 
@@ -124,6 +125,11 @@ function appendChild(
   // - QQuickPlatformMenuBar requires manually setting window
   if (childType === 'QQuickPlatformMenuBar' && isWindow(parent)) {
     child.window = parent;
+  }
+
+  // - QQuickPlatformDialog requires manually setting parentWindow
+  if (isPlatformDialog(child) && isWindow(parent)) {
+    child.parentWindow = parent;
   }
 
   // - set animation's target to parent, if not specified
