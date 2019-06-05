@@ -1,9 +1,0 @@
-{
-	"devDependencies": {
-		"lerna": "^2.5.1"
-	},
-	"scripts": {
-		"release": "lerna publish --conventional-commits --independent"
-	},
-	"dependencies": {}
-}

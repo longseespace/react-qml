@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/react-qml">
+        <file>main.qml</file>
+    </qresource>
+</RCC>

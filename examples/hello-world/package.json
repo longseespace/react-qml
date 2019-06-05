@@ -1,0 +1,19 @@
+{
+  "name": "HelloWorld",
+  "version": "0.0.4",
+  "private": true,
+  "scripts": {
+    "start": "rq start --dev --platform=macos",
+    "bundle": "NODE_ENV=production rq bundle --platform=macos",
+    "build_cpp": "node ./qt/build.js",
+    "run_macos": "node ./qt/run.js",
+    "build": "NODE_ENV=production yarn bundle && NODE_ENV=production yarn build_cpp"
+  },
+  "dependencies": {
+    "react": "^16.0.0",
+    "react-qml": "^0.4.0"
+  },
+  "devDependencies": {
+    "@react-qml/cli": "^0.1.0"
+  }
+}

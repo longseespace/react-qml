@@ -1,0 +1,4 @@
+flow-typed/**
+coverage/**
+vendor/**
+fixtures/**

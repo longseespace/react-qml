@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`display command help (start) 1`] = `
+"react-qml start [options]
+Starts a new webpack server
+
+Options:
+
+  --port [number]                                  Port to run your webpack server, 8081 by default
+  --dev [true|false]                               Whether to build in development mode, true by
+                                                   default
+  --minify [true|false]                            Whether to minify the bundle, 'true' by default
+                                                   when dev=false
+  --platform                                       Platform to bundle for
+  <macos|windows|linux|ios|android|all>
+  --config [string]                                Path to config file, eg. react-qml.config.js,
+                                                   react-qml.config.js by default"
+`;
+
+exports[`display help 1`] = `
+"
+Usage: react-qml [command] [options]
+
+Options:
+
+  --version  print the version number
+  --help     print usage information
+
+Commands:
+
+  init       Generates necessary configuration files
+  start      Starts a new webpack server
+  bundle     Builds the app bundle for packaging
+  reload     Sends reload request to all devices that enabled live reload
+
+Run react-qml COMMAND --help for more information on specific commands
+"
+`;
+
+exports[`display unsupported command info (run-ios) 1`] = `" INFO  This command is not yet supported"`;

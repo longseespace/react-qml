@@ -1,0 +1,36 @@
+
+{
+  "env": {
+    "production": {
+      "presets": [
+        "@babel/env",
+        "@babel/typescript",
+        "@babel/react"
+      ],
+      "plugins": [
+        "@babel/proposal-class-properties",
+        "@babel/proposal-object-rest-spread",
+        [
+          "transform-remove-console",
+          {
+            "exclude": [
+              "error",
+              "warn"
+            ]
+          }
+        ]
+      ]
+    },
+    "development": {
+      "presets": [
+        "@babel/env",
+        "@babel/typescript",
+        "@babel/react"
+      ],
+      "plugins": [
+        "@babel/proposal-class-properties",
+        "@babel/proposal-object-rest-spread"
+      ]
+    }
+  }
+}

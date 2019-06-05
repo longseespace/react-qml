@@ -1,0 +1,991 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`creates config from defaults: (configs) 1`] = `
+Array [
+  Object {
+    "context": "<<REPLACED>>/utils/__tests__/fixtures",
+    "devtool": false,
+    "entry": Array [
+      "<<REPLACED>>/utils/polyfillEnvironment.js",
+      "./file.js",
+    ],
+    "mode": "development",
+    "module": Object {
+      "rules": Array [
+        Object {
+          "parser": Object {
+            "requireEnsure": false,
+          },
+        },
+        Object {
+          "exclude": /\\(\\(node_modules\\(\\\\/\\|\\\\\\\\\\)\\(\\?!react\\|@expo\\|pretty-format\\|@react-qml\\|react-qml-cli\\|react-qml-renderer\\|qt-react\\)\\)\\|qt-react\\|react-qml-renderer\\)/,
+          "test": /\\\\\\.js\\$/,
+          "use": Array [
+            Object {
+              "loader": "<<NODE_MODULE>>/babel-loader/lib/index.js",
+              "options": Object {
+                "cacheDirectory": true,
+                "extends": "<<REPLACED>>/utils/__tests__/fixtures/.babelrc",
+                "plugins": Array [
+                  "<<REPLACED>>/utils/fixRequireIssues.js",
+                  "<<NODE_MODULE>>/react-hot-loader/babel.js",
+                  "<<REPLACED>>/hot/babelPlugin.js",
+                ],
+              },
+            },
+          ],
+        },
+        Object {
+          "test": /\\\\\\.qml\\$/,
+          "use": Array [
+            Object {
+              "loader": "<<NODE_MODULE>>/file-loader/dist/cjs.js",
+              "options": Object {
+                "name": [Function],
+                "publicPath": "/",
+              },
+            },
+          ],
+        },
+        Object {
+          "test": /\\\\\\.\\(aac\\|aiff\\|bmp\\|caf\\|gif\\|html\\|jpeg\\|jpg\\|m4a\\|m4v\\|mov\\|mp3\\|mp4\\|mpeg\\|mpg\\|obj\\|otf\\|pdf\\|png\\|psd\\|svg\\|ttf\\|wav\\|webm\\|webp\\)\\$/,
+          "use": Array [
+            Object {
+              "loader": "<<NODE_MODULE>>/file-loader/dist/cjs.js",
+              "options": Object {
+                "name": [Function],
+                "publicPath": "/",
+              },
+            },
+          ],
+        },
+        Object {
+          "loader": "<<string-replace-webpack-plugin>>",
+          "test": /runtime\\\\\\.js\\$/,
+        },
+        Object {
+          "loader": "<<string-replace-webpack-plugin>>",
+          "test": /rxjs\\(\\\\/\\|\\\\\\\\\\)\\.\\*\\\\\\.js\\$/,
+        },
+        Object {
+          "loader": "<<string-replace-webpack-plugin>>",
+          "test": /\\(invariant\\|invariant\\(\\\\/\\|\\\\\\\\\\)browser\\)\\\\\\.js\\$/,
+        },
+        Object {
+          "loader": "<<string-replace-webpack-plugin>>",
+          "test": /connected-react-router\\.\\*\\\\\\.js\\$/,
+        },
+      ],
+    },
+    "name": "ios",
+    "node": Object {
+      "global": true,
+      "setImmediate": false,
+    },
+    "optimization": Object {
+      "concatenateModules": true,
+      "minimize": false,
+      "namedModules": true,
+    },
+    "output": Object {
+      "filename": "ios.bundle.js",
+      "library": "Bundle",
+      "path": "<<REPLACED>>/utils/__tests__/fixtures/dist",
+      "publicPath": "http://localhost:8081/",
+    },
+    "plugins": Array [
+      CaseSensitivePathsPlugin {
+        "fsOperations": 0,
+        "options": Object {},
+        "pathCache": Object {},
+        "primed": false,
+      },
+      ProgressPlugin {
+        "handler": [Function],
+        "modulesCount": 500,
+        "profile": false,
+        "showActiveModules": true,
+        "showEntries": false,
+        "showModules": true,
+      },
+      DefinePlugin {
+        "definitions": Object {
+          "__DEV__": true,
+          "process.env.DEV_SERVER_HOST": "\\"localhost\\"",
+          "process.env.DEV_SERVER_ORIGIN": "\\"ws://localhost:8081\\"",
+          "process.env.NODE_ENV": "\\"development\\"",
+          "process.env.__REACT_DEVTOOLS_HOST__": "\\"localhost\\"",
+          "process.env.__REACT_DEVTOOLS_PORT__": undefined,
+        },
+      },
+      LoaderOptionsPlugin {
+        "options": Object {
+          "debug": true,
+          "minimize": false,
+          "test": Object {
+            "test": [Function],
+          },
+        },
+      },
+      HotModuleReplacementPlugin {
+        "fullBuildTimeout": 200,
+        "multiStep": undefined,
+        "options": Object {},
+        "requestTimeout": 10000,
+      },
+      BannerPlugin {
+        "banner": [Function],
+        "options": Object {
+          "banner": "if (this && !this.self) { this.self = this; };",
+          "raw": true,
+        },
+      },
+    ],
+    "resolve": Object {
+      "alias": Object {
+        "react-proxy": "@zamotany/react-proxy",
+      },
+      "extensions": Array [
+        ".ios.js",
+        ".native.js",
+        ".js",
+      ],
+      "mainFields": Array [
+        "react-native",
+        "browser",
+        "main",
+      ],
+      "plugins": Array [],
+    },
+    "target": "webworker",
+  },
+  Object {
+    "context": "<<REPLACED>>/utils/__tests__/fixtures",
+    "devtool": false,
+    "entry": Array [
+      "<<REPLACED>>/utils/polyfillEnvironment.js",
+      "./file.js",
+    ],
+    "mode": "development",
+    "module": Object {
+      "rules": Array [
+        Object {
+          "parser": Object {
+            "requireEnsure": false,
+          },
+        },
+        Object {
+          "exclude": /\\(\\(node_modules\\(\\\\/\\|\\\\\\\\\\)\\(\\?!react\\|@expo\\|pretty-format\\|@react-qml\\|react-qml-cli\\|react-qml-renderer\\|qt-react\\)\\)\\|qt-react\\|react-qml-renderer\\)/,
+          "test": /\\\\\\.js\\$/,
+          "use": Array [
+            Object {
+              "loader": "<<NODE_MODULE>>/babel-loader/lib/index.js",
+              "options": Object {
+                "cacheDirectory": true,
+                "extends": "<<REPLACED>>/utils/__tests__/fixtures/.babelrc",
+                "plugins": Array [
+                  "<<REPLACED>>/utils/fixRequireIssues.js",
+                  "<<NODE_MODULE>>/react-hot-loader/babel.js",
+                  "<<REPLACED>>/hot/babelPlugin.js",
+                ],
+              },
+            },
+          ],
+        },
+        Object {
+          "test": /\\\\\\.qml\\$/,
+          "use": Array [
+            Object {
+              "loader": "<<NODE_MODULE>>/file-loader/dist/cjs.js",
+              "options": Object {
+                "name": [Function],
+                "publicPath": "/",
+              },
+            },
+          ],
+        },
+        Object {
+          "test": /\\\\\\.\\(aac\\|aiff\\|bmp\\|caf\\|gif\\|html\\|jpeg\\|jpg\\|m4a\\|m4v\\|mov\\|mp3\\|mp4\\|mpeg\\|mpg\\|obj\\|otf\\|pdf\\|png\\|psd\\|svg\\|ttf\\|wav\\|webm\\|webp\\)\\$/,
+          "use": Array [
+            Object {
+              "loader": "<<NODE_MODULE>>/file-loader/dist/cjs.js",
+              "options": Object {
+                "name": [Function],
+                "publicPath": "/",
+              },
+            },
+          ],
+        },
+        Object {
+          "loader": "<<string-replace-webpack-plugin>>",
+          "test": /runtime\\\\\\.js\\$/,
+        },
+        Object {
+          "loader": "<<string-replace-webpack-plugin>>",
+          "test": /rxjs\\(\\\\/\\|\\\\\\\\\\)\\.\\*\\\\\\.js\\$/,
+        },
+        Object {
+          "loader": "<<string-replace-webpack-plugin>>",
+          "test": /\\(invariant\\|invariant\\(\\\\/\\|\\\\\\\\\\)browser\\)\\\\\\.js\\$/,
+        },
+        Object {
+          "loader": "<<string-replace-webpack-plugin>>",
+          "test": /connected-react-router\\.\\*\\\\\\.js\\$/,
+        },
+      ],
+    },
+    "name": "android",
+    "node": Object {
+      "global": true,
+      "setImmediate": false,
+    },
+    "optimization": Object {
+      "concatenateModules": true,
+      "minimize": false,
+      "namedModules": true,
+    },
+    "output": Object {
+      "filename": "android.bundle.js",
+      "library": "Bundle",
+      "path": "<<REPLACED>>/utils/__tests__/fixtures/dist",
+      "publicPath": "http://localhost:8081/",
+    },
+    "plugins": Array [
+      CaseSensitivePathsPlugin {
+        "fsOperations": 0,
+        "options": Object {},
+        "pathCache": Object {},
+        "primed": false,
+      },
+      ProgressPlugin {
+        "handler": [Function],
+        "modulesCount": 500,
+        "profile": false,
+        "showActiveModules": true,
+        "showEntries": false,
+        "showModules": true,
+      },
+      DefinePlugin {
+        "definitions": Object {
+          "__DEV__": true,
+          "process.env.DEV_SERVER_HOST": "\\"localhost\\"",
+          "process.env.DEV_SERVER_ORIGIN": "\\"ws://localhost:8081\\"",
+          "process.env.NODE_ENV": "\\"development\\"",
+          "process.env.__REACT_DEVTOOLS_HOST__": "\\"localhost\\"",
+          "process.env.__REACT_DEVTOOLS_PORT__": undefined,
+        },
+      },
+      LoaderOptionsPlugin {
+        "options": Object {
+          "debug": true,
+          "minimize": false,
+          "test": Object {
+            "test": [Function],
+          },
+        },
+      },
+      HotModuleReplacementPlugin {
+        "fullBuildTimeout": 200,
+        "multiStep": undefined,
+        "options": Object {},
+        "requestTimeout": 10000,
+      },
+      BannerPlugin {
+        "banner": [Function],
+        "options": Object {
+          "banner": "if (this && !this.self) { this.self = this; };",
+          "raw": true,
+        },
+      },
+    ],
+    "resolve": Object {
+      "alias": Object {
+        "react-proxy": "@zamotany/react-proxy",
+      },
+      "extensions": Array [
+        ".android.js",
+        ".native.js",
+        ".js",
+      ],
+      "mainFields": Array [
+        "react-native",
+        "browser",
+        "main",
+      ],
+      "plugins": Array [],
+    },
+    "target": "webworker",
+  },
+  Object {
+    "context": "<<REPLACED>>/utils/__tests__/fixtures",
+    "devtool": false,
+    "entry": Array [
+      "<<REPLACED>>/utils/polyfillEnvironment.js",
+      "./file.js",
+    ],
+    "mode": "development",
+    "module": Object {
+      "rules": Array [
+        Object {
+          "parser": Object {
+            "requireEnsure": false,
+          },
+        },
+        Object {
+          "exclude": /\\(\\(node_modules\\(\\\\/\\|\\\\\\\\\\)\\(\\?!react\\|@expo\\|pretty-format\\|@react-qml\\|react-qml-cli\\|react-qml-renderer\\|qt-react\\)\\)\\|qt-react\\|react-qml-renderer\\)/,
+          "test": /\\\\\\.js\\$/,
+          "use": Array [
+            Object {
+              "loader": "<<NODE_MODULE>>/babel-loader/lib/index.js",
+              "options": Object {
+                "cacheDirectory": true,
+                "extends": "<<REPLACED>>/utils/__tests__/fixtures/.babelrc",
+                "plugins": Array [
+                  "<<REPLACED>>/utils/fixRequireIssues.js",
+                  "<<NODE_MODULE>>/react-hot-loader/babel.js",
+                  "<<REPLACED>>/hot/babelPlugin.js",
+                ],
+              },
+            },
+          ],
+        },
+        Object {
+          "test": /\\\\\\.qml\\$/,
+          "use": Array [
+            Object {
+              "loader": "<<NODE_MODULE>>/file-loader/dist/cjs.js",
+              "options": Object {
+                "name": [Function],
+                "publicPath": "/",
+              },
+            },
+          ],
+        },
+        Object {
+          "test": /\\\\\\.\\(aac\\|aiff\\|bmp\\|caf\\|gif\\|html\\|jpeg\\|jpg\\|m4a\\|m4v\\|mov\\|mp3\\|mp4\\|mpeg\\|mpg\\|obj\\|otf\\|pdf\\|png\\|psd\\|svg\\|ttf\\|wav\\|webm\\|webp\\)\\$/,
+          "use": Array [
+            Object {
+              "loader": "<<NODE_MODULE>>/file-loader/dist/cjs.js",
+              "options": Object {
+                "name": [Function],
+                "publicPath": "/",
+              },
+            },
+          ],
+        },
+        Object {
+          "loader": "<<string-replace-webpack-plugin>>",
+          "test": /runtime\\\\\\.js\\$/,
+        },
+        Object {
+          "loader": "<<string-replace-webpack-plugin>>",
+          "test": /rxjs\\(\\\\/\\|\\\\\\\\\\)\\.\\*\\\\\\.js\\$/,
+        },
+        Object {
+          "loader": "<<string-replace-webpack-plugin>>",
+          "test": /\\(invariant\\|invariant\\(\\\\/\\|\\\\\\\\\\)browser\\)\\\\\\.js\\$/,
+        },
+        Object {
+          "loader": "<<string-replace-webpack-plugin>>",
+          "test": /connected-react-router\\.\\*\\\\\\.js\\$/,
+        },
+      ],
+    },
+    "name": "macos",
+    "node": Object {
+      "global": true,
+      "setImmediate": false,
+    },
+    "optimization": Object {
+      "concatenateModules": true,
+      "minimize": false,
+      "namedModules": true,
+    },
+    "output": Object {
+      "filename": "macos.bundle.js",
+      "library": "Bundle",
+      "path": "<<REPLACED>>/utils/__tests__/fixtures/dist",
+      "publicPath": "http://localhost:8081/",
+    },
+    "plugins": Array [
+      CaseSensitivePathsPlugin {
+        "fsOperations": 0,
+        "options": Object {},
+        "pathCache": Object {},
+        "primed": false,
+      },
+      ProgressPlugin {
+        "handler": [Function],
+        "modulesCount": 500,
+        "profile": false,
+        "showActiveModules": true,
+        "showEntries": false,
+        "showModules": true,
+      },
+      DefinePlugin {
+        "definitions": Object {
+          "__DEV__": true,
+          "process.env.DEV_SERVER_HOST": "\\"localhost\\"",
+          "process.env.DEV_SERVER_ORIGIN": "\\"ws://localhost:8081\\"",
+          "process.env.NODE_ENV": "\\"development\\"",
+          "process.env.__REACT_DEVTOOLS_HOST__": "\\"localhost\\"",
+          "process.env.__REACT_DEVTOOLS_PORT__": undefined,
+        },
+      },
+      LoaderOptionsPlugin {
+        "options": Object {
+          "debug": true,
+          "minimize": false,
+          "test": Object {
+            "test": [Function],
+          },
+        },
+      },
+      HotModuleReplacementPlugin {
+        "fullBuildTimeout": 200,
+        "multiStep": undefined,
+        "options": Object {},
+        "requestTimeout": 10000,
+      },
+      BannerPlugin {
+        "banner": [Function],
+        "options": Object {
+          "banner": "if (this && !this.self) { this.self = this; };",
+          "raw": true,
+        },
+      },
+    ],
+    "resolve": Object {
+      "alias": Object {
+        "react-proxy": "@zamotany/react-proxy",
+      },
+      "extensions": Array [
+        ".macos.js",
+        ".native.js",
+        ".js",
+      ],
+      "mainFields": Array [
+        "react-native",
+        "browser",
+        "main",
+      ],
+      "plugins": Array [],
+    },
+    "target": "webworker",
+  },
+  Object {
+    "context": "<<REPLACED>>/utils/__tests__/fixtures",
+    "devtool": false,
+    "entry": Array [
+      "<<REPLACED>>/utils/polyfillEnvironment.js",
+      "./file.js",
+    ],
+    "mode": "development",
+    "module": Object {
+      "rules": Array [
+        Object {
+          "parser": Object {
+            "requireEnsure": false,
+          },
+        },
+        Object {
+          "exclude": /\\(\\(node_modules\\(\\\\/\\|\\\\\\\\\\)\\(\\?!react\\|@expo\\|pretty-format\\|@react-qml\\|react-qml-cli\\|react-qml-renderer\\|qt-react\\)\\)\\|qt-react\\|react-qml-renderer\\)/,
+          "test": /\\\\\\.js\\$/,
+          "use": Array [
+            Object {
+              "loader": "<<NODE_MODULE>>/babel-loader/lib/index.js",
+              "options": Object {
+                "cacheDirectory": true,
+                "extends": "<<REPLACED>>/utils/__tests__/fixtures/.babelrc",
+                "plugins": Array [
+                  "<<REPLACED>>/utils/fixRequireIssues.js",
+                  "<<NODE_MODULE>>/react-hot-loader/babel.js",
+                  "<<REPLACED>>/hot/babelPlugin.js",
+                ],
+              },
+            },
+          ],
+        },
+        Object {
+          "test": /\\\\\\.qml\\$/,
+          "use": Array [
+            Object {
+              "loader": "<<NODE_MODULE>>/file-loader/dist/cjs.js",
+              "options": Object {
+                "name": [Function],
+                "publicPath": "/",
+              },
+            },
+          ],
+        },
+        Object {
+          "test": /\\\\\\.\\(aac\\|aiff\\|bmp\\|caf\\|gif\\|html\\|jpeg\\|jpg\\|m4a\\|m4v\\|mov\\|mp3\\|mp4\\|mpeg\\|mpg\\|obj\\|otf\\|pdf\\|png\\|psd\\|svg\\|ttf\\|wav\\|webm\\|webp\\)\\$/,
+          "use": Array [
+            Object {
+              "loader": "<<NODE_MODULE>>/file-loader/dist/cjs.js",
+              "options": Object {
+                "name": [Function],
+                "publicPath": "/",
+              },
+            },
+          ],
+        },
+        Object {
+          "loader": "<<string-replace-webpack-plugin>>",
+          "test": /runtime\\\\\\.js\\$/,
+        },
+        Object {
+          "loader": "<<string-replace-webpack-plugin>>",
+          "test": /rxjs\\(\\\\/\\|\\\\\\\\\\)\\.\\*\\\\\\.js\\$/,
+        },
+        Object {
+          "loader": "<<string-replace-webpack-plugin>>",
+          "test": /\\(invariant\\|invariant\\(\\\\/\\|\\\\\\\\\\)browser\\)\\\\\\.js\\$/,
+        },
+        Object {
+          "loader": "<<string-replace-webpack-plugin>>",
+          "test": /connected-react-router\\.\\*\\\\\\.js\\$/,
+        },
+      ],
+    },
+    "name": "windows",
+    "node": Object {
+      "global": true,
+      "setImmediate": false,
+    },
+    "optimization": Object {
+      "concatenateModules": true,
+      "minimize": false,
+      "namedModules": true,
+    },
+    "output": Object {
+      "filename": "windows.bundle.js",
+      "library": "Bundle",
+      "path": "<<REPLACED>>/utils/__tests__/fixtures/dist",
+      "publicPath": "http://localhost:8081/",
+    },
+    "plugins": Array [
+      CaseSensitivePathsPlugin {
+        "fsOperations": 0,
+        "options": Object {},
+        "pathCache": Object {},
+        "primed": false,
+      },
+      ProgressPlugin {
+        "handler": [Function],
+        "modulesCount": 500,
+        "profile": false,
+        "showActiveModules": true,
+        "showEntries": false,
+        "showModules": true,
+      },
+      DefinePlugin {
+        "definitions": Object {
+          "__DEV__": true,
+          "process.env.DEV_SERVER_HOST": "\\"localhost\\"",
+          "process.env.DEV_SERVER_ORIGIN": "\\"ws://localhost:8081\\"",
+          "process.env.NODE_ENV": "\\"development\\"",
+          "process.env.__REACT_DEVTOOLS_HOST__": "\\"localhost\\"",
+          "process.env.__REACT_DEVTOOLS_PORT__": undefined,
+        },
+      },
+      LoaderOptionsPlugin {
+        "options": Object {
+          "debug": true,
+          "minimize": false,
+          "test": Object {
+            "test": [Function],
+          },
+        },
+      },
+      HotModuleReplacementPlugin {
+        "fullBuildTimeout": 200,
+        "multiStep": undefined,
+        "options": Object {},
+        "requestTimeout": 10000,
+      },
+      BannerPlugin {
+        "banner": [Function],
+        "options": Object {
+          "banner": "if (this && !this.self) { this.self = this; };",
+          "raw": true,
+        },
+      },
+    ],
+    "resolve": Object {
+      "alias": Object {
+        "react-proxy": "@zamotany/react-proxy",
+      },
+      "extensions": Array [
+        ".windows.js",
+        ".native.js",
+        ".js",
+      ],
+      "mainFields": Array [
+        "react-native",
+        "browser",
+        "main",
+      ],
+      "plugins": Array [],
+    },
+    "target": "webworker",
+  },
+  Object {
+    "context": "<<REPLACED>>/utils/__tests__/fixtures",
+    "devtool": false,
+    "entry": Array [
+      "<<REPLACED>>/utils/polyfillEnvironment.js",
+      "./file.js",
+    ],
+    "mode": "development",
+    "module": Object {
+      "rules": Array [
+        Object {
+          "parser": Object {
+            "requireEnsure": false,
+          },
+        },
+        Object {
+          "exclude": /\\(\\(node_modules\\(\\\\/\\|\\\\\\\\\\)\\(\\?!react\\|@expo\\|pretty-format\\|@react-qml\\|react-qml-cli\\|react-qml-renderer\\|qt-react\\)\\)\\|qt-react\\|react-qml-renderer\\)/,
+          "test": /\\\\\\.js\\$/,
+          "use": Array [
+            Object {
+              "loader": "<<NODE_MODULE>>/babel-loader/lib/index.js",
+              "options": Object {
+                "cacheDirectory": true,
+                "extends": "<<REPLACED>>/utils/__tests__/fixtures/.babelrc",
+                "plugins": Array [
+                  "<<REPLACED>>/utils/fixRequireIssues.js",
+                  "<<NODE_MODULE>>/react-hot-loader/babel.js",
+                  "<<REPLACED>>/hot/babelPlugin.js",
+                ],
+              },
+            },
+          ],
+        },
+        Object {
+          "test": /\\\\\\.qml\\$/,
+          "use": Array [
+            Object {
+              "loader": "<<NODE_MODULE>>/file-loader/dist/cjs.js",
+              "options": Object {
+                "name": [Function],
+                "publicPath": "/",
+              },
+            },
+          ],
+        },
+        Object {
+          "test": /\\\\\\.\\(aac\\|aiff\\|bmp\\|caf\\|gif\\|html\\|jpeg\\|jpg\\|m4a\\|m4v\\|mov\\|mp3\\|mp4\\|mpeg\\|mpg\\|obj\\|otf\\|pdf\\|png\\|psd\\|svg\\|ttf\\|wav\\|webm\\|webp\\)\\$/,
+          "use": Array [
+            Object {
+              "loader": "<<NODE_MODULE>>/file-loader/dist/cjs.js",
+              "options": Object {
+                "name": [Function],
+                "publicPath": "/",
+              },
+            },
+          ],
+        },
+        Object {
+          "loader": "<<string-replace-webpack-plugin>>",
+          "test": /runtime\\\\\\.js\\$/,
+        },
+        Object {
+          "loader": "<<string-replace-webpack-plugin>>",
+          "test": /rxjs\\(\\\\/\\|\\\\\\\\\\)\\.\\*\\\\\\.js\\$/,
+        },
+        Object {
+          "loader": "<<string-replace-webpack-plugin>>",
+          "test": /\\(invariant\\|invariant\\(\\\\/\\|\\\\\\\\\\)browser\\)\\\\\\.js\\$/,
+        },
+        Object {
+          "loader": "<<string-replace-webpack-plugin>>",
+          "test": /connected-react-router\\.\\*\\\\\\.js\\$/,
+        },
+      ],
+    },
+    "name": "linux",
+    "node": Object {
+      "global": true,
+      "setImmediate": false,
+    },
+    "optimization": Object {
+      "concatenateModules": true,
+      "minimize": false,
+      "namedModules": true,
+    },
+    "output": Object {
+      "filename": "linux.bundle.js",
+      "library": "Bundle",
+      "path": "<<REPLACED>>/utils/__tests__/fixtures/dist",
+      "publicPath": "http://localhost:8081/",
+    },
+    "plugins": Array [
+      CaseSensitivePathsPlugin {
+        "fsOperations": 0,
+        "options": Object {},
+        "pathCache": Object {},
+        "primed": false,
+      },
+      ProgressPlugin {
+        "handler": [Function],
+        "modulesCount": 500,
+        "profile": false,
+        "showActiveModules": true,
+        "showEntries": false,
+        "showModules": true,
+      },
+      DefinePlugin {
+        "definitions": Object {
+          "__DEV__": true,
+          "process.env.DEV_SERVER_HOST": "\\"localhost\\"",
+          "process.env.DEV_SERVER_ORIGIN": "\\"ws://localhost:8081\\"",
+          "process.env.NODE_ENV": "\\"development\\"",
+          "process.env.__REACT_DEVTOOLS_HOST__": "\\"localhost\\"",
+          "process.env.__REACT_DEVTOOLS_PORT__": undefined,
+        },
+      },
+      LoaderOptionsPlugin {
+        "options": Object {
+          "debug": true,
+          "minimize": false,
+          "test": Object {
+            "test": [Function],
+          },
+        },
+      },
+      HotModuleReplacementPlugin {
+        "fullBuildTimeout": 200,
+        "multiStep": undefined,
+        "options": Object {},
+        "requestTimeout": 10000,
+      },
+      BannerPlugin {
+        "banner": [Function],
+        "options": Object {
+          "banner": "if (this && !this.self) { this.self = this; };",
+          "raw": true,
+        },
+      },
+    ],
+    "resolve": Object {
+      "alias": Object {
+        "react-proxy": "@zamotany/react-proxy",
+      },
+      "extensions": Array [
+        ".linux.js",
+        ".native.js",
+        ".js",
+      ],
+      "mainFields": Array [
+        "react-native",
+        "browser",
+        "main",
+      ],
+      "plugins": Array [],
+    },
+    "target": "webworker",
+  },
+]
+`;
+
+exports[`creates config from defaults: (platforms) 1`] = `
+Array [
+  "ios",
+  "android",
+  "macos",
+  "windows",
+  "linux",
+]
+`;
+
+exports[`merges existing config 1`] = `
+Array [
+  Object {
+    "context": "<<REPLACED>>/utils/__tests__/fixtures",
+    "devtool": false,
+    "entry": Array [
+      "<<REPLACED>>/utils/polyfillEnvironment.js",
+      "/some/file.js",
+    ],
+    "mode": "development",
+    "module": Object {
+      "rules": Array [
+        Object {
+          "parser": Object {
+            "requireEnsure": false,
+          },
+        },
+      ],
+    },
+    "name": "ios",
+    "node": Object {
+      "global": true,
+      "setImmediate": false,
+    },
+    "optimization": Object {
+      "concatenateModules": true,
+      "minimize": false,
+      "namedModules": true,
+    },
+    "output": Object {
+      "filename": "ios.bundle.js",
+      "library": "Bundle",
+      "path": "<<REPLACED>>/utils/__tests__/fixtures/dist",
+      "publicPath": "http://localhost:8081/",
+    },
+    "plugins": Array [],
+    "resolve": Object {},
+    "target": "webworker",
+  },
+  Object {
+    "context": "<<REPLACED>>/utils/__tests__/fixtures",
+    "devtool": false,
+    "entry": Array [
+      "<<REPLACED>>/utils/polyfillEnvironment.js",
+      "/some/file.js",
+    ],
+    "mode": "development",
+    "module": Object {
+      "rules": Array [
+        Object {
+          "parser": Object {
+            "requireEnsure": false,
+          },
+        },
+      ],
+    },
+    "name": "android",
+    "node": Object {
+      "global": true,
+      "setImmediate": false,
+    },
+    "optimization": Object {
+      "concatenateModules": true,
+      "minimize": false,
+      "namedModules": true,
+    },
+    "output": Object {
+      "filename": "android.bundle.js",
+      "library": "Bundle",
+      "path": "<<REPLACED>>/utils/__tests__/fixtures/dist",
+      "publicPath": "http://localhost:8081/",
+    },
+    "plugins": Array [],
+    "resolve": Object {},
+    "target": "webworker",
+  },
+  Object {
+    "context": "<<REPLACED>>/utils/__tests__/fixtures",
+    "devtool": false,
+    "entry": Array [
+      "<<REPLACED>>/utils/polyfillEnvironment.js",
+      "/some/file.js",
+    ],
+    "mode": "development",
+    "module": Object {
+      "rules": Array [
+        Object {
+          "parser": Object {
+            "requireEnsure": false,
+          },
+        },
+      ],
+    },
+    "name": "macos",
+    "node": Object {
+      "global": true,
+      "setImmediate": false,
+    },
+    "optimization": Object {
+      "concatenateModules": true,
+      "minimize": false,
+      "namedModules": true,
+    },
+    "output": Object {
+      "filename": "macos.bundle.js",
+      "library": "Bundle",
+      "path": "<<REPLACED>>/utils/__tests__/fixtures/dist",
+      "publicPath": "http://localhost:8081/",
+    },
+    "plugins": Array [],
+    "resolve": Object {},
+    "target": "webworker",
+  },
+  Object {
+    "context": "<<REPLACED>>/utils/__tests__/fixtures",
+    "devtool": false,
+    "entry": Array [
+      "<<REPLACED>>/utils/polyfillEnvironment.js",
+      "/some/file.js",
+    ],
+    "mode": "development",
+    "module": Object {
+      "rules": Array [
+        Object {
+          "parser": Object {
+            "requireEnsure": false,
+          },
+        },
+      ],
+    },
+    "name": "windows",
+    "node": Object {
+      "global": true,
+      "setImmediate": false,
+    },
+    "optimization": Object {
+      "concatenateModules": true,
+      "minimize": false,
+      "namedModules": true,
+    },
+    "output": Object {
+      "filename": "windows.bundle.js",
+      "library": "Bundle",
+      "path": "<<REPLACED>>/utils/__tests__/fixtures/dist",
+      "publicPath": "http://localhost:8081/",
+    },
+    "plugins": Array [],
+    "resolve": Object {},
+    "target": "webworker",
+  },
+  Object {
+    "context": "<<REPLACED>>/utils/__tests__/fixtures",
+    "devtool": false,
+    "entry": Array [
+      "<<REPLACED>>/utils/polyfillEnvironment.js",
+      "/some/file.js",
+    ],
+    "mode": "development",
+    "module": Object {
+      "rules": Array [
+        Object {
+          "parser": Object {
+            "requireEnsure": false,
+          },
+        },
+      ],
+    },
+    "name": "linux",
+    "node": Object {
+      "global": true,
+      "setImmediate": false,
+    },
+    "optimization": Object {
+      "concatenateModules": true,
+      "minimize": false,
+      "namedModules": true,
+    },
+    "output": Object {
+      "filename": "linux.bundle.js",
+      "library": "Bundle",
+      "path": "<<REPLACED>>/utils/__tests__/fixtures/dist",
+      "publicPath": "http://localhost:8081/",
+    },
+    "plugins": Array [],
+    "resolve": Object {},
+    "target": "webworker",
+  },
+]
+`;
