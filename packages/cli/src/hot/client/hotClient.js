@@ -96,8 +96,8 @@ function processPayload(payload, { logger, reporter, ...opts }) {
  */
 module.exports = function connect(options: Object) {
   const { logger, ...opts } = normalizeOptions(options);
-  // TODO: do not hardcode macos
-  const ws = new WebSocket(`${opts.path}?platform=${Qt.platform.os}`);
+
+  const ws = new global.WebSocket(`${opts.path}?platform=${Qt.platform.os}`);
 
   ws.onopen = () => {
     logger.log('[Haul HMR] Client connected');
