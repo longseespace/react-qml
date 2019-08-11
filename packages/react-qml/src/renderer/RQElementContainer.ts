@@ -39,13 +39,17 @@ class RQElementContainer {
   }
 
   setNativeProps(props: any) {
+    this.updateNativeProps({}, props);
+  }
+
+  updateNativeProps(prevProps: any, nextProps: any) {
     const { element } = this;
     if (!element) {
       return;
     }
 
     // generate update payload
-    const updatePayload = diffProps({}, props);
+    const updatePayload = diffProps(prevProps, nextProps);
     if (updatePayload != null) {
       console.log('updatePayload');
       console.log(inspect(updatePayload, { depth: 1 }));
