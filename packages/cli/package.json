@@ -68,6 +68,7 @@
     "escape-string-regexp": "^1.0.5",
     "express": "^4.15.2",
     "fetch-ie8": "^1.5.0",
+    "file-loader": "^3.0.1",
     "generate-asset-webpack-plugin": "^0.3.0",
     "hasha": "^2.2.0",
     "hoist-non-react-statics": "^2.2.1",
@@ -93,7 +94,6 @@
     "strip-ansi": "^3.0.1",
     "thread-loader": "^1.1.5",
     "ts-loader": "^5.3.3",
-    "file-loader": "^3.0.1",
     "webpack": "^4.1.0",
     "webpack-dev-middleware": "^3.5.1",
     "webpack-hot-middleware": "^2.24.3",
@@ -110,7 +110,8 @@
     "lint-staged": "^3.4.0",
     "mkdirp": "^0.5.1",
     "rimraf": "^2.6.1",
-    "traverse": "^0.6.6"
+    "traverse": "^0.6.6",
+    "typescript": "^3.5.3"
   },
   "lint-staged": {
     "*.js": [
