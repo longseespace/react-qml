@@ -133,7 +133,12 @@ function appendChild(
   }
 
   // - set animation's target to parent, if not specified
-  if (isAnimation(child) && !isAnimation(parent) && isQuickItem(parent)) {
+  if (
+    isAnimation(child) &&
+    !isAnimation(parent) &&
+    isQuickItem(parent) &&
+    !child.target
+  ) {
     child.target = parent;
   }
 

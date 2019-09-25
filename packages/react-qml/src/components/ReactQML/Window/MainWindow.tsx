@@ -10,7 +10,7 @@ let container: RQElementContainer;
 try {
   container = new RQElementContainer(__mainWindow, { defaultProp: 'data' });
 } catch (error) {
-  console.error('__mainWindow not found');
+  // omit
 }
 
 type Props = {
@@ -33,6 +33,13 @@ const omit = (props: Array<string>) => (source: PlainObject) =>
 const omitNonNativeProps = omit(['children', 'ref', 'forwardedRef', 'key']);
 
 class MainWindowWrapper extends React.Component<Props> {
+  constructor(props: Props) {
+    super(props);
+
+    if (!container) {
+      throw new Error('__mainWindow not found');
+    }
+  }
   onClosing = (ev: QQuickCloseEvent) => {
     ev.accepted = false;
     if (this.props.onClosing) {
@@ -50,11 +57,13 @@ class MainWindowWrapper extends React.Component<Props> {
       ...otherProps
     } = this.props;
 
-    try {
-      forwardedRef.current = __mainWindow;
-    } catch (e) {
-      // no mainwindow
-      console.error('__mainWindow not found');
+    if (forwardedRef) {
+      try {
+        forwardedRef.current = __mainWindow;
+      } catch (e) {
+        // no mainwindow
+        console.error('__mainWindow not found');
+      }
     }
 
     const defaultVisibility = visible ? 'AutomaticVisibility' : 'Hidden';
@@ -71,11 +80,13 @@ class MainWindowWrapper extends React.Component<Props> {
   componentDidUpdate(prevProps: any) {
     const { forwardedRef } = this.props;
 
-    try {
-      forwardedRef.current = __mainWindow;
-    } catch (e) {
-      // no mainwindow
-      console.error('__mainWindow not found');
+    if (forwardedRef) {
+      try {
+        forwardedRef.current = __mainWindow;
+      } catch (e) {
+        // no mainwindow
+        console.error('__mainWindow not found');
+      }
     }
 
     container.updateNativeProps(
