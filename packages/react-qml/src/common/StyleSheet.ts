@@ -22,6 +22,7 @@ export type TextStyleProps = FontProps & {
   textAlign?: 'auto' | 'left' | 'right' | 'center' | 'justify';
   textAlignVertical?: 'auto' | 'top' | 'bottom' | 'center';
   letterSpacing?: number;
+  wordSpacing?: number;
   textTransform?: 'none' | 'uppercase' | 'lowercase' | 'capitalize';
 };
 
@@ -215,6 +216,12 @@ export function mapStyleToProps(style: Style): Qml.QmlProps {
         break;
       case 'textTransform':
         font.capitalization = getFontCapitalization(String(styleValue));
+        break;
+      case 'letterSpacing':
+        font.letterSpacing = styleValue;
+        break;
+      case 'wordSpacing':
+        font.wordSpacing = styleValue;
         break;
 
       default:
