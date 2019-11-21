@@ -173,8 +173,12 @@ function handleStyle(
     const lastFlatStyle = StyleSheet.flattenStyle(lastStyle);
     for (let styleName in lastFlatStyle) {
       if (!nextFlatStyle.hasOwnProperty(styleName)) {
-        // unset
-        finalStyle[styleName] = undefined;
+        // not every element/prop allow setting to undefined
+        try {
+          finalStyle[styleName] = undefined;
+        } catch (ex) {
+          console.warn(`Cannot unset property '${styleName}' of ${qmlElement}`);
+        }
       }
     }
   }
@@ -290,6 +294,16 @@ export function updateProps(
       continue;
     }
 
-    qmlElement[propKey] = propValue;
+    if (propValue === undefined) {
+      try {
+        qmlElement[propKey] = propValue;
+      } catch (ex) {
+        console.warn(
+          `Cannot unset property "${propKey}" of object ${qmlElement}`
+        );
+      }
+    } else {
+      qmlElement[propKey] = propValue;
+    }
   }
 }

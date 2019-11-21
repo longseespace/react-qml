@@ -256,7 +256,19 @@ export function setStyle(qmlElement: Qml.QmlElement, style: Style) {
 
   for (const propName in props) {
     if (qmlElement.hasOwnProperty(propName)) {
-      qmlElement[propName] = props[propName];
+      const propValue = props[propName];
+
+      if (propValue === undefined) {
+        try {
+          qmlElement[propName] = propValue;
+        } catch (ex) {
+          console.warn(
+            `Cannot unset property "${propName}" of object ${qmlElement}`
+          );
+        }
+      } else {
+        qmlElement[propName] = propValue;
+      }
     }
   }
 }
