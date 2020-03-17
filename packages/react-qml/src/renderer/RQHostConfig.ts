@@ -5,6 +5,7 @@ import invariant from 'invariant';
 import RQElementContainer from './RQElementContainer';
 import UIManager from './UIManager';
 import { diffProps, updateProps } from './RQAttributePayload';
+import { inspect } from 'util';
 
 type Type = string;
 type HostContext = RQElementContainer;
@@ -34,12 +35,20 @@ type RQHostConfig = HostConfig<
   NoTimeout
 >;
 
+type RQHostConfigPatched = RQHostConfig & {
+  scheduleTimeout(
+    handler: (...args: any[]) => void,
+    timeout: number
+  ): TimeoutHandle | NoTimeout;
+  cancelTimeout(handle: TimeoutHandle | NoTimeout): void;
+};
+
 const nullElement = { parent: null, destroy: () => {} };
 const nullElementContainer = new RQElementContainer(nullElement, {
   defaultProp: 'data',
 });
 
-const hostConfig: RQHostConfig = {
+const hostConfig: RQHostConfigPatched = {
   now: Date.now,
   isPrimaryRenderer: true,
   noTimeout: -1,
@@ -62,7 +71,21 @@ const hostConfig: RQHostConfig = {
     }
     return -1;
   },
+  scheduleTimeout(
+    handler: (...args: any[]) => void,
+    timeout: number
+  ): TimeoutHandle | NoTimeout {
+    if (global && global.setTimeout) {
+      return global.setTimeout(handler, timeout);
+    }
+    return -1;
+  },
   clearTimeout(handle: TimeoutHandle | NoTimeout): void {
+    if (typeof handle !== 'number' && global && global.clearTimeout) {
+      global.clearTimeout(handle);
+    }
+  },
+  cancelTimeout(handle: TimeoutHandle | NoTimeout): void {
     if (typeof handle !== 'number' && global && global.clearTimeout) {
       global.clearTimeout(handle);
     }
@@ -74,7 +97,7 @@ const hostConfig: RQHostConfig = {
   },
   getRootHostContext(rootContainerInstance: Container): HostContext {
     const rootContext = UIManager.getHostContext(rootContainerInstance);
-    console.log('getRootHostContext', rootContext.element);
+    console.log('getRootHostContext', rootContext.element.toString());
     // UIManager.removeAllChildren(rootContext);
     return rootContext;
   },
