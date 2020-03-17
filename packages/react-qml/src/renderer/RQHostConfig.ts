@@ -1,4 +1,4 @@
-import { HostConfig, OpaqueHandle, Deadline } from 'react-reconciler';
+import { HostConfig, OpaqueHandle } from 'react-reconciler';
 
 import invariant from 'invariant';
 
@@ -58,7 +58,7 @@ const hostConfig: RQHostConfigPatched = {
     return false;
   },
   scheduleDeferredCallback(
-    callback: (deadline: Deadline) => void,
+    callback: () => any,
     options?: { timeout: number }
   ): any {},
   cancelDeferredCallback(callbackID: any): void {},
