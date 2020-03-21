@@ -1,6 +1,6 @@
 {
   "name": "react-qml",
-  "version": "0.4.9",
+  "version": "0.4.10",
   "description": "React QML",
   "main": "dist/index.js",
   "files": [
@@ -13,7 +13,7 @@
     "build": "yarn build:types && yarn build:js",
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "babel src --copy-files --out-dir dist --extensions \".ts,.tsx\"",
-    "prepublish": "NODE_ENV=production yarn build"
+    "prepare": "NODE_ENV=production yarn build"
   },
   "repository": {
     "type": "git",
@@ -54,6 +54,7 @@
     "@types/jest": "^24.0.6",
     "@types/node": "^10.12.18",
     "@types/react-reconciler": "^0.18.0",
+    "@types/scheduler": "^0.16.1",
     "babel-jest": "^23.6.0",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "flex-js": "^1.0.5",
