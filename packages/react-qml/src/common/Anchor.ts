@@ -201,7 +201,7 @@ export class ParentAnchor {
     parentPropName?: AnchorRefProp
   ) => {
     if (!childElement.parent) {
-      console.log('ChildElement has no parent', childElement);
+      // console.log('ChildElement has no parent', childElement);
       return;
     }
     if (childPropName === 'fill' || childPropName === 'centerIn') {

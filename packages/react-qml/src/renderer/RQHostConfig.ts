@@ -1,11 +1,14 @@
 import { HostConfig, OpaqueHandle } from 'react-reconciler';
+import {
+  unstable_scheduleCallback as schedulePassiveEffects,
+  unstable_cancelCallback as cancelPassiveEffects,
+} from 'scheduler';
 
 import invariant from 'invariant';
 
 import RQElementContainer from './RQElementContainer';
 import UIManager from './UIManager';
 import { diffProps, updateProps } from './RQAttributePayload';
-import { inspect } from 'util';
 
 type Type = string;
 type HostContext = RQElementContainer;
@@ -36,11 +39,8 @@ type RQHostConfig = HostConfig<
 >;
 
 type RQHostConfigPatched = RQHostConfig & {
-  scheduleTimeout(
-    handler: (...args: any[]) => void,
-    timeout: number
-  ): TimeoutHandle | NoTimeout;
-  cancelTimeout(handle: TimeoutHandle | NoTimeout): void;
+  schedulePassiveEffects: typeof schedulePassiveEffects;
+  cancelPassiveEffects: typeof cancelPassiveEffects;
 };
 
 const nullElement = { parent: null, destroy: () => {} };
@@ -60,8 +60,14 @@ const hostConfig: RQHostConfigPatched = {
   scheduleDeferredCallback(
     callback: () => any,
     options?: { timeout: number }
-  ): any {},
-  cancelDeferredCallback(callbackID: any): void {},
+  ): any {
+    console.log('scheduleDeferredCallback');
+  },
+  cancelDeferredCallback(callbackID: any): void {
+    console.log('cancelDeferredCallback');
+  },
+  schedulePassiveEffects,
+  cancelPassiveEffects,
   setTimeout(
     handler: (...args: any[]) => void,
     timeout: number
@@ -71,21 +77,7 @@ const hostConfig: RQHostConfigPatched = {
     }
     return -1;
   },
-  scheduleTimeout(
-    handler: (...args: any[]) => void,
-    timeout: number
-  ): TimeoutHandle | NoTimeout {
-    if (global && global.setTimeout) {
-      return global.setTimeout(handler, timeout);
-    }
-    return -1;
-  },
   clearTimeout(handle: TimeoutHandle | NoTimeout): void {
-    if (typeof handle !== 'number' && global && global.clearTimeout) {
-      global.clearTimeout(handle);
-    }
-  },
-  cancelTimeout(handle: TimeoutHandle | NoTimeout): void {
     if (typeof handle !== 'number' && global && global.clearTimeout) {
       global.clearTimeout(handle);
     }
