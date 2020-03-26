@@ -9,18 +9,19 @@ Build native, high-performance, cross-platform universal applications (desktop *
 - Native components: no Electron
 - Batteries included: access to full webpack ecosystem and wide sets of [QML modules][qml_module_list]
 - Cross platform: macOS/Windows/Linux/Android/iOS/tvOS/watchOS (see [Qt supported platforms][suported_platforms]).
-- Write codes in ES6/7 or TypeScript (transpiling with babel, bundling with webpack, highly customizable)
+- Write codes in modern Javascript (ES2016+) or TypeScript (transpiling with babel, bundling with webpack, highly customizable)
 - Works with existing front-end libraries such as redux, lodash, rxjs, redux-observable etc.
 - Supports Hot Module Reloading
 - Supports react-devtools & redux-devtools (Time Travel Debugging possible)
+- New in v0.5: supports React Hooks!
 
 # Quickstart
 
-TODO
+See [react-qml-quickstart](https://github.com/longseespace/react-qml-quickstart) and [Ben](https://github.com/longseespace/ben)
 
 # API Example
 
-You can build UI components using JSX syntax and/or QML syntax. (_Note_: APIs is not stable/ready yet - head over branch [`next`][branch_next] for latest development)
+You can build UI components using JSX syntax and/or QML syntax.
 
 ### React Component
 
